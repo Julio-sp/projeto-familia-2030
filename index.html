@@ -136,6 +136,15 @@
 </head>
 <body>
 
+    <div id="login-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--premium-blue); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white;">
+    <h1 style="color:var(--gold)">CENTRO DE COMANDO 2026</h1>
+    <div id="ranking-display" style="margin: 20px 0; background:#1e293b; padding:15px; border-radius:10px;"></div>
+    <div style="background:white; padding:20px; border-radius:15px; color:black;">
+        <select id="user-select"><option value="julio">Júlio</option><option value="lais">Laís</option><option value="isabella">Isabella</option></select>
+        <input type="password" id="pass-input" placeholder="Senha...">
+        <button onclick="validarLogin()">Aceder</button>
+    </div>
+</div>
 <div class="top-bar">
     <div onclick="toggleMenu()" style="font-size:24px; cursor:pointer; color: var(--premium-blue)">☰</div>
     <div class="logo-title" onclick="showView('home')">HORIZONTE<span>2030</span></div>
@@ -600,6 +609,7 @@ function openMetaDetails(id) {
             <div class="ai-chat-input-row">
                 <input type="text" id="meta-ai-input" class="ai-chat-input" placeholder="Solicitar checklist ou análise técnica à IA...">
                 <button class="ai-chat-btn" onclick="enviarMensagemIAReal('meta', '${meta.user} - ${meta.titulo} - ${meta.desc}')">Enviar</button>
+           addXP(10); // A cada resposta da IA, adiciona 10 pontos vezes o peso da pessoa
             </div>
         </div>
     `;
@@ -732,6 +742,50 @@ async function enviarMensagemIAReal(tipo, contextoBase) {
     
     messagesElement.scrollTop = messagesElement.scrollHeight;
 }
+    const CONFIG_PERFIS = {
+    julio: { pass: "j2026", peso: 1.2, nome: "Júlio" },
+    lais: { pass: "l2026", peso: 1.5, nome: "Laís" },
+    isabella: { pass: "i2026", nome: "Isabella", peso: 1.0 }
+};
+
+function validarLogin() {
+    const u = document.getElementById('user-select').value;
+    const p = document.getElementById('pass-input').value;
+    if(CONFIG_PERFIS[u] && CONFIG_PERFIS[u].pass === p) {
+        localStorage.setItem('session_user', u);
+        document.getElementById('login-overlay').style.display = 'none';
+        atualizarRanking();
+    } else alert("Senha incorreta.");
+}
+
+function addXP(base) {
+    const user = localStorage.getItem('session_user');
+    if(!user) return;
+    let data = JSON.parse(localStorage.getItem('xp_data') || '{}');
+    data[user] = (data[user] || 0) + Math.round(base * CONFIG_PERFIS[user].peso);
+    localStorage.setItem('xp_data', JSON.stringify(data));
+    atualizarRanking();
+}
+
+function atualizarRanking() {
+    const data = JSON.parse(localStorage.getItem('xp_data') || '{}');
+    const display = document.getElementById('ranking-display');
+    if(display) {
+        display.innerHTML = Object.keys(CONFIG_PERFIS).map(u => `
+            <div style="display:flex; justify-content:space-between; width:200px; margin:5px 0;">
+                <span style="color:white; font-size:0.8rem;">${CONFIG_PERFIS[u].nome}</span>
+                <div style="width:80px; height:8px; background:#334155; border-radius:4px;"><div style="width:${Math.min((data[u]||0)/20, 100)}%; height:100%; background:var(--gold);"></div></div>
+            </div>`).join('');
+    }
+}
+
+// Inicializador que esconde o login se já estiver logado
+window.onload = () => {
+    if(localStorage.getItem('session_user')) {
+        document.getElementById('login-overlay').style.display = 'none';
+        atualizarRanking();
+    }
+};
 </script>
 </body>
 </html>

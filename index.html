@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Família 2030</title>
+    <!-- Tailwind CSS para o Visual Moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React e Babel para rodar direto no navegador sem Node.js -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased font-sans">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Estrutura de dados totalmente separada por membro da família para independência total
+        const dadosIniciaisFamilia = {
+            julio: {
+                nome: "Júlio (Pai)",
+                avatar: "👨‍💻",
+                activeMonthId: "2026-01",
+                months: [
+                    {
+                        id: "2026-01",
+                        name: "Janeiro 2026",
+                        unlocked: true,
+                        tasks: [
+                            { id: "ju-t1", text: "Registar poupança mensal base (Meta: €250)", done: false },
+                            { id: "ju-t2", text: "Iniciar Curso Avançado de Programação / Arquitetura de Software", done: false },
+                            { id: "ju-t3", text: "Finalizar checklist de documentação pessoal para emigração", done: false }
+                        ],
+                        languages: [
+                            { id: "ju-en1", lang: "en", title: "Month 1 – Intermediate English: Career", completed: false, content: "I am responsible for... = Sou responsável por...\nProject management = Gestão de projetos", questions: ["Translate: Sou responsável por gerir este projeto."] }
+                        ]
+                    },
+                    {
+                        id: "2026-02",
+                        name: "Fevereiro 2026",
+                        unlocked: false,
+                        tasks: [
+                            { id: "ju-t4", text: "Consolidar Módulo 2 do plano técnico de engenharia de software", done: false }
+                        ],
+                        languages: []
+                    }
+                ]
+            },
+            lais: {
+                nome: "Laís (Mãe)",
+                avatar: "👩‍⚕️",
+                activeMonthId: "2026-01",
+                months: [
+                    {
+                        id: "2026-01",
+                        name: "Janeiro 2026",
+                        unlocked: true,
+                        tasks: [
+                            { id: "la-t1", text: "Pesquisa de validação profissional e mercado de trabalho no destino", done: false },
+                            { id: "la-t2", text: "Organizar portfólio e equivalência de currículo internacional", done: false }
+                        ],
+                        languages: [
+                            { id: "la-fr1", lang: "fr", title: "Mês 1 – Francês Básico: Apresentação", completed: false, content: "Bonjour = bom dia / olá\nComment allez-vous? = como está?\nJe m'appelle... = Chamo-me...", questions: ["Escreva a sua mini apresentação pessoal em francês."] }
+                        ]
+                    },
+                    {
+                        id: "2026-02",
+                        name: "Fevereiro 2026",
+                        unlocked: false,
+                        tasks: [
+                            { id: "la-t3", text: "Mapeamento de vagas e conexões estratégicas no LinkedIn", done: false }
+                        ],
+                        languages: []
+                    }
+                ]
+            },
+            isabella: {
+                nome: "Isabella (Filha)",
+                avatar: "👑",
+                activeMonthId: "2026-01",
+                months: [
+                    {
+                        id: "2026-01",
+                        name: "Janeiro 2026",
+                        unlocked: true,
+                        tasks: [
+                            { id: "is-t1", text: "Atividade de adaptação cultural e bilinguismo precoce", done: false },
+                            { id: "is-t2", text: "Pesquisa sobre o modelo de ensino e escolas no país de destino", done: false }
+                        ],
+                        languages: [
+                            { id: "is-en1", lang: "en", title: "Month 1 – English Basics for Teens", completed: false, content: "Hello! My name is Isabella = Olá! O meu nome é Isabella\nI am a student = Eu sou estudante", questions: ["Escreva 3 frases sobre a sua rotina escolar em inglês."] }
+                        ]
+                    },
+                    {
+                        id: "2026-02",
+                        name: "Fevereiro 2026",
+                        unlocked: false,
+                        tasks: [
+                            { id: "is-t3", text: "Leitura guiada sobre história e cultura do destino", done: false }
+                        ],
+                        languages: []
+                    }
+                ]
+            }
+        };
+
+        function App() {
+            const [familia, setFamilia] = useState(dadosIniciaisFamilia);
+            const [membroAtivo, setMembroAtivo] = useState("julio");
+
+            const dadosMembro = familia[membroAtivo];
+            const activeMonth = dadosMembro.months.find(m => m.id === dadosMembro.activeMonthId);
+
+            // Função para mudar o mês ativo do membro selecionado
+            const mudarMesMembro = (monthId) => {
+                setFamilia(prev => ({
+                    ...prev,
+                    [membroAtivo]: {
+                        ...prev[membroAtivo],
+                        activeMonthId: monthId
+                    }
+                }));
+            };
+
+            // Função para alternar status das tarefas normais
+            const toggleTask = (taskId) => {
+                setFamilia(prev => {
+                    const updatedMonths = prev[membroAtivo].months.map(m => {
+                        if (m.id !== dadosMembro.activeMonthId) return m;
+                        return {
+                            ...m,
+                            tasks: m.tasks.map(t => t.id === taskId ? { ...t, done: !t.done } : t)
+                        };
+                    });
+                    return {
+                        ...prev,
+                        [membroAtivo]: { ...prev[membroAtivo], months: updatedMonths }
+                    };
+                });
+            };
+
+            // Função para alternar status das lições de idiomas
+            const toggleLanguage = (lessonId) => {
+                setFamilia(prev => {
+                    const updatedMonths = prev[membroAtivo].months.map(m => {
+                        if (m.id !== dadosMembro.activeMonthId) return m;
+                        return {
+                            ...m,
+                            languages: m.languages.map(l => l.id === lessonId ? { ...l, completed: !l.completed } : l)
+                        };
+                    });
+                    return {
+                        ...prev,
+                        [membroAtivo]: { ...prev[membroAtivo], months: updatedMonths }
+                    };
+                });
+            };
+
+            // Lógica Anti-Desistência INDEPENDENTE por membro
+            useEffect(() => {
+                setFamilia(prev => {
+                    const novoEstado = { ...prev };
+                    Object.keys(novoEstado).forEach(membro => {
+                        const m1 = novoEstado[membro].months[0];
+                        const tasksDone = m1.tasks.every(t => t.done);
+                        const langDone = m1.languages.every(l => l.completed);
+
+                        novoEstado[membro].months = novoEstado[membro].months.map((m, idx) => {
+                            if (idx === 1) {
+                                return { ...m, unlocked: (tasksDone && langDone) };
+                            }
+                            return m;
+                        });
+                    });
+                    return novoEstado;
+                });
+            }, [membroAtivo]); // Executa a validação de travas de forma isolada
+
+            return (
+                <div className="min-h-screen flex flex-col">
+                    {/* Header */}
+                    <header className="border-b border-slate-800 bg-slate-950 p-4 sticky top-0 z-50 shadow-md">
+                        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <div>
+                                <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
+                                    🗺️ Projeto Família 2030
+                                </h1>
+                                <p className="text-xs text-slate-400">Roteiro de Emigração & Desenvolvimento Individual Autónomo</p>
+                            </div>
+
+                            {/* Menu de Seleção de Membro da Família */}
+                            <div className="flex gap-2 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                                {Object.keys(familia).map(key => (
+                                    <button
+                                        key={key}
+                                        onClick={() => setMembroAtivo(key)}
+                                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+                                            membroAtivo === key 
+                                                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md font-bold scale-105' 
+                                                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                                        }`}
+                                    >
+                                        <span>{familia[key].avatar}</span>
+                                        <span>{familia[key].nome.split(" ")[0]}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Dashboard do Membro Ativo */}
+                    <main className="flex-1 max-w-6xl mx-auto w-full p-4 grid grid-cols-1 lg:grid-cols-3 gap-6 my-4">
+                        
+                        {/* Coluna Esquerda e Centro: Painel de Atividades */}
+                        <div className="lg:col-span-2 space-y-6">
+                            
+                            {/* Navegação dos Meses do Membro Atual */}
+                            <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+                                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Painel Cronológico:</span>
+                                <div className="flex gap-1.5">
+                                    {dadosMembro.months.map(m => (
+                                        <button
+                                            key={m.id}
+                                            onClick={() => m.unlocked && mudarMesMembro(m.id)}
+                                            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                                                dadosMembro.activeMonthId === m.id 
+                                                    ? 'bg-blue-600 text-white' 
+                                                    : m.unlocked ? 'text-slate-300 bg-slate-900 hover:bg-slate-800' : 'text-slate-600 bg-slate-950 cursor-not-allowed opacity-40'
+                                            }`}
+                                        >
+                                            {!m.unlocked && "🔒 "} {m.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Checklist */}
+                            <div className="bg-slate-800/40 border border-slate-800 p-5 rounded-2xl backdrop-blur-sm">
+                                <h2 className="text-md font-bold mb-3 flex items-center gap-2 text-slate-200">
+                                    <span>📋</span> Minhas Tarefas — {activeMonth.name}
+                                </h2>
+                                <div className="space-y-2.5">
+                                    {activeMonth.tasks.length > 0 ? activeMonth.tasks.map(t => (
+                                        <label key={t.id} className="flex items-start gap-3 p-3 bg-slate-900/40 rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700 hover:bg-slate-900/80 transition">
+                                            <input type="checkbox" checked={t.done} onChange={() => toggleTask(t.id)} className="mt-1 accent-blue-500 rounded text-blue-600" />
+                                            <span className={`text-sm ${t.done ? 'line-through text-slate-500' : 'text-slate-300'}`}>{t.text}</span>
+                                        </label>
+                                    )) : <p className="text-xs text-slate-500 italic p-2">Nenhuma tarefa listada para este mês.</p>}
+                                </div>
+                            </div>
+
+                            {/* Idiomas Práticos */}
+                            <div className="bg-slate-800/40 border border-slate-800 p-5 rounded-2xl backdrop-blur-sm space-y-4">
+                                <h2 className="text-md font-bold text-slate-200 flex items-center gap-2">
+                                    <span>🌍</span> Meu Plano de Estudo de Idiomas
+                                </h2>
+                                
+                                {activeMonth.languages.length > 0 ? activeMonth.languages.map(l => (
+                                    <div key={l.id} className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3">
+                                        <div className="flex justify-between items-center gap-2">
+                                            <h3 className="text-sm font-semibold text-blue-400 flex items-center gap-1.5">
+                                                <span>{l.lang === "fr" ? "🇫🇷" : "🇬🇧"}</span>
+                                                {l.title}
+                                            </h3>
+                                            <button 
+                                                onClick={() => toggleLanguage(l.id)} 
+                                                className={`text-xs px-3 py-1 rounded-lg font-medium border transition-all ${
+                                                    l.completed 
+                                                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 shadow-sm shadow-emerald-500/5' 
+                                                        : 'bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-600'
+                                                }`}
+                                            >
+                                                {l.completed ? "✓ Concluído" : "Marcar Conclusão"}
+                                            </button>
+                                        </div>
+                                        <div className="bg-slate-900/60 p-3 rounded-lg border border-slate-800/80 text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed">
+                                            {l.content}
+                                        </div>
+                                        <div className="text-xs p-2 bg-blue-950/20 border border-blue-900/30 rounded-lg text-slate-400">
+                                            <strong className="text-blue-400 block mb-1">Atividade Prática:</strong>
+                                            {l.questions.map((q, idx) => (
+                                                <p key={idx} className="mt-0.5">• {q}</p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )) : <p className="text-xs text-slate-500 italic p-2">Nenhuma lição pendente neste período.</p>}
+                            </div>
+                        </div>
+
+                        {/* Coluna Direita: Informações Gerais e Proteção Anti-Desistência */}
+                        <div className="space-y-6">
+                            
+                            {/* Bloco Anti-Desistência Personalizado */}
+                            <div className="bg-gradient-to-b from-slate-950 to-slate-900 border border-slate-800 p-5 rounded-2xl">
+                                <h3 className="text-sm font-bold text-amber-400 mb-2 flex items-center gap-1.5">
+                                    <span>⚠️</span> Regras de Evolução Individual
+                                </h3>
+                                <p className="text-xs text-slate-400 leading-relaxed">
+                                    Olá, <strong className="text-slate-200">{dadosMembro.nome}</strong>. O teu progresso depende unicamente das tuas ações. Conclui as tuas lições de línguas e a tua checklist para libertar o teu próximo mês na barra do topo.
+                                </p>
+                            </div>
+
+                            {/* Caixa de Proteção Patrimonial (Ajustada sem a dependência imediata do RJ) */}
+                            <div className="bg-slate-950 border border-slate-800 p-5 rounded-2xl space-y-3">
+                                <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                                    <span>🛡️</span> Radar Patrimonial & Finanças
+                                </h3>
+                                <p className="text-xs text-slate-400 leading-relaxed">
+                                    O orçamento principal está ancorado exclusivamente na capacidade de poupança mensal familiar.
+                                </p>
+                                <div className="p-3 bg-slate-900/60 rounded-xl border border-dashed border-slate-800">
+                                    <div className="flex justify-between items-center text-xs">
+                                        <span className="text-slate-400 font-medium">✨ Bónus Futuro Imóvel (RJ):</span>
+                                        <span className="text-slate-400 bg-slate-800 px-2 py-0.5 rounded font-mono text-[10px]">Condicionado</span>
+                                    </div>
+                                    <p className="text-[11px] text-slate-500 mt-1.5 leading-normal">
+                                        O valor projetado de **€15.000,00** da casa do Rio de Janeiro foi movido para o plano de reserva futura e não compõe o caixa ativo. Se e quando a venda for concretizada, este montante entrará como um acelerador extra.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </main>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

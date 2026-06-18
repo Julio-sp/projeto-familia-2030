@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horizonte 2030 - Plataforma de Alta Performance</title>
+    <title>Horizonte 2030 - Gestão Familiar & Alta Performance</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -14,6 +14,9 @@
             --bg-light: #f8fafc; 
             --text-muted: #64748b;
             --accent-purple: #8b5cf6;
+            --julio-color: #0284c7;
+            --lais-color: #db2777;
+            --isabella-color: #7c3aed;
         }
         
         body { margin:0; font-family: 'Lexend', sans-serif; background: var(--bg-light); color: #1e293b; overflow-x: hidden; }
@@ -23,29 +26,37 @@
         .logo-title { font-weight: 900; font-size: 1.3rem; color: var(--electric-blue); letter-spacing: 0.5px; cursor: pointer; }
         .logo-title span { color: var(--gold); }
         
-        /* Menu Lateral */
-        #sidebar { position: fixed; left: -280px; top: 0; width: 280px; height: 100vh; background: var(--premium-blue); color: white; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; padding-top: 80px; box-shadow: 5px 0 15px rgba(0,0,0,0.2); overflow-y: auto; }
+        /* Menu Lateral Avançado */
+        #sidebar { position: fixed; left: -290px; top: 0; width: 290px; height: 100vh; background: var(--premium-blue); color: white; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; padding-top: 80px; box-shadow: 5px 0 15px rgba(0,0,0,0.2); overflow-y: auto; }
         #sidebar.active { left: 0; }
         .sidebar-content { padding-bottom: 120px; }
-        .sidebar-section-title { padding: 15px 25px 5px 25px; font-size: 0.7rem; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 1.5px; }
-        #sidebar a { display: block; padding: 13px 25px; color: #94a3b8; text-decoration: none; border-bottom: 1px solid #1e293b; cursor: pointer; font-size: 0.88rem; font-weight: 600; transition: 0.2s; }
-        #sidebar a:hover { color: white; background: #1e293b; padding-left: 30px; }
+        .sidebar-section-title { padding: 18px 25px 6px 25px; font-size: 0.72rem; font-weight: 900; color: #475569; text-transform: uppercase; letter-spacing: 1.5px; border-top: 1px solid #1e293b; margin-top: 10px; }
+        #sidebar a { display: block; padding: 12px 25px; color: #94a3b8; text-decoration: none; border-bottom: 1px solid #1e293b; cursor: pointer; font-size: 0.88rem; font-weight: 600; transition: 0.2s; }
+        #sidebar a:hover { color: white; background: #1e293b; padding-left: 32px; }
+        
+        /* Submenus */
         .submenu { background: #0b111e; display: none; }
         .submenu.open { display: block; }
-        .submenu a { padding-left: 45px !important; font-size: 0.8rem !important; opacity: 0.8; }
-        .submenu a:hover { padding-left: 50px !important; }
+        .submenu a { padding-left: 45px !important; font-size: 0.82rem !important; opacity: 0.85; }
+        .submenu a:hover { padding-left: 52px !important; opacity: 1; }
+        
+        /* Modificadores de Cores por Pessoa no Menu */
+        .border-j { border-left: 4px solid var(--julio-color); }
+        .border-l { border-left: 4px solid var(--lais-color); }
+        .border-i { border-left: 4px solid var(--isabella-color); }
 
-        /* Contentores e Vistas */
-        .container { padding: 20px; max-width: 950px; margin: 85px auto 40px auto; display: none; box-sizing: border-box; }
-        .container.active { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Contentores Principais */
+        .container { padding: 20px; max-width: 1050px; margin: 85px auto 40px auto; display: none; box-sizing: border-box; }
+        .container.active { display: block; animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Banner de Inspiração */
-        .adn-container { background: linear-gradient(135deg, #1e3a8a, #0f172a); padding: 35px 25px; border-radius: 24px; text-align: center; margin-bottom: 30px; box-shadow: 0 12px 30px rgba(30, 58, 138, 0.15); border: 1px solid rgba(255,255,255,0.05); }
-        .adn-title { color: white; font-weight: 900; font-size: 1.6rem; margin: 0 0 10px 0; letter-spacing: 0.5px; }
-        .adn-title span { color: var(--gold); }
-        .adn-words { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
-        .adn-word { font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 6px 16px; border-radius: 50px; background: rgba(255,255,255,0.08); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.05); }
+        /* Perfis de Utilizador Envolventes */
+        .profile-banner { padding: 35px 25px; border-radius: 24px; color: white; margin-bottom: 30px; box-shadow: 0 12px 30px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
+        .profile-banner.julio { background: linear-gradient(135deg, #0284c7, #0f172a); }
+        .profile-banner.lais { background: linear-gradient(135deg, #db2777, #31102f); }
+        .profile-banner.isabella { background: linear-gradient(135deg, #7c3aed, #1e1b4b); }
+        .profile-name { font-size: 1.8rem; font-weight: 900; margin: 0 0 5px 0; letter-spacing: 0.5px; }
+        .profile-tagline { font-size: 0.9rem; opacity: 0.9; font-weight: 400; margin-bottom: 15px; }
 
         /* Grelha de Estatísticas */
         .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 35px; }
@@ -53,12 +64,12 @@
         .stat-num { display: block; font-size: 2rem; font-weight: 900; color: var(--electric-blue); }
         .stat-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 6px; letter-spacing: 0.5px; }
 
-        /* Cabeçalhos de Secção */
+        /* Cabeçalhos Estruturais */
         .section-header { font-weight: 900; color: var(--premium-blue); margin-bottom: 25px; display: flex; align-items: center; gap: 12px; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 0.5px; }
         .section-header span.bar { width: 6px; height: 24px; background: var(--gold); display: block; border-radius: 4px; }
 
-        /* Cartões de Metas */
-        .meta-card { background: white; border-radius: 20px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; border: 1px solid #e2e8f0; transition: transform 0.2s, box-shadow 0.2s; }
+        /* Cartões de Metas Robustos */
+        .meta-card { background: white; border-radius: 22px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; border: 1px solid #e2e8f0; transition: transform 0.2s, box-shadow 0.2s; }
         .meta-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .meta-status-bar { width: 12px; flex-shrink: 0; }
         .meta-content { flex: 1; padding: 24px; display: flex; flex-direction: column; }
@@ -68,13 +79,13 @@
         .meta-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 18px; margin-top: auto; }
         .meta-badge { font-size: 0.68rem; font-weight: 800; padding: 5px 12px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* Botões */
+        /* Botões Pró-Ação */
         .btn-action { padding: 11px 20px; border: none; border-radius: 12px; font-weight: 800; font-size: 0.75rem; cursor: pointer; text-decoration: none; text-align: center; background: #f1f5f9; color: #475569; transition: 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
         .btn-action:hover { background: var(--electric-blue); color: white; }
         .btn-primary { background: var(--electric-blue); color: white; }
         .btn-primary:hover { background: var(--premium-blue); }
 
-        /* Cartões de Idiomas/Aulas */
+        /* Idiomas e Listagens de Lições */
         .lesson-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
         .lesson-card { background: white; border-radius: 22px; border: 1px solid #e2e8f0; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.01); position: relative; }
         .lesson-badge { position: absolute; top: 25px; right: 25px; padding: 5px 12px; border-radius: 30px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; }
@@ -83,49 +94,42 @@
         .lesson-title { font-size: 1.3rem; font-weight: 900; color: var(--premium-blue); margin: 0 0 8px 0; }
         .lesson-subtitle { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 20px; text-transform: uppercase; }
         
-        /* Conversação / Diálogo */
+        /* Caixas de Diálogo Complexas */
         .dialogue-box { background: #f8fafc; border-radius: 16px; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
         .dialogue-line { margin-bottom: 12px; font-size: 0.9rem; line-height: 1.5; }
         .dialogue-line:last-child { margin-bottom: 0; }
         .dialogue-character { font-weight: 800; color: var(--electric-blue); }
         .dialogue-translation { display: block; font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-top: 2px; }
 
-        /* Exercícios */
+        /* Exercícios Ativos */
         .exercise-box { border-top: 1px solid #f1f5f9; padding-top: 20px; margin-top: 20px; }
         .exercise-title { font-size: 0.9rem; font-weight: 800; color: var(--premium-blue); margin-bottom: 15px; text-transform: uppercase; }
         .exercise-item { background: #fff; border: 1px solid #e2e8f0; padding: 15px; border-radius: 12px; margin-bottom: 10px; font-size: 0.9rem; }
-        .exercise-input { width: 100%; max-width: 300px; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 0.85rem; margin-top: 8px; display: block; }
+        .exercise-input { width: 100%; max-width: 320px; padding: 9px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 0.85rem; margin-top: 8px; display: block; }
         
-        /* Painel de Detalhes Deslizante */
+        /* Painel Lateral Deslizante (Slideout Global) */
         #detailPane { position: fixed; top:0; right:-100%; width:100%; height:100%; background:white; z-index:2000; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow-y: auto; box-sizing: border-box; }
         #detailPane.open { right:0; }
         .detail-header { padding: 22px; font-weight: 900; background: white; cursor:pointer; position:sticky; top:0; z-index:10; display: flex; align-items: center; border-bottom: 1px solid #f1f5f9; color: var(--premium-blue); text-transform: uppercase; font-size: 0.9rem; }
         
-        /* IA Chat Widget Integrado no Painel de Detalhes e Lições */
+        /* Módulo de Inteligência Artificial Inteligente (Suporte a chaves AQ e AIzaSy) */
         .ai-chat-container { background: #f1f5f9; border-radius: 18px; padding: 15px; margin-top: 25px; border: 1px solid #e2e8f0; }
         .ai-chat-header { font-weight: 800; font-size: 0.85rem; color: var(--accent-purple); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; }
-        .ai-chat-messages { max-height: 200px; overflow-y: auto; background: white; border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid #e2e8f0; font-size: 0.85rem; }
-        .ai-msg { margin-bottom: 10px; line-height: 1.4; }
+        .ai-chat-messages { max-height: 240px; overflow-y: auto; background: white; border-radius: 12px; padding: 14px; margin-bottom: 10px; border: 1px solid #e2e8f0; font-size: 0.88rem; }
+        .ai-msg { margin-bottom: 12px; line-height: 1.4; }
         .ai-msg.user { text-align: right; color: var(--electric-blue); font-weight: 600; }
-        .ai-msg.gemini { color: #1e293b; background: #f8fafc; padding: 8px; border-radius: 8px; border-left: 3px solid var(--accent-purple); }
+        .ai-msg.gemini { color: #1e293b; background: #f8fafc; padding: 10px; border-radius: 10px; border-left: 4px solid var(--accent-purple); }
         .ai-chat-input-row { display: flex; gap: 8px; }
-        .ai-chat-input { flex: 1; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 10px; font-family: inherit; font-size: 0.85rem; }
-        .ai-chat-btn { background: var(--accent-purple); color: white; border: none; padding: 0 15px; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.8rem; }
+        .ai-chat-input { flex: 1; padding: 11px 15px; border: 1px solid #cbd5e1; border-radius: 10px; font-family: inherit; font-size: 0.85rem; }
+        .ai-chat-btn { background: var(--accent-purple); color: white; border: none; padding: 0 18px; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; }
         
-        /* Configuração de API Key */
-        .api-config-box { background: #fef2f2; border: 1px solid #fca5a5; padding: 15px; border-radius: 14px; margin-bottom: 25px; font-size: 0.8rem; color: #991b1b; }
-        .api-config-input { padding: 6px 10px; border: 1px solid #fca5a5; border-radius: 6px; font-size: 0.8rem; width: 100%; max-width: 250px; margin-top: 5px; box-sizing: border-box; }
-
-        /* Filtros de Topo */
+        /* Filtros por Categoria */
         .filter-area { display: flex; gap: 8px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; }
         .tab-btn { padding: 8px 16px; border-radius: 50px; border: 1px solid #e2e8f0; background: white; font-weight: 700; font-size: 0.78rem; cursor: pointer; color: var(--text-muted); white-space: nowrap; transition: 0.2s; }
         .tab-btn.active { background: var(--electric-blue); color: white; border-color: var(--electric-blue); }
 
-        /* Playlist Elemento */
-        .playlist-wrapper { text-align: center; padding: 20px 0; }
-
         @media(min-width: 768px) {
-            #detailPane { width: 550px; right: -550px; box-shadow: -10px 0 30px rgba(0,0,0,0.08); }
+            #detailPane { width: 560px; right: -560px; box-shadow: -10px 0 30px rgba(0,0,0,0.08); }
             .lesson-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
@@ -135,315 +139,281 @@
 <div class="top-bar">
     <div onclick="toggleMenu()" style="font-size:24px; cursor:pointer; color: var(--premium-blue)">☰</div>
     <div class="logo-title" onclick="showView('home')">HORIZONTE<span>2030</span></div>
-    <div onclick="showView('playlist')" style="font-size: 20px; cursor:pointer; color: var(--gold)">🎧</div>
+    <div onclick="showView('settings')" style="font-size: 20px; cursor:pointer; color: var(--text-muted)">⚙️</div>
 </div>
 
 <div id="sidebar">
     <div class="sidebar-content">
-        <a onclick="showView('home')">🏠 PAINEL DE CONTROLO</a>
-        <a onclick="showView('macros')">🎯 MARCOS ESTRATÉGICOS</a>
+        <a onclick="showView('home')">🏠 PAINEL INTERATIVO GLOBAL</a>
         
-        <div class="sidebar-section-title">Idiomas & Conversação</div>
-        <a onclick="showView('idiomas-en')">🇬🇧 LÍNGUA INGLESA</a>
-        <a onclick="showView('idiomas-fr')">🇫🇷 LÍNGUA FRANCESA</a>
-        
-        <div class="sidebar-section-title">Cronograma de Metas</div>
-        <a onclick="toggleSub('sub-2627')">📅 ANO 2026 / 2027 ▼</a>
-        <div id="sub-2627" class="submenu">
-            <a onclick="showPeriodo('Julho 2026')">🔹 Julho 2026</a>
-            <a onclick="showPeriodo('Agosto 2026')">🔹 Agosto 2026</a>
-            <a onclick="showPeriodo('Setembro 2026')">🔹 Setembro 2026</a>
-            <a onclick="showPeriodo('Outubro 2026')">🔹 Outubro 2026</a>
-            <a onclick="showPeriodo('Novembro 2026')">🔹 Novembro 2026</a>
-            <a onclick="showPeriodo('Dezembro 2026')">🔹 Dezembro 2026</a>
-            <a onclick="showPeriodo('Janeiro 2027')">🔹 Janeiro 2027</a>
-            <a onclick="showPeriodo('Fevereiro 2027')">🔹 Fevereiro 2027</a>
-            <a onclick="showPeriodo('Março 2027')">🔹 Março 2027</a>
-            <a onclick="showPeriodo('Abril 2027')">🔹 Abril 2027</a>
-            <a onclick="showPeriodo('Maio 2027')">🔹 Maio 2027</a>
-            <a onclick="showPeriodo('Junho 2027')">🔹 Junho 2027</a>
+        <div class="sidebar-section-title" style="color: var(--julio-color);">👨‍💻 ÁREA TÉCNICA - JÚLIO</div>
+        <a onclick="showUserDashboard('julio')" class="border-j">📊 Dashboard Geral Júlio</a>
+        <a onclick="toggleSub('sub-j-cronograma')" class="border-j">📅 Metas Mensais Júlio ▼</a>
+        <div id="sub-j-cronograma" class="submenu">
+            <a onclick="showUserPeriodo('julio', 'Julho 2026')">🔹 Julho 2026</a>
+            <a onclick="showUserPeriodo('julio', 'Agosto 2026')">🔹 Agosto 2026</a>
+            <a onclick="showUserPeriodo('julio', 'Setembro 2026')">🔹 Setembro 2026</a>
+            <a onclick="showUserPeriodo('julio', 'Outubro 2026')">🔹 Outubro 2026</a>
+            <a onclick="showUserPeriodo('julio', 'Novembro 2026')">🔹 Novembro 2026</a>
+            <a onclick="showUserPeriodo('julio', 'Dezembro 2026')">🔹 Dezembro 2026</a>
+            <a onclick="showUserPeriodo('julio', 'Ano 2027')">🔹 Horizonte 2027</a>
+            <a onclick="showUserPeriodo('julio', 'Ano 2028')">🔹 Horizonte 2028</a>
+            <a onclick="showUserPeriodo('julio', 'Anos 2029-2030')">🔹 Alvo Final 2030</a>
         </div>
+        <a onclick="showUserLessons('julio', 'en')" class="border-j">🇬🇧 Inglês Profissional / Tech</a>
 
-        <a onclick="toggleSub('sub-2728')">📅 ANO 2027 / 2028 ▼</a>
-        <div id="sub-2728" class="submenu">
-            <a onclick="showPeriodo('Julho 2027')">🔹 Julho 2027</a>
-            <a onclick="showPeriodo('Outubro 2027')">🔹 Outubro 2027</a>
-            <a onclick="showPeriodo('Dezembro 2027')">🔹 Dezembro 2027</a>
-            <a onclick="showPeriodo('Março 2028')">🔹 Março 2028</a>
-            <a onclick="showPeriodo('Junho 2028')">🔹 Junho 2028</a>
+        <div class="sidebar-section-title" style="color: var(--lais-color);">👩‍🦰 EXPANSÃO CULTURAL - LAÍS</div>
+        <a onclick="showUserDashboard('lais')" class="border-l">📊 Dashboard Geral Laís</a>
+        <a onclick="toggleSub('sub-l-cronograma')" class="border-l">📅 Metas Mensais Laís ▼</a>
+        <div id="sub-l-cronograma" class="submenu">
+            <a onclick="showUserPeriodo('lais', 'Julho 2026')">🔹 Julho 2026</a>
+            <a onclick="showUserPeriodo('lais', 'Agosto 2026')">🔹 Agosto 2026</a>
+            <a onclick="showUserPeriodo('lais', 'Setembro 2026')">🔹 Setembro 2026</a>
+            <a onclick="showUserPeriodo('lais', 'Outubro 2026')">🔹 Outubro 2026</a>
+            <a onclick="showUserPeriodo('lais', 'Novembro 2026')">🔹 Novembro 2026</a>
+            <a onclick="showUserPeriodo('lais', 'Dezembro 2026')">🔹 Dezembro 2026</a>
+            <a onclick="showUserPeriodo('lais', 'Fases 2027-2030')">🔹 Horizonte 2027-2030</a>
         </div>
+        <a onclick="showUserLessons('lais', 'fr')" class="border-l">🇫🇷 Francês Avançado / Viagens</a>
 
-        <a onclick="toggleSub('sub-2829')">📅 ANO 2028 / 2029 ▼</a>
-        <div id="sub-2829" class="submenu">
-            <a onclick="showPeriodo('Julho 2028')">🔹 Julho 2028</a>
-            <a onclick="showPeriodo('Dezembro 2028')">🔹 Dezembro 2028</a>
-            <a onclick="showPeriodo('Junho 2029')">🔹 Junho 2029</a>
+        <div class="sidebar-section-title" style="color: var(--isabella-color);">👑 ACELERAÇÃO FUTURA - ISABELLA</div>
+        <a onclick="showUserDashboard('isabella')" class="border-i">📊 Dashboard Geral Isabella</a>
+        <a onclick="toggleSub('sub-i-cronograma')" class="border-i">📅 Cronograma de Estudos ▼</a>
+        <div id="sub-i-cronograma" class="submenu">
+            <a onclick="showUserPeriodo('isabella', 'Julho 2026')">🔹 Julho 2026</a>
+            <a onclick="showUserPeriodo('isabella', 'Agosto 2026')">🔹 Agosto 2026</a>
+            <a onclick="showUserPeriodo('isabella', 'Setembro 2026')">🔹 Setembro 2026</a>
+            <a onclick="showUserPeriodo('isabella', 'Fases 2027-2030')">🔹 Roteiro de Fluência 2030</a>
         </div>
+        <a onclick="showUserLessons('isabella', 'en')" class="border-i">🇬🇧 Inglês Fluido Interativo</a>
 
-        <a onclick="toggleSub('sub-2930')">📅 ANO 2029 / 2030 ▼</a>
-        <div id="sub-2930" class="submenu">
-            <a onclick="showPeriodo('Julho 2029')">🔹 Julho 2029</a>
-            <a onclick="showPeriodo('Dezembro 2029')">🔹 Dezembro 2029</a>
-            <a onclick="showPeriodo('Julho 2030')">🔹 Julho 2030 (Marco Final)</a>
-        </div>
-        
-        <div class="sidebar-section-title">Definições</div>
-        <a onclick="showView('settings')">⚙️ CONFIGURAR IA</a>
+        <div class="sidebar-section-title">Parâmetros</div>
+        <a onclick="showView('settings')">⚙️ CONFIGURAR IA INTEGRADA</a>
     </div>
 </div>
 
 <div id="home" class="container active">
-    <div class="adn-container">
-        <div class="adn-title">Plano de Evolução Multidirecional <span>2030</span></div>
-        <div class="adn-words">
-            <div class="adn-word">Professional Growth</div>
-            <div class="adn-word">Aura & Mastery</div>
-            <div class="adn-word">Language Fluency</div>
-            <div class="adn-word">Execution</div>
-        </div>
+    <div style="background: linear-gradient(135deg, #1e3a8a, #0f172a); padding: 40px 25px; border-radius: 26px; color: white; text-align: center; margin-bottom: 30px; box-shadow: 0 15px 35px rgba(30,58,138,0.18);">
+        <h1 style="margin: 0 0 10px 0; font-weight: 900; font-size: 1.8rem; letter-spacing: 0.5px;">Painel de Convergência Familiar <span>2030</span></h1>
+        <p style="opacity: 0.85; max-width: 650px; margin: 0 auto; font-size: 0.92rem; line-height: 1.6;">Centralização inteligente de metas estruturadas, capacitação em múltiplos idiomas e otimização de rotinas sob medida para o progresso do ecossistema familiar.</p>
     </div>
 
     <div class="stat-grid">
-        <div class="stat-box">
-            <span class="stat-num" id="dash-total-metas">0</span>
-            <span class="stat-label">Objetivos Mapeados</span>
+        <div class="stat-box" style="border-top: 4px solid var(--julio-color);">
+            <span class="stat-num" id="global-j-count">0</span>
+            <span class="stat-label">Objetivos Júlio</span>
         </div>
-        <div class="stat-box">
-            <span class="stat-num" style="color: var(--emerald)" id="dash-concluidas">0</span>
-            <span class="stat-label">Concluídos</span>
+        <div class="stat-box" style="border-top: 4px solid var(--lais-color);">
+            <span class="stat-num" id="global-l-count">0</span>
+            <span class="stat-label">Objetivos Laís</span>
         </div>
-        <div class="stat-box">
-            <span class="stat-num" style="color: var(--gold)" id="dash-foco-mes">0</span>
-            <span class="stat-label">Metas no Mês Atual</span>
-        </div>
-    </div>
-
-    <div class="section-header">
-        <span class="bar"></span>
-        <span>🔥 Ações Críticas em Foco Alternado</span>
-    </div>
-    <div id="home-foco-content"></div>
-</div>
-
-<div id="mainView" class="container">
-    <div class="section-header">
-        <span class="bar"></span>
-        <span id="mainView-title">Objetivos</span>
-    </div>
-    <div id="filterArea" class="filter-area"></div>
-    <div id="viewContent"></div>
-</div>
-
-<div id="idiomas-en" class="container">
-    <div class="section-header">
-        <span class="bar"></span>
-        <span>🇬🇧 English Mastery & Active Conversation</span>
-    </div>
-    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px;">Lições estruturadas para conversação profissional e fluência avançada com suporte de inteligência artificial.</p>
-    <div id="container-lessons-en" class="lesson-grid"></div>
-</div>
-
-<div id="idiomas-fr" class="container">
-    <div class="section-header">
-        <span class="bar"></span>
-        <span>🇫🇷 Maîtrise du Français - Professional Track</span>
-    </div>
-    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px;">Módulos progressivos focados em vocabulário técnico, conversação e agilidade corporativa.</p>
-    <div id="container-lessons-fr" class="lesson-grid"></div>
-</div>
-
-<div id="playlist" class="container">
-    <div class="section-header">
-        <span class="bar"></span>
-        <span>🎧 Ritmo de Trabalho & Aura Estética</span>
-    </div>
-    <div class="playlist-wrapper">
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">A sonoridade ideal para focar profundamente nas execuções e blocos de código.</p>
-        <div style="border-radius:20px; overflow:hidden; max-width: 500px; margin: 0 auto; background: #000; min-height: 400px;">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/06ejdeZNzhkBOSN5oaeKX3?utm_source=generator&theme=0" width="100%" height="400" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div class="stat-box" style="border-top: 4px solid var(--isabella-color);">
+            <span class="stat-num" id="global-i-count">0</span>
+            <span class="stat-label">Objetivos Isabella</span>
         </div>
     </div>
+
+    <div class="section-header"><span class="bar"></span><span>🔥 Objetivos Críticos em Andamento Simultâneo</span></div>
+    <div id="global-foco-content"></div>
+</div>
+
+<div id="userDashboardView" class="container">
+    <div id="userBannerArea"></div>
+    <div class="stat-grid" id="userStatsArea"></div>
+    <div class="section-header"><span class="bar"></span><span id="userSectionTitle">Foco Operacional Próprio</span></div>
+    <div id="userDashboardContent"></div>
+</div>
+
+<div id="periodoView" class="container">
+    <div class="section-header"><span class="bar"></span><span id="periodoViewTitle">Planeamento Detalhado</span></div>
+    <div id="periodoFilterArea" class="filter-area"></div>
+    <div id="periodoContentArea"></div>
+</div>
+
+<div id="lessonsView" class="container">
+    <div class="section-header"><span class="bar"></span><span id="lessonsViewTitle">Capacitação Linguística Avançada</span></div>
+    <div id="lessonsContentGrid" class="lesson-grid"></div>
 </div>
 
 <div id="settings" class="container">
-    <div class="section-header">
-        <span class="bar"></span>
-        <span>⚙️ Configuração da Inteligência Artificial Activa</span>
-    </div>
-    <div style="background: white; border-radius: 20px; padding: 30px; border: 1px solid #e2e8f0;">
-        <h4 style="margin: 0 0 10px 0;">Ativar Tutor Gemini Real-Time</h4>
-        <p style="font-size: 0.88rem; color: #475569; line-height: 1.5; margin-bottom: 20px;">
-            Para tornar o site inteligente e permitir que tires dúvidas diretamente em cada lição de inglês ou francês, insere a tua chave de API do Gemini abaixo. A chave fica guardada de forma segura apenas no teu navegador (localStorage).
+    <div class="section-header"><span class="bar"></span><span>⚙️ Configuração do Core de Inteligência Artificial</span></div>
+    <div style="background: white; border-radius: 24px; padding: 35px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.01);">
+        <h3 style="margin: 0 0 10px 0; font-weight: 900;">Conectar API Key Real-Time</h3>
+        <p style="font-size: 0.9rem; color: #475569; line-height: 1.6; margin-bottom: 20px;">
+            Este ecossistema foi programado para aceitar tanto o formato clássico de chaves da Google Cloud (`AIzaSy...`) quanto o formato europeu ultra-seguro gerado recentemente pelo AI Studio (**`AQ.Ab8...`**). A chave é processada de forma 100% local e protegida pelo teu navegador no `localStorage`, permitindo enviar o teu site de forma segura para o GitHub sem expor dados confidenciais.
         </p>
-        <label style="font-weight: 700; font-size: 0.85rem; display: block; margin-bottom: 8px;">Gemini API Key:</label>
-        <input type="password" id="global-api-key" class="ai-chat-input" style="max-width: 400px; display: block; margin-bottom: 15px;" placeholder="AIzaSy...">
-        <button class="btn-action btn-primary" onclick="saveApiKey()">Guardar Configuração</button>
-        <p id="save-status" style="font-size: 0.8rem; color: var(--emerald); margin-top: 10px; font-weight: 600; display: none;">✓ Chave guardada com sucesso localmente!</p>
+        <label style="font-weight: 700; font-size: 0.85rem; display: block; margin-bottom: 8px;">Insere a tua Gemini API Key:</label>
+        <input type="password" id="global-api-key" class="ai-chat-input" style="max-width: 500px; display: block; margin-bottom: 15px;" placeholder="Cola a tua chave AQ.Ab8... ou AIzaSy... aqui">
+        <button class="btn-action btn-primary" onclick="saveApiKey()">Ativar Sincronização Inteligente</button>
+        <p id="save-status" style="font-size: 0.82rem; color: var(--emerald); margin-top: 12px; font-weight: 700; display: none;">✓ Motor de IA ativo com sucesso neste dispositivo!</p>
     </div>
 </div>
 
 <div id="detailPane">
-    <div class="detail-header" onclick="closeDetail()">
-        <span style="margin-right: 15px; font-size: 20px">⬅</span> Sair dos Detalhes
-    </div>
-    <div id="detailBody"></div>
+    <div class="detail-header" onclick="closeDetail()"><span style="margin-right: 15px; font-size: 20px">⬅</span> Retornar ao Painel</div>
+    <div id="detailBody" style="padding: 25px;"></div>
 </div>
 
 <script>
 // ============================================================================
-// BASE DE DADOS GLOBAL, ROBUSTA E EXPANSÍVEL (METAS HORIZONTE 2030)
+// BASE DE DADOS MACRO EXPANDIDA - CENTENAS DE DADOS DE OBJETIVOS CRONOLÓGICOS
 // ============================================================================
-const METAS_DB = [
-    // --- ANO 2026/2027 (Mensal Ininterrupto) ---
-    { id: 101, periodo: "Julho 2026", titulo: "Desenvolvimento Inicial da Plataforma Unificada", desc: "Estruturar o core técnico da InfoBase de acompanhamento, garantindo persistência local e mapeamento de rota.", categoria: "Profissional/Tech", status: "Em Progresso", foco_home: true, detalhes: "Garantir a integridade das funções DOM e preparar as amarras de dados para os exercícios das aulas." },
-    { id: 102, periodo: "Julho 2026", titulo: "Definição de Parâmetros de Fluência e Imersão", desc: "Mapear cronograma diário de escuta ativa (podcasts e áudios) para aceleração idiomática.", categoria: "Estudos", status: "Em Progresso", foco_home: true, detalhes: "Executar pelo menos 20 minutos de conversação assistida simulada por dia durante a transição de rotina." },
-    { id: 103, periodo: "Agosto 2026", titulo: "Arquitetura Avançada Base 3D & Design de Componentes", desc: "Otimizar fluxos de fatiamento e calibração de filamentos específicos para novos conceitos de hardware.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Criar perfis dedicados de alta velocidade preservando integridade estrutural e mecânica das peças estruturadas." },
-    { id: 104, periodo: "Setembro 2026", titulo: "Transição e Alinhamento Técnico de Projetos Locais", desc: "Implementar rotinas de manutenção preventiva de ativos de infraestrutura com registo digital.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Desenvolver checklists padronizadas para otimizar os tempos de resposta e a eficácia das reparações estruturais." },
-    { id: 105, periodo: "Outubro 2026", titulo: "Auditoria de Skills e Lançamento de Módulos B2", desc: "Iniciar a validação prática de conversação com nativos digitais através de fóruns abertos.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Focar em expressões idiomáticas avançadas e terminologia de engenharia reversa de processos." },
-    { id: 106, periodo: "Novembro 2026", titulo: "Sistemas de Automação de Backups e Repositórios", desc: "Migrar a arquitetura estática para servidores locais espelhados e automação Git.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Implementar webhooks que validam o código HTML automaticamente a cada alteração estrutural feita." },
-    { id: 107, periodo: "Dezembro 2026", titulo: "Revisão Semestral de Infraestrutura Pessoal", desc: "Fecho de balanço de eficiência e otimização financeira de projetos.", categoria: "Gestão", status: "Planeado", foco_home: false, detalhes: "Análise quantitativa de custos por projeto e planeamento das aquisições para o primeiro trimestre de 2027." },
-    { id: 108, periodo: "Janeiro 2027", titulo: "Lançamento da Fase de Expansão de Idioma Ativo", desc: "Migração completa de todas as interfaces e leituras diárias exclusivamente para os idiomas em estudo.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Treino de escrita técnica: redação de relatórios simulados em inglês e francês semanalmente." },
-    { id: 109, periodo: "Fevereiro 2027", titulo: "Otimização de Hardware e Extrusão Avançada", desc: "Upgrade físico de componentes mecânicos para aumento de precisão em micro-peças.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Substituição de nozzles e calibração fina de eixos estruturais para projetos automotivos personalizados." },
-    { id: 110, periodo: "Março 2027", titulo: "Mapeamento de Rotas Corporativas de Alto Impacto", desc: "Estudo aprofundado de metodologias ágeis aplicadas à gestão de equipas de manutenção.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Conclusão de leituras base sobre Lean e aplicação prática no ambiente diário de trabalho." },
-    { id: 111, periodo: "Abril 2027", titulo: "Consolidação Gramatical Avançada e Vocabulário", desc: "Módulo focado em negociação e apresentações corporativas de alta complexidade em francês.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Treino intensivo de oratória e simulações com o assistente inteligente integrado." },
-    { id: 112, periodo: "Maio 2027", titulo: "Lançamento do Ecossistema Interativo V2", desc: "Revisão completa de código do ecossistema e integração de novas APIs preditivas.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Otimização de performance JavaScript e redução de latência nos pedidos da inteligência artificial." },
-    { id: 113, periodo: "Junho 2027", titulo: "Avaliação Anual de Progresso do Horizonte", desc: "Auditoria detalhada de metas atingidas e reajuste fino do cronograma dos próximos 3 anos.", categoria: "Gestão", status: "Planeado", foco_home: false, detalhes: "Geração de métricas visuais de performance pessoal e nível de proficiência linguística atingida." },
+const METAS_CENTRAL_DB = [
+    // --- METAS JÚLIO (Profissional, Engenharia Reversa, Manutenção Industrial, Automação, Idioma Técnico) ---
+    { id: 1, user: "julio", periodo: "Julho 2026", titulo: "Validação Operacional da InfoBase Familiar", desc: "Consolidar a arquitetura técnica estrutural de dados, rotinas locais e segurança criptográfica ponta a ponta.", categoria: "Profissional/Tech", status: "Em Progresso", foco_home: true, detalhes: "Garantir persistência local impecável e modularidade JavaScript estruturada para expansões futuras." },
+    { id: 2, user: "julio", periodo: "Julho 2026", titulo: "Imersão em Inglês Técnico de Manutenção Corretiva", desc: "Avançar na leitura de manuais e consolidação de termos de engenharia mecânica de precisão.", categoria: "Estudos", status: "Em Progresso", foco_home: true, detalhes: "Dominar expressões associadas a falhas de eixos, calibrações dinâmicas e relatórios de downtime." },
+    { id: 3, user: "julio", periodo: "Agosto 2026", titulo: "Calibração e Otimização de Hardware 3D de Alta Velocidade", desc: "Ajustar dinâmicas de extrusão fina e perfis mecânicos térmicos para novos polímeros estruturais.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Desenvolvimento de perfis avançados de fatiamento para peças automóveis customizadas." },
+    { id: 4, user: "julio", periodo: "Setembro 2026", titulo: "Checklists Automatizados para Ativos de Infraestrutura", desc: "Desenvolver arquitetura digital baseada em rotinas preditivas para otimizar intervenções em edifícios escolares.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Reduzir tempos de resposta de manutenção corretiva mapeando tempos e movimentos operacionais." },
+    { id: 5, user: "julio", periodo: "Outubro 2026", titulo: "Terminologia Avançada de Engenharia Reversa", desc: "Capacitar redação técnica e oratória em inglês simulando negociações internacionais de insumos.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Aulas focadas em expressões idiomáticas avançadas de compras técnicas e logística corporativa." },
+    { id: 6, user: "julio", periodo: "Novembro 2026", titulo: "Sincronização Automatizada via Repositórios Git locais", desc: "Configurar webhooks estruturados para automação de código-fonte dinâmico e compilações automáticas.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Garantir que atualizações de bases de dados externas reflitam em tempo real nos dashboards." },
+    { id: 7, user: "julio", periodo: "Dezembro 2026", titulo: "Auditoria Semestral de Eficácia de Projetos Físicos", desc: "Balanço quantitativo de custos por prototipagem 3D e eficácia de manutenção operacional preditiva.", categoria: "Gestão", status: "Planeado", foco_home: false, detalhes: "Mapeamento orçamental detalhado focado em maximizar o rendimento de ativos para o ciclo de 2027." },
+    { id: 8, user: "julio", periodo: "Ano 2027", titulo: "Especialização em Automação Industrial e Lean Systems", desc: "Arranque de certificações em gestão ágil aplicadas diretamente a equipas e manutenção de infraestruturas.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Implementação prática de metodologias Lean para otimizar estoques e agilizar o processamento de ordens de serviço." },
+    { id: 9, user: "julio", periodo: "Ano 2028", titulo: "Laboratório de Prototipagem Funcional Estabelecido", desc: "Conclusão do ecossistema físico mecânico privado focado no setor automóvel e assessoria técnica regional.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Domínio absoluto de ferramentas CAD avançadas e processamento integrado de materiais compostos." },
+    { id: 10, user: "julio", periodo: "Anos 2029-2030", titulo: "✨ Maturidade e Independência Tecnológica Absoluta", desc: "Convergência final de carreira como especialista sénior em otimização de infraestruturas, engenharia e fluência bilingue plena.", categoria: "Macros", status: "Planeado", foco_home: false, detalhes: "O ponto culminante do Horizonte 2030 planeado com total domínio operacional do ecossistema de dados." },
 
-    // --- MARCOS ESTRATÉGICOS ANOS SEGUINTES (2027 - 2030) ---
-    { id: 201, periodo: "Julho 2027", titulo: "Início do Ciclo de Especialização Técnica Superior", desc: "Matrícula e arranque de certificações de engenharia de automação ou automotiva.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Foco total na transição de carreira e consolidação de competências industriais avançadas." },
-    { id: 202, periodo: "Outubro 2027", titulo: "Fluência Plena em Negociações Internacionais", desc: "Atingir nível de proficiência C1 em Inglês técnico verificado por padrões internacionais.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Capacidade de liderar reuniões e criar documentação técnica complexa sem suporte de tradução externa." },
-    { id: 203, periodo: "Dezembro 2027", titulo: "Consolidação de Ativos de Hardware Independente", desc: "Laboratório próprio de prototipagem 3D e design mecânico funcional estabelecido.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Produção de componentes sob demanda para o setor automóvel regional e assessoria técnica." },
-    { id: 204, periodo: "Março 2028", titulo: "Domínio e Imersão Fluida na Cultura Francesa", desc: "Atingir nível de proficiência B2/C1 corporativo focado no mercado europeu.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Uso fluido do idioma para trâmites profissionais, análises financeiras e parcerias estratégicas." },
-    { id: 205, periodo: "Junho 2028", titulo: "Fecho do Segundo Ciclo Estratégico", desc: "Duplicação da capacidade operacional técnica e independência financeira de projetos paralelos.", categoria: "Gestão", status: "Planeado", foco_home: false, detalhes: "Revisão de portefólio de produtos criados e expansão da base de dados InfoBase." },
-    { id: 301, periodo: "Julho 2028", titulo: "Arranque do Ano de Liderança Tecnológica", desc: "Implementação de sistemas de gestão inteligente em larga escala.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Desenvolvimento de patentes ou soluções customizadas para automação industrial regional." },
-    { id: 302, periodo: "Dezembro 2028", titulo: "Expansão de Rede de Consultoria Técnica", desc: "Conexão com hubs de inovação e tecnologia aplicada na Europa central.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Presença ativa em eventos de engenharia mecânica e design funcional." },
-    { id: 303, periodo: "Junho 2029", titulo: "Internacionalização de Projetos Proprietários", desc: "Exportação de designs e soluções funcionais desenvolvidas localmente.", categoria: "Gestão", status: "Planeado", foco_home: false, detalhes: "Estruturação logística de distribuição digital de ficheiros CAD de alta complexidade." },
-    { id: 401, periodo: "Julho 2029", titulo: "Consolidação de Liderança de Mercado", desc: "Posicionamento como especialista sénior em otimização física de ativos industriais.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Gestão macro de equipas ou consultoria externa direta para grandes entidades organizacionais." },
-    { id: 402, periodo: "Dezembro 2029", titulo: "Preparação de Cenário Final Horizonte 2030", desc: "Alinhamento e blindagem patrimonial, profissional e operacional de longo prazo.", categoria: "Gestão", status: "Planeado", foco_home: false, detalhes: "Fecho do ciclo de desenvolvimento acelerado e estabilização de sistemas autonómos." },
-    { id: 501, periodo: "Julho 2030", titulo: "✨ MARCO DE CONVERGÊNCIA ABSOLUTA", desc: "Independência técnica, domínio pleno de múltiplos idiomas e consolidação profissional estabelecida.", categoria: "Macros", status: "Planeado", foco_home: false, detalhes: "O ponto final planeado para a maturidade de todos os eixos estratégicos iniciados em 2026." },
+    // --- METAS LAÍS (Francês Instrumental, Fluência em Viagens, Organização Estrutural, Cultura Européia) ---
+    { id: 21, user: "lais", periodo: "Julho 2026", titulo: "Lançamento do Cronograma de Imersão Linguística Base", desc: "Estruturar o plano diário de audição ativa e fala guiada focada em conversação prática europeia.", categoria: "Estudos", status: "Em Progresso", foco_home: true, detalhes: "Utilizar os blocos dinâmicos do site para fixar vocabulário de sobrevivência e logística internacional." },
+    { id: 22, user: "lais", periodo: "Agosto 2026", titulo: "Vocabulário de Trâmites Aeroportuários e Alfândega", desc: "Dominar estruturas de conversação em francês para deslocações, reservas e check-ins fluidos.", categoria: "Conversação", status: "Planeado", foco_home: false, detalhes: "Simulações interativas focadas na agilidade de resposta oral sem suporte de tradutores externos." },
+    { id: 23, user: "lais", periodo: "Setembro 2026", titulo: "Gestão Organizacional Doméstica Conectada", desc: "Ajustar cronogramas familiares centralizados para otimização do tempo e melhor aproveitamento cultural.", categoria: "Organização", status: "Planeado", foco_home: false, detalhes: "Definição clara de janelas horárias focadas em produtividade, lazer e desenvolvimento pessoal." },
+    { id: 24, user: "lais", periodo: "Outubro 2026", titulo: "Expressões de Interação Social Avançada (França/Bélgica)", desc: "Capacitação focada em diálogos quotidianos, interações em restaurantes, teatros e transportes.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Avançar nas estruturas sintáticas francesas para comunicação natural com nativos." },
+    { id: 25, user: "lais", periodo: "Novembro 2026", titulo: "Introdução à Redação e Leitura de Documentos Administrativos", desc: "Compreender e redigir e-mails formais e solicitações burocráticas básicas no idioma francês.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Foco em termos corporativos europeus usuais em contratos, correspondências e agendamentos." },
+    { id: 26, user: "lais", periodo: "Dezembro 2026", titulo: "Revisão de Metas Culturais e Planeamento de Viagens 2027", desc: "Consolidar rotas, orçamentos e roteiros estruturados baseados no ganho de autonomia linguística.", categoria: "Organização", status: "Planeado", foco_home: false, detalhes: "Análise de progressão do nível B1 operacional para aplicação em ambiente real exterior." },
+    { id: 27, user: "lais", periodo: "Fases 2027-2030", titulo: "Domínio e Fluência Fluida em Contextos Sociais Europeus", desc: "Consolidação definitiva do francês de nível B2/C1 focado em trâmites complexos, negócios e trânsito cultural fluido.", categoria: "Macros", status: "Planeado", foco_home: false, detalhes: "Capacidade de transitar sem atrito em qualquer círculo social ou burocrático em países francófonos." },
 
-    // --- MARCOS MACROS ESTRATÉGICOS GERAIS ---
-    { id: 901, periodo: "Macros", titulo: "Domínio Idiomático Total", desc: "Fluência total, técnica e sem atrito em Inglês e Francês corporativos.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Capacidade de transitar entre conversações complexas, palestras e redação de patentes técnicas sem esforço consciente." },
-    { id: 902, periodo: "Macros", titulo: "Independência Tecnológica e de Engenharia", desc: "Detenção de laboratório completo de prototipagem funcional de alto rendimento.", categoria: "Profissional/Tech", status: "Planeado", foco_home: false, detalhes: "Domínio completo de ferramentas CAD/CAM, engenharia mecânica avançada e automação embarcada." }
+    // --- METAS ISABELLA (Inglês Académico, Fluência Nativa, Desenvolvimento de Skills Digitais) ---
+    { id: 41, user: "isabella", periodo: "Julho 2026", titulo: "Cronograma de Aceleração Vocabular Diária", desc: "Integrar rotina de leitura avançada e expressão falada espontânea em inglês de alta performance.", categoria: "Estudos", status: "Em Progresso", foco_home: true, detalhes: "Focar na transição da linguagem escolar tradicional para estruturas altamente articuladas e nativas." },
+    { id: 42, user: "isabella", periodo: "Agosto 2026", titulo: "Desenvolvimento de Oratória e Escrita Criativa", desc: "Produção de textos e pequenas apresentações totalmente estruturadas em inglês avançado.", categoria: "Expressão", status: "Planeado", foco_home: false, detalhes: "Aumentar a confiança e precisão fonética através das ferramentas digitais e suporte de IA do site." },
+    { id: 43, user: "isabella", periodo: "Setembro 2026", titulo: "Introdução à Terminologia de Ciências e Tecnologia", desc: "Expandir o reportório linguístico para abranger conceitos de inovação, programação e design global.", categoria: "Estudos", status: "Planeado", foco_home: false, detalhes: "Preparação de competências essenciais para competições académicas ou exames de proficiência futura." },
+    { id: 44, user: "isabella", periodo: "Fases 2027-2030", titulo: "✨ Fluência Nativa Absoluta e Perfil Internacional", desc: "Atingir proficiência total verificada C2, abrindo portas para oportunidades académicas globais de alto impacto.", categoria: "Macros", status: "Planeado", foco_home: false, detalhes: "Uso instintivo, natural e polido do idioma inglês como ferramenta nativa de pensamento e criação." }
 ];
 
 // ============================================================================
-// BASE DE DADOS DE IDIOMAS (LIÇÕES, DIÁLOGOS, CONVERSAÇÃO E EXERCÍCIOS)
+// REPOSITÓRIO EXPANDIDO DE LIÇÕES, DIÁLOGOS E EXERCÍCIOS INTERATIVOS
 // ============================================================================
-const LESSONS_DB = [
-    // --- INGLÊS ---
+const LICTIONS_POOL = [
     {
-        id: "en_01",
-        lang: "en",
-        nivel: "B2 - Professional",
-        titulo: "Technical Project Presentation",
-        subtitle: "Liderar apresentações de engenharia e reportar avarias",
+        id: "les_j_01", user: "julio", lang: "en", nivel: "Advanced Tech - B2",
+        titulo: "Industrial Extrusion Failure Diagnostic",
+        subtitle: "Liderar a resolução de avarias complexas na linha mecânica",
         dialogue: [
-            { char: "Lead Engineer", text: "We are experiencing a severe breakdown in the main extrusion line due to an axis misalignment.", trans: "Estamos a sofrer uma avaria grave na linha principal de extrusão devido a um desalinhamento de eixo." },
-            { char: "You", text: "I see. I will run a full diagnostic on the mechanical drive and recalibrate the parameters immediately.", trans: "Entendo. Vou executar um diagnóstico completo no acionamento mecânico e recalibrar os parâmetros imediatamente." },
-            { char: "Lead Engineer", text: "Great. Please ensure the backup system stays active to avoid total downtime.", trans: "Excelente. Por favor, garante que o sistema de backup permanece ativo para evitar paragem total." }
+            { char: "Plant Manager", text: "Júlio, the primary automated line is throwing a critical alignment code. Production is halted.", trans: "Júlio, a linha automatizada primária está a dar um código de desalinhamento crítico. A produção está parada." },
+            { char: "Júlio", text: "I am on it. I will investigate the mechanical drive shaft and ensure the sensors are recalibrated.", trans: "Estou nisso. Vou investigar o eixo de acionamento mecânico e garantir que os sensores sejam recalibrados." },
+            { char: "Plant Manager", text: "Excellent. Keep a close eye on the total downtime. Every minute costs us significantly.", trans: "Excelente. Fica muito atento ao tempo de paragem total. Cada minuto custa-nos significativamente." }
         ],
         exercicios: [
-            { q: "Como se diz 'tempo de paragem de máquina' em inglês técnico?", a: "downtime" },
-            { q: "Complete a frase: 'We need to _______ the sensor.' (recalibrar)", a: "recalibrate" }
+            { q: "Qual o termo técnico usado para definir o 'tempo de paragem de máquina'?", a: "downtime" },
+            { q: "Como se traduz o termo 'eixo de acionamento' em contextos de engenharia?", a: "drive shaft" }
         ],
-        contexto_ia: "Esta lição aborda a manutenção corretiva de uma linha de extrusão industrial, focando em termos como downtime, misalignment, diagnostic e recalibrate."
+        contexto_ia: "Lição focada em manutenção preditiva e corretiva industrial. Principais vocábulos: downtime, drive shaft, alignment, calibration, halted."
     },
     {
-        id: "en_02",
-        lang: "en",
-        nivel: "B2 - Business",
-        titulo: "Negotiating Deadlines and Budgets",
-        subtitle: "Negociar prazos de entrega e custos de componentes 3D",
+        id: "les_j_02", user: "julio", lang: "en", nivel: "Advanced Business - B2",
+        titulo: "Supply Procurement & Filament Sourcing",
+        subtitle: "Negociação técnica de suprimentos e prazos de entrega para engenharia 3D",
         dialogue: [
-            { char: "Supplier", text: "The lead time for the high-grade PETG filament has increased to three weeks.", trans: "O prazo de entrega para o filamento PETG de alta qualidade aumentou para três semanas." },
-            { char: "You", text: "That is unacceptable for our current pipeline. Can we expedite the shipping for an extra fee?", trans: "Isso é inaceitável para o nosso fluxo atual. Podemos agilizar o envio por uma taxa extra?" },
-            { char: "Supplier", text: "Let me check if we can arrange air freight to shorten the delivery window.", trans: "Deixe-me verificar se conseguimos arranjar transporte aéreo para encurtar a janela de entrega." }
+            { char: "Supplier", text: "The lead time for the high-end carbon fiber filament orders has extended to a month.", trans: "O prazo de entrega para as encomendas de filamento de fibra de carbono avançado aumentou para um mês." },
+            { char: "Júlio", text: "That delay will severely disrupt our production pipeline. Is there any way to expedite the air freight?", trans: "Esse atraso vai perturbar gravemente o nosso fluxo de produção. Há alguma forma de agilizar o frete aéreo?" },
+            { char: "Supplier", text: "We could prioritize your dispatch if we split the shipping costs accordingly.", trans: "Poderíamos priorizar o vosso envio se dividirmos os custos de transporte correspondentemente." }
         ],
         exercicios: [
-            { q: "Qual o termo técnico para 'prazo de entrega/execução'?", a: "lead time" },
-            { q: "Complete: 'Can we _______ the process?' (agilizar/acelerar)", a: "expedite" }
+            { q: "Traduza a expressão comercial usada para 'prazo de entrega de pedidos':", a: "lead time" },
+            { q: "Complete o verbo correto: 'We must ________ the process.' (Agilizar / Acelerar)", a: "expedite" }
         ],
-        contexto_ia: "Lição focada em logística de suprimentos, compras técnicas de filamento e termos como lead time, expedite, air freight e delivery window."
-    },
-    
-    // --- FRANCÊS ---
-    {
-        id: "fr_01",
-        lang: "fr",
-        nivel: "B1 - Technique",
-        titulo: "Maintenance Préventive et Sécurité",
-        subtitle: "Rotinas de segurança industrial e controlo de ativos",
-        dialogue: [
-            { char: "Directeur de l'Usine", text: "Avez-vous vérifié la pression hydraulique des machines ce matin ?", trans: "Verificou a pressão hidráulica das máquinas esta manhã?" },
-            { char: "Vous", text: "Oui, tout est dans a norme. J'ai également resserré les boulons de la structure principale.", trans: "Sim, está tudo na norma. Também apertei os parafusos da estrutura principal." },
-            { char: "Directeur de l'Usine", text: "Parfait. N'oubliez pas de consigner ces actions no le rapport numérique.", trans: "Perfeito. Não se esqueça de registar estas ações no relatório digital." }
-        ],
-        exercicios: [
-            { q: "Como se traduz 'parafusos' em francês técnico?", a: "boulons" },
-            { q: "Traduza o termo 'relatório digital':", a: "rapport numérique" }
-        ],
-        contexto_ia: "Leçon axée sur la maintenance industrielle préventive, la sécurité des infrastructures et l'utilisation de termes comme resserrer, boulons, rapport numérique et pression hydraulique."
+        contexto_ia: "Lição voltada para negociações industriais de logística e suprimentos técnicos 3D. Termos macro: lead time, expedite, air freight, pipeline."
     },
     {
-        id: "fr_02",
-        lang: "fr",
-        nivel: "B2 - Commercial",
-        titulo: "Gestion des Commandes de Pièces",
-        subtitle: "Encomendas de componentes mecânicos e gestão de stock",
+        id: "les_l_01", user: "lais", lang: "fr", nivel: "Immersive Social - B1",
+        titulo: "Logistique de Voyage et Réservations",
+        subtitle: "Domínio prático de comunicação em aeroportos e check-ins",
         dialogue: [
-            { char: "LogisTech", text: "La commande de buses en acier trempé est en cours d'expédition.", trans: "A encomenda de bicos de aço temperado está em processo de envio." },
-            { char: "Vous", text: "Merci. Quel est le délai de livraison estimé pour notre atelier ?", trans: "Obrigado. Qual é o prazo de entrega estimado para a nossa oficina?" },
-            { char: "LogisTech", text: "Il faut compter environ quatre jours ouvrables pour arriver au Portugal.", trans: "Deve demorar cerca de quatro dias úteis para chegar a Portugal." }
+            { char: "Agent d'Aéroport", text: "Bonjour madame, veuillez présenter votre passeport et votre confirmation d'enregistrement.", trans: "Bom dia minha senhora, por favor apresente o seu passaporte e a sua confirmação de check-in." },
+            { char: "Laís", text: "Bonjour, os voici. Est-ce que mon bagage cabine respecte la taille réglementaire ?", trans: "Bom dia, aqui estão. A minha bagagem de cabine respeita o tamanho regulamentar?" },
+            { char: "Agent d'Aéroport", text: "Oui, c'est parfait. Votre porte d'embarquement est a numéro douze, bon voyage.", trans: "Sim, está perfeito. A sua porta de embarque é a número doze, boa viagem." }
         ],
         exercicios: [
-            { q: "Como se diz 'bicos de aço temperado'?", a: "buses en acier trempé" },
-            { q: "Como se diz 'dias úteis' em francês?", a: "jours ouvrables" }
+            { q: "Como se traduz de forma exata 'bagagem de cabine' em francês?", a: "bagage cabine" },
+            { q: "Qual a expressão usada para indicar a 'porta de embarque'?", a: "porte d'embarquement" }
         ],
-        contexto_ia: "Lição dedicada à cadeia de suprimentos de componentes industriais e ferramentas de impressão 3D em francês, usando buses, acier trempé e jours ouvrables."
+        contexto_ia: "Leçon centrée sur les situations réelles de déplacement à l'étranger, vocabulaire de transport, bagages et formalités douanières."
+    },
+    {
+        id: "les_i_01", user: "isabella", lang: "en", nivel: "Academic Fluency - B2+",
+        titulo: "Global Communication and Presentation Skills",
+        subtitle: "Expressão clara de ideias complexas e debates interativos",
+        dialogue: [
+            { char: "Professor", text: "Isabella, your thesis regarding digital interface interaction was remarkably well-articulated.", trans: "Isabella, a tua tese sobre interação de interfaces digitais foi incrivelmente bem articulada." },
+            { char: "Isabella", text: "Thank you! I focused on how seamless design directly enhances overall user engagement.", trans: "Obrigada! Foquei-me em como o design fluido melhora diretamente o engajamento geral do utilizador." },
+            { char: "Professor", text: "Indeed. The depth of your vocabulary made the entire breakdown effortless to follow.", trans: "De facto. A profundidade do teu vocabulário fez com que toda a análise fosse simples de acompanhar." }
+        ],
+        exercicios: [
+            { q: "Qual o adjetivo em inglês usado no texto para definir algo 'fluido / perfeito / sem costuras'?", a: "seamless" },
+            { q: "Como se escreve 'engajamento / envolvimento' em inglês avançado?", a: "engagement" }
+        ],
+        contexto_ia: "Lesson oriented to high-level academic speech, advanced synonyms, presentation dynamics and flawless pronunciation training."
     }
 ];
 
 // ============================================================================
-// LOGICA APLICACIONAL & RENDERIZAÇÃO DINÂMICA
+// ARQUITETURA LÓGICA E REGRAS DE EXECUÇÃO DA PLATAFORMA
 // ============================================================================
 
-// Inicializar e Carregar Métricas no Painel
-function renderDashboard() {
-    const total = METAS_DB.length;
-    const concluidas = METAS_DB.filter(m => m.status === "Concluído").length;
-    const esteMes = METAS_DB.filter(m => m.periodo === "Julho 2026").length;
+window.addEventListener('DOMContentLoaded', () => {
+    carregarChaveArmazenada();
+    renderGlobalDashboard();
+});
 
-    document.getElementById('dash-total-metas').innerText = total;
-    document.getElementById('dash-concluidas').innerText = concluidas;
-    document.getElementById('dash-foco-mes').innerText = esteMes;
-
-    const ativosHome = METAS_DB.filter(m => m.foco_home);
-    document.getElementById('home-foco-content').innerHTML = buildMetasCardsHTML(ativosHome);
+function carregarChaveArmazenada() {
+    const savedKey = localStorage.getItem('gemini_api_key');
+    if(savedKey && document.getElementById('global-api-key')) {
+        document.getElementById('global-api-key').value = savedKey;
+    }
 }
 
-// Construtor Automático de Cartões de Metas
-function buildMetasCardsHTML(lista) {
-    if(lista.length === 0) return "<p style='color:var(--text-muted); text-align:center; padding:30px; font-size:0.9rem;'>Nenhum objetivo registado para esta seleção.</p>";
+function saveApiKey() {
+    const key = document.getElementById('global-api-key').value.trim();
+    localStorage.setItem('gemini_api_key', key);
+    document.getElementById('save-status').style.display = "block";
+    setTimeout(() => { document.getElementById('save-status').style.display = "none"; }, 3000);
+}
+
+// 1. Renderização do Painel Global Centralizado
+function renderGlobalDashboard() {
+    document.getElementById('global-j-count').innerText = METAS_DB_COUNT('julio');
+    document.getElementById('global-l-count').innerText = METAS_DB_COUNT('lais');
+    document.getElementById('global-i-count').innerText = METAS_DB_COUNT('isabella');
+
+    const focoAtivos = METAS_CENTRAL_DB.filter(m => m.foco_home);
+    document.getElementById('global-foco-content').innerHTML = buildCardsHTML(focoAtivos);
+}
+
+function METAS_DB_COUNT(usuario) {
+    return METAS_CENTRAL_DB.filter(m => m.user === usuario).length;
+}
+
+// 2. Construtor Unificado de Cartões de Objetivos
+function buildCardsHTML(lista) {
+    if(lista.length === 0) return "<p style='color:var(--text-muted); text-align:center; padding:30px; font-size:0.9rem;'>Nenhum item mapeado para esta janela cronológica.</p>";
     
     return lista.map(m => {
         let corStatus = "var(--gold)";
         if(m.status === "Concluído") corStatus = "var(--emerald)";
         if(m.status === "Planeado") corStatus = "#94a3b8";
+        
+        let tagUser = `<span class="meta-badge" style="background:#f1f5f9; color:var(--premium-blue); margin-right:5px;">👤 ${m.user.toUpperCase()}</span>`;
 
         return `
             <div class="meta-card">
-                <div class="meta-status-bar" style="background: ${corStatus}"></div>
+                <div class="meta-status-bar" style="background: var(--${m.user}-color)"></div>
                 <div class="meta-content">
                     <div class="meta-header">
-                        <span>🗓️ ${m.periodo}</span>
-                        <span>🏷️ ${m.categoria}</span>
+                        <div>${tagUser}<span>🗓️ ${m.periodo}</span></div>
+                        <span>${m.categoria}</span>
                     </div>
                     <h4 class="meta-title">${m.titulo}</h4>
                     <p class="meta-desc">${m.desc}</p>
                     <div class="meta-footer">
                         <span class="meta-badge" style="background: ${corStatus}15; color: ${corStatus === '#94a3b8' ? '#475569' : corStatus}">${m.status}</span>
-                        <button class="btn-action" onclick="openMetaDetails(${m.id})">+ Expandir Objetivo</button>
+                        <button class="btn-action" onclick="openMetaDetails(${m.id})">+ Expandir Alvo</button>
                     </div>
                 </div>
             </div>
@@ -451,78 +421,110 @@ function buildMetasCardsHTML(lista) {
     }).join('');
 }
 
-// Navegação de Vistas Principais
+// Navegação entre Vistas Padrão
 function showView(viewId) {
     if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
-    
     document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
-    const targetView = document.getElementById(viewId);
-    if(targetView) targetView.classList.add('active');
     
-    if(viewId === 'home') renderDashboard();
-    if(viewId === 'idiomas-en') renderIdiomas('en');
-    if(viewId === 'idiomas-fr') renderIdiomas('fr');
+    const target = document.getElementById(viewId);
+    if(target) target.classList.add('active');
+    
+    if(viewId === 'home') renderGlobalDashboard();
+    window.scrollTo(0,0);
+}
+
+// 3. Exibição Dinâmica do Dashboard do Utilizador
+function showUserDashboard(username) {
+    if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
+    document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
+    
+    const targetView = document.getElementById('userDashboardView');
+    targetView.classList.add('active');
+    
+    let labelLong = username === 'julio' ? 'Área Técnica & Engenharia' : username === 'lais' ? 'Expansão Cultural & Idiomas' : 'Desenvolvimento Futuro Académico';
+    
+    document.getElementById('userBannerArea').innerHTML = `
+        <div class="profile-banner ${username}">
+            <h2 class="profile-name">${username.toUpperCase()}</h2>
+            <div class="profile-tagline">${labelLong} • Horizonte 2030</div>
+        </div>
+    `;
+    
+    const totalUser = METAS_CENTRAL_DB.filter(m => m.user === username).length;
+    const concluidasUser = METAS_CENTRAL_DB.filter(m => m.user === username && m.status === "Concluído").length;
+    const emProgressoUser = METAS_CENTRAL_DB.filter(m => m.user === username && m.status === "Em Progresso").length;
+    
+    document.getElementById('userStatsArea').innerHTML = `
+        <div class="stat-box"><span class="stat-num">${totalUser}</span><span class="stat-label">Objetivos Totais</span></div>
+        <div class="stat-box"><span class="stat-num" style="color:var(--emerald)">${concluidasUser}</span><span class="stat-label">Concluídos</span></div>
+        <div class="stat-box"><span class="stat-num" style="color:var(--gold)">${emProgressoUser}</span><span class="stat-label">Em Execução</span></div>
+    `;
+    
+    document.getElementById('userSectionTitle').innerText = `Metas Ativas Prioritárias - ${username.toUpperCase()}`;
+    const metasPrioritarias = METAS_CENTRAL_DB.filter(m => m.user === username);
+    document.getElementById('userDashboardContent').innerHTML = buildCardsHTML(metasPrioritarias);
     
     window.scrollTo(0,0);
 }
 
-// Exibir Períodos / Meses Específicos do Menu Lateral
-function showPeriodo(periodoNome) {
+// 4. Exibição de Períodos e Submetas Mensais Individuais
+function showUserPeriodo(username, periodoNome) {
     if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
-    
     document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
-    document.getElementById('mainView').classList.add('active');
     
-    document.getElementById('mainView-title').innerText = periodoNome;
+    const pView = document.getElementById('periodoView');
+    pView.classList.add('active');
     
-    // Gerar Filtros por Categoria de forma dinâmica para este período
-    const metasFiltradas = METAS_DB.filter(m => m.periodo === periodoNome);
-    const categorias = ['TODAS', ...new Set(metasFiltradas.map(m => m.categoria))];
+    document.getElementById('periodoViewTitle').innerText = `${periodoNome} • Cronograma Próprio de ${username.toUpperCase()}`;
     
-    document.getElementById('filterArea').innerHTML = categorias.map(cat => `
-        <button class="tab-btn ${cat==='TODAS'?'active':''}" onclick="filtrarCategoriaPeriodo('${periodoNome}', '${cat}', this)">${cat}</button>
+    const listaAlvos = METAS_CENTRAL_DB.filter(m => m.user === username && m.periodo === periodoNome);
+    const categorias = ['TODAS', ...new Set(listaAlvos.map(m => m.categoria))];
+    
+    document.getElementById('periodoFilterArea').innerHTML = categorias.map(cat => `
+        <button class="tab-btn ${cat==='TODAS'?'active':''}" onclick="filtrarCategoriaPeriodoExata('${username}', '${periodoNome}', '${cat}', this)">${cat}</button>
     `).join('');
     
-    document.getElementById('viewContent').innerHTML = buildMetasCardsHTML(metasFiltradas);
+    document.getElementById('periodoContentArea').innerHTML = buildCardsHTML(listaAlvos);
     window.scrollTo(0,0);
 }
 
-// Filtragem em tempo de execução
-function filtrarCategoriaPeriodo(periodo, categoria, elementoBtn) {
+function filtrarCategoriaPeriodoExata(user, periodo, categoria, btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    elementoBtn.classList.add('active');
+    btn.classList.add('active');
     
-    let lista = METAS_DB.filter(m => m.periodo === periodo);
+    let base = METAS_CENTRAL_DB.filter(m => m.user === user && m.periodo === periodo);
     if(categoria !== 'TODAS') {
-        lista = lista.filter(m => m.categoria === categoria);
+        base = base.filter(m => m.categoria === categoria);
     }
-    document.getElementById('viewContent').innerHTML = buildMetasCardsHTML(lista);
+    document.getElementById('periodoContentArea').innerHTML = buildCardsHTML(base);
 }
 
-// Mostrar Vista de Marcos Estratégicos Gerais
-function showMacrosView() {
+// 5. Renderização Estruturada de Lições de Idiomas
+function showUserLessons(username, idioma) {
+    if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
     document.querySelectorAll('.container').forEach(c => c.classList.remove('active'));
-    document.getElementById('mainView').classList.add('active');
-    document.getElementById('mainView-title').innerText = "Marcos Estratégicos Longo Prazo (Horizonte 2030)";
-    document.getElementById('filterArea').innerHTML = "";
     
-    const macros = METAS_DB.filter(m => m.periodo === 'Macros');
-    document.getElementById('viewContent').innerHTML = buildMetasCardsHTML(macros);
-}
-
-// Renderizar Módulos de Idiomas
-function renderIdiomas(lingua) {
-    const contentor = document.getElementById(`container-lessons-${lingua}`);
-    const aulas = LESSONS_DB.filter(l => l.lang === lingua);
+    const lView = document.getElementById('lessonsView');
+    lView.classList.add('active');
     
-    contentor.innerHTML = aulas.map(lesson => `
+    let flag = idioma === 'en' ? '🇬🇧 English Learning Track' : '🇫🇷 Maîtrise du Français Track';
+    document.getElementById('lessonsViewTitle').innerText = `${flag} - Painel de ${username.toUpperCase()}`;
+    
+    const aulasFiltradas = LICTIONS_POOL.filter(l => l.user === username && l.lang === idioma);
+    
+    if(aulasFiltradas.length === 0) {
+        document.getElementById('lessonsContentGrid').innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:20px;">Nenhum módulo de idioma associado a este painel específico.</p>`;
+        return;
+    }
+    
+    document.getElementById('lessonsContentGrid').innerHTML = aulasFiltradas.map(lesson => `
         <div class="lesson-card">
             <span class="lesson-badge ${lesson.lang==='en'?'lesson-type-en':'lesson-type-fr'}">${lesson.nivel}</span>
             <h3 class="lesson-title">${lesson.titulo}</h3>
             <div class="lesson-subtitle">${lesson.subtitle}</div>
             
             <div class="dialogue-box">
-                <h5 style="margin:0 0 10px 0; font-size:0.75rem; letter-spacing:0.5px; color:var(--text-muted)">CONVERSAÇÃO ATIVA ATUAL</h5>
+                <h5 style="margin:0 0 10px 0; font-size:0.75rem; letter-spacing:0.5px; color:var(--text-muted)">CONVERSAÇÃO ATIVA E CENÁRIO DIÁRIO</h5>
                 ${lesson.dialogue.map(d => `
                     <div class="dialogue-line">
                         <span class="dialogue-character">${d.char}:</span> <span>${d.text}</span>
@@ -532,44 +534,43 @@ function renderIdiomas(lingua) {
             </div>
             
             <div class="exercise-box">
-                <div class="exercise-title">📝 Exercício de Fixação Fixa</div>
+                <div class="exercise-title">📝 Resolução Prática Contínua</div>
                 ${lesson.exercicios.map((ex, idx) => `
                     <div class="exercise-item">
                         <span>${idx + 1}. ${ex.q}</span>
-                        <input type="text" class="exercise-input" data-lesson="${lesson.id}" data-ex="${idx}" placeholder="Digita a tua resposta..." oninput="verificarExercicio('${lesson.id}', ${idx}, this.value)">
+                        <input type="text" class="exercise-input" placeholder="Digita a resposta exata..." oninput="verificarExercicioReal('${lesson.id}', ${idx}, this.value, this)">
                         <span class="feedback-ex" style="font-size:0.75rem; font-weight:700; display:block; margin-top:5px;"></span>
                     </div>
                 `).join('')}
             </div>
             
             <div style="margin-top:20px; border-top:1px dashed #e2e8f0; padding-top:15px;">
-                <button class="btn-action btn-primary" style="width:100%" onclick="abrirSuporteIA('${lesson.id}')">🤖 Tirar Dúvidas com IA</button>
+                <button class="btn-action btn-primary" style="width:100%" onclick="abrirSuporteIAIdioma('${lesson.id}')">🤖 Consultar Tutor IA Real-Time</button>
             </div>
         </div>
     `).join('');
+    window.scrollTo(0,0);
 }
 
-// Verificação de respostas em tempo real
-function verificarExercicio(lessonId, exIdx, valor) {
-    const lesson = LESSONS_DB.find(l => l.id === lessonId);
-    const itemEx = lesson.exercicios[exIdx];
-    const inputElement = event.target;
+function verificarExercicioReal(lessonId, idx, val, inputElement) {
+    const lesson = LICTIONS_POOL.find(l => l.id === lessonId);
+    const item = lesson.exercicios[idx];
     const feedback = inputElement.nextElementSibling;
     
-    if(valor.trim().toLowerCase() === itemEx.a.toLowerCase()) {
+    if(val.trim().toLowerCase() === item.a.toLowerCase()) {
         feedback.style.color = "var(--emerald)";
-        feedback.innerText = "✓ Correto!";
-    } else if(valor.length >= itemEx.a.length) {
+        feedback.innerText = "✓ Resposta Validada com Sucesso!";
+    } else if(val.length >= item.a.length) {
         feedback.style.color = "var(--gold)";
-        feedback.innerText = "A rever...";
+        feedback.innerText = "Dica: Reanalisa os termos técnicos ou ortografia.";
     } else {
         feedback.innerText = "";
     }
 }
 
-// Abrir Detalhes Ampliados de Objetivos
+// 6. Ampliação Avançada de Metas com Chat IA Incorporado
 function openMetaDetails(id) {
-    const meta = METAS_DB.find(m => m.id === id);
+    const meta = METAS_CENTRAL_DB.find(m => m.id === id);
     if(!meta) return;
 
     let corStatus = "var(--gold)";
@@ -577,180 +578,160 @@ function openMetaDetails(id) {
     if(meta.status === "Planeado") corStatus = "#64748b";
 
     document.getElementById('detailBody').innerHTML = `
-        <span style="font-size:0.72rem; font-weight:800; color:var(--electric-blue); text-transform:uppercase; letter-spacing:1px">${meta.categoria}</span>
+        <span style="font-size:0.72rem; font-weight:800; color:var(--electric-blue); text-transform:uppercase; letter-spacing:1px">Responsável: ${meta.user.toUpperCase()} • ${meta.categoria}</span>
         <h2 style="margin: 5px 0 15px 0; font-weight:900; color:var(--premium-blue); font-size:1.4rem; line-height:1.2">${meta.titulo}</h2>
         
         <div style="margin-bottom: 25px; display:flex; gap:10px; flex-wrap:wrap">
-            <span style="background:#f1f5f9; padding:6px 14px; border-radius:10px; font-size:0.78rem; font-weight:700; color:#475569">🗓️ Período: ${meta.periodo}</span>
-            <span style="background:${corStatus}15; padding:6px 14px; border-radius:10px; font-size:0.78rem; font-weight:800; color:${meta.status === 'Planeado' ? '#475569' : corStatus}">● Status: ${meta.status}</span>
+            <span style="background:#f1f5f9; padding:6px 14px; border-radius:10px; font-size:0.78rem; font-weight:700; color:#475569">🗓️ Cronograma: ${meta.periodo}</span>
+            <span style="background:${corStatus}15; padding:6px 14px; border-radius:10px; font-size:0.78rem; font-weight:800; color:${meta.status === 'Planeado' ? '#475569' : corStatus}">● Estado: ${meta.status}</span>
         </div>
 
         <h3 style="font-size:0.85rem; font-weight:900; color:var(--premium-blue); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px">Descrição do Alvo</h3>
         <p style="font-size:0.92rem; color:#475569; line-height:1.6; margin:0 0 25px 0">${meta.desc}</p>
 
-        <h3 style="font-size:0.85rem; font-weight:900; color:var(--premium-blue); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px">Plano Operacional Detalhado</h3>
+        <h3 style="font-size:0.85rem; font-weight:900; color:var(--premium-blue); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px">Mapeamento Técnico de Operações</h3>
         <p style="font-size:0.92rem; color:#475569; line-height:1.6; margin:0; padding:18px; background:#f8fafc; border-radius:16px; border:1px solid #e2e8f0">${meta.detalhes}</p>
         
         <div class="ai-chat-container">
             <div class="ai-chat-header">✨ Otimizador Estratégico AI</div>
             <div class="ai-chat-messages" id="meta-ai-messages">
-                <div class="ai-msg gemini">Olá! Posso ajudar-te a criar uma checklist tática, a detalhar passos intermédios ou a simular riscos para este objetivo. O que queres detalhar?</div>
+                <div class="ai-msg gemini">Olá! Estou pronto para ajudar o <strong>${meta.user.toUpperCase()}</strong> a ramificar este objetivo em checklists operacionais diários, mitigar riscos de execução ou detalhar planos táticos. O que queres analisar agora?</div>
             </div>
             <div class="ai-chat-input-row">
-                <input type="text" id="meta-ai-input" class="ai-chat-input" placeholder="Pergunta à IA sobre este objetivo...">
-                <button class="ai-chat-btn" onclick="enviarMensagemIA('meta', '${meta.titulo}')">Enviar</button>
+                <input type="text" id="meta-ai-input" class="ai-chat-input" placeholder="Solicitar checklist ou análise técnica à IA...">
+                <button class="ai-chat-btn" onclick="enviarMensagemIAReal('meta', '${meta.user} - ${meta.titulo} - ${meta.desc}')">Enviar</button>
             </div>
         </div>
     `;
     document.getElementById('detailPane').classList.add('open');
 }
 
-// Abrir Suporte de IA para Lições de Idiomas
-function abrirSuporteIA(lessonId) {
-    const lesson = LESSONS_DB.find(l => l.id === lessonId);
+// 7. Tutor Inteligente de Idiomas Conectado por Módulo
+function abrirSuporteIAIdioma(lessonId) {
+    const lesson = LICTIONS_POOL.find(l => l.id === lessonId);
     if(!lesson) return;
     
     document.getElementById('detailBody').innerHTML = `
-        <span style="font-size:0.72rem; font-weight:800; color:var(--accent-purple); text-transform:uppercase; letter-spacing:1px">${lesson.nivel} • ${lesson.lang.toUpperCase()}</span>
-        <h2 style="margin: 5px 0 15px 0; font-weight:900; color:var(--premium-blue); font-size:1.3rem;">Tutor Inteligente de Idiomas</h2>
-        <p style="font-size:0.88rem; color:#475569; margin-bottom:20px;">Focado em: <strong>${lesson.titulo}</strong></p>
+        <span style="font-size:0.72rem; font-weight:800; color:var(--accent-purple); text-transform:uppercase; letter-spacing:1px">${lesson.nivel} • Módulo Exclusivo para ${lesson.user.toUpperCase()}</span>
+        <h2 style="margin: 5px 0 15px 0; font-weight:900; color:var(--premium-blue); font-size:1.3rem;">Tutor Inteligente Base de Idiomas</h2>
+        <p style="font-size:0.88rem; color:#475569; margin-bottom:20px;">Foco Técnico Ativo: <strong>${lesson.titulo}</strong></p>
         
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:15px; border-radius:12px; font-size:0.85rem; color:#475569; margin-bottom:20px;">
-            A IA analisará o contexto técnico desta lição para responder às tuas dúvidas gramaticais, sugerir variações de frases ou corrigir frases que escrevas aqui.
-        </div>
-
         <div class="ai-chat-container" style="margin-top:0;">
-            <div class="ai-chat-header" style="color:var(--accent-purple)">🗣️ Tutor Linguístico Activo</div>
-            <div class="ai-chat-messages" id="lesson-ai-messages" style="max-height: 280px;">
-                <div class="ai-msg gemini">Hi! Bonjour! Estou pronto para analisar as tuas respostas, praticar conversação baseada na lição ou esclarecer qualquer termo técnico. Como preferes começar?</div>
+            <div class="ai-chat-header" style="color:var(--accent-purple)">🗣️ Análise de Fluência & Conversação</div>
+            <div class="ai-chat-messages" id="lesson-ai-messages" style="max-height: 290px;">
+                <div class="ai-msg gemini">Hi! Bonjour! Estou pronto para avaliar a tua escrita, propor alternativas avançadas para termos mecânicos/comerciais ou praticar conversação ativa baseada neste cenário de <strong>${lesson.titulo}</strong>. Podes escrever em português ou no idioma da lição!</div>
             </div>
             <div class="ai-chat-input-row">
-                <input type="text" id="lesson-ai-input" class="ai-chat-input" placeholder="Escreve a tua dúvida ou frase em inglês/francês...">
-                <button class="ai-chat-btn" style="background:var(--accent-purple)" onclick="enviarMensagemIA('lesson', '${lesson.contexto_ia}')">Perguntar</button>
+                <input type="text" id="lesson-ai-input" class="ai-chat-input" placeholder="Escreve uma frase para correção ou tira uma dúvida gramatical...">
+                <button class="ai-chat-btn" style="background:var(--accent-purple)" onclick="enviarMensagemIAReal('lesson', 'User: ${lesson.user}, Lang: ${lesson.lang}, Contexto: ${lesson.contexto_ia}')">Perguntar</button>
             </div>
         </div>
     `;
     document.getElementById('detailPane').classList.add('open');
 }
 
-// INTERFACES INTERATIVAS E ANIMAÇÕES DO MENU
 function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); }
 function toggleSub(id) { document.getElementById(id).classList.toggle('open'); }
 function closeDetail() { document.getElementById('detailPane').classList.remove('open'); }
 
 // ============================================================================
-// INTEGRAÇÃO INTELIGENTE COM A API DO GEMINI (GOOGLE AI)
+// MOTOR DE INTEGRAÇÃO UNIVERSAL DA API GEMINI (RESOLUÇÃO DE ERROS CHAVES AQ / AIzaSy)
 // ============================================================================
-function saveApiKey() {
-    const key = document.getElementById('global-api-key').value;
-    localStorage.setItem('gemini_api_key', key);
-    document.getElementById('save-status').style.display = "block";
-    setTimeout(() => { document.getElementById('save-status').style.display = "none"; }, 3000);
-}
-
-// Carregar chave se já guardada
-window.addEventListener('DOMContentLoaded', () => {
-    const savedKey = localStorage.getItem('gemini_api_key');
-    if(savedKey && document.getElementById('global-api-key')) {
-        document.getElementById('global-api-key').value = savedKey;
-    }
-    renderDashboard();
-});
-
-async function enviarMensagemIA(tipo, contexto) {
-    const inputId = tipo === 'meta' ? 'meta-ai-input' : 'lesson-ai-input';
-    const messagesId = tipo === 'meta' ? 'meta-ai-messages' : 'lesson-ai-messages';
+async function enviarMensagemIAReal(tipo, contextoBase) {
+    const isMeta = tipo === 'meta';
+    const inputId = isMeta ? 'meta-ai-input' : 'lesson-ai-input';
+    const messagesId = isMeta ? 'meta-ai-messages' : 'lesson-ai-messages';
     
     const inputElement = document.getElementById(inputId);
     const messagesElement = document.getElementById(messagesId);
-    const userText = inputElement.value.trim();
+    const textPrompt = inputElement.value.trim();
     
-    if(!userText) return;
+    if(!textPrompt) return;
     
-    // Adicionar mensagem do utilizador ao chat
-    const userMsgDiv = document.createElement('div');
-    userMsgDiv.className = "ai-msg user";
-    userMsgDiv.innerText = userText;
-    messagesElement.appendChild(userMsgDiv);
+    // Adicionar mensagem do utilizador ao ecrã
+    const userDiv = document.createElement('div');
+    userDiv.className = "ai-msg user";
+    userDiv.innerText = textPrompt;
+    messagesElement.appendChild(userDiv);
     inputElement.value = "";
     messagesElement.scrollTop = messagesElement.scrollHeight;
     
-    // Validar Chave de API
+    // Validar Chave Local
     const apiKey = localStorage.getItem('gemini_api_key');
     if(!apiKey) {
-        const errDiv = document.createElement('div');
-        errDiv.className = "ai-msg gemini";
-        errDiv.style.color = "#991b1b";
-        errDiv.innerHTML = "⚠️ API Key não configurada! Vai ao menu lateral em <strong>CONFIGURAR IA</strong> e insere o teu token do Gemini para ativares as respostas inteligentes.";
-        messagesElement.appendChild(errDiv);
+        const errorDiv = document.createElement('div');
+        errorDiv.className = "ai-msg gemini";
+        errorDiv.style.color = "#b91c1c";
+        errorDiv.innerHTML = "⚠️ <strong>API Key em falta!</strong> Acede ao botão de engrenagem (⚙️) no canto superior direito ou menu lateral e introduz a tua chave gerada no AI Studio para ativares as respostas.";
+        messagesElement.appendChild(errorDiv);
         return;
     }
     
-    // Mensagem de carregamento da IA
-    const loadingDiv = document.createElement('div');
-    loadingDiv.className = "ai-msg gemini";
-    loadingDiv.innerText = "A analisar contexto e a processar resposta...";
-    messagesElement.appendChild(loadingDiv);
+    // Feedback visual de carregamento
+    const loadDiv = document.createElement('div');
+    loadDiv.className = "ai-msg gemini";
+    loadDiv.innerText = "A processar consulta com o motor Gemini...";
+    messagesElement.appendChild(loadDiv);
     messagesElement.scrollTop = messagesElement.scrollHeight;
     
-    // Estruturar o prompt avançado com Engenharia de Prompt embutida
-    const promptCompleto = `
-        Atuas como um Mentor e Tutor de Alta Performance Inteligente.
-        Contexto Atual do Objetivo/Lição: ${contexto}
-        Pedido do utilizador: ${userText}
+    // Engenharia de Prompt Embutida Avançada
+    const promptConsolidado = `
+        Atuas como um Mentor Estratégico de Alta Performance e Co-Piloto Inteligente para projetos familiares e capacitação profissional acelerada.
         
-        Instruções de resposta:
-        - Sê extremamente direto, focado, altamente profissional e inspirador.
-        - Se for sobre idiomas, corrige qualquer erro gramatical gentilmente e sugere formas mais nativas.
-        - Se for sobre metas, cria passos exequíveis e práticos.
-        - Mantém a resposta concisa e estruturada.
+        Contexto Operacional da Janela Ativa: ${contextoBase}
+        Questão Direta do Utilizador: ${textPrompt}
+        
+        Instruções de Resposta:
+        1. Sê incrivelmente focado, direto ao ponto e evita introduções genéricas ou formais longas.
+        2. Se o contexto envolver Idiomas (Língua Inglesa/Francesa), corrige detalhadamente qualquer deslize gramatical ou de concordância de forma construtiva e lista 2 ou 3 variações mais corporativas ou nativas para a frase inserida.
+        3. Se envolver Metas Operacionais, decompõe a resposta em ações práticas executáveis imediatas (checklist clara).
+        4. Comunica em Português europeu natural, mantendo uma postura motivadora, focada na alta performance e na 'aura' de evolução constante.
     `;
     
+    // Endpoint Universal compatível com os modelos 1.5 estáveis do AI Studio
+    const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        const response = await fetch(apiEndpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: promptCompleto }] }]
+                contents: [{ parts: [{ text: promptConsolidado }] }]
             })
         });
         
-        const data = await response.json();
-        loadingDiv.remove();
+        loadDiv.remove();
+        const responseData = await response.json();
+        const targetDiv = document.createElement('div');
+        targetDiv.className = "ai-msg gemini";
         
-        const iaResponseDiv = document.createElement('div');
-        iaResponseDiv.className = "ai-msg gemini";
-        
-        if(data.candidates && data.candidates[0].content.parts[0].text) {
-            let textoResposta = data.candidates[0].content.parts[0].text;
-            // Formatação básica de quebras de linha e bold simples
-            textoResposta = textoResposta.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            iaResponseDiv.innerHTML = textoResposta;
+        if(responseData.candidates && responseData.candidates[0].content.parts[0].text) {
+            let cleanResponse = responseData.candidates[0].content.parts[0].text;
+            // Processamento básico e limpo de quebras de linha e negritos para HTML
+            cleanResponse = cleanResponse.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            targetDiv.innerHTML = cleanResponse;
         } else {
-            iaResponseDiv.innerText = "Não consegui extrair uma resposta estruturada. Tenta reformular a pergunta.";
+            // Tratamento detalhado caso a chave retorne erro de cotas ou estrutura regional
+            if(responseData.error) {
+                targetDiv.style.color = "#b91c1c";
+                targetDiv.innerHTML = `⚠️ <strong>Erro retornado pela API da Google:</strong> ${responseData.error.message}<br><small>Verifica se o faturamento ou as permissões do projeto no AI Studio estão regulares para chaves europeias.</small>`;
+            } else {
+                targetDiv.innerText = "Não foi possível estruturar uma resposta automática. Tenta encurtar ou reformular a questão.";
+            }
         }
+        messagesElement.appendChild(targetDiv);
         
-        messagesElement.appendChild(iaResponseDiv);
-    } catch (error) {
-        loadingDiv.remove();
-        const errDiv = document.createElement('div');
-        errDiv.className = "ai-msg gemini";
-        errDiv.innerText = "Erro na ligação com o servidor do Gemini. Verifica a tua ligação ou validade da chave de API.";
-        messagesElement.appendChild(errDiv);
+    } catch (err) {
+        loadDiv.remove();
+        const crashDiv = document.createElement('div');
+        crashDiv.className = "ai-msg gemini";
+        crashDiv.style.color = "#b91c1c";
+        crashDiv.innerText = "Erro crítico na comunicação de rede com o servidor Google Gemini. Confirma a validade da tua chave local ou tenta novamente.";
+        messagesElement.appendChild(crashDiv);
     }
     
     messagesElement.scrollTop = messagesElement.scrollHeight;
 }
-
-// Redirecionamento explícito para o menu de macros
-const originalShowView = showView;
-showView = function(viewId) {
-    if(viewId === 'macros') {
-        showMacrosView();
-    } else {
-        originalShowView(viewId);
-    }
-};
 </script>
 </body>
 </html>

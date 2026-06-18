@@ -3,620 +3,788 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PROJETO FAMÍLIA 2030 - Plataforma Corporativa</title>
+    <title>PROJETO FAMÍLIA 2030 - Enterprise Suite v4.0</title>
+    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        /* Custom scrollbar para visual executivo */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #0b0f19; }
-        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #374151; }
-        .sidebar-scroll { max-height: calc(100vh - 180px); overflow-y: auto; }
-        .main-scroll { max-height: calc(100vh - 90px); overflow-y: auto; }
+        ::-webkit-scrollbar-track { background: #0b1329; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        .interactive-panel { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .tab-active { background: linear-gradient(to right, #0891b2, #2563eb) !important; color: white !important; box-shadow: 0 4px 6px -1px rgba(6, 182, 212, 0.2); }
+        .input-focus-effect:focus { border-color: #06b6d4; box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.2); }
     </style>
 </head>
-<body class="bg-[#060814] text-slate-100 antialiased font-sans min-h-screen flex flex-col overflow-hidden">
+<body class="bg-[#050b18] text-slate-100 font-sans min-h-screen flex flex-col overflow-x-hidden antialiased selection:bg-cyan-500/30">
 
-    <div id="screen-lock" class="hidden fixed inset-0 bg-[#060814] z-[9999] flex flex-col items-center justify-center p-4">
-        <div class="bg-[#0b0f19] border border-slate-800 p-8 rounded-2xl max-w-md w-full text-center space-y-4 shadow-2xl">
-            <div class="text-3xl">🔒</div>
-            <h2 class="text-lg font-bold text-slate-200">Acesso Restrito - Diretoria Executiva</h2>
-            <p class="text-xs text-slate-400">Insira a credencial mestra do Projeto Família 2030 para libertar o terminal de dados.</p>
-            <input type="password" id="global-pass" placeholder="Palavra-passe" class="w-full bg-[#060814] border border-slate-700 rounded-lg p-3 text-center text-sm font-mono text-white focus:outline-none focus:border-cyan-500">
-            <button onclick="verificarAcessoGlobal()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 rounded-lg text-sm transition">Autenticar Plataforma</button>
-        </div>
-    </div>
-
-    <header class="h-[80px] border-b border-slate-800 bg-[#0b0f19] px-6 flex justify-between items-center shadow-xl flex-shrink-0 z-40">
-        <div class="flex items-center gap-3">
-            <div class="bg-gradient-to-br from-cyan-500 to-emerald-500 text-slate-950 font-black px-3 py-1.5 rounded-xl text-sm tracking-tighter">F30</div>
+    <!-- HEADER EXECUTIVO DE ALTA PATENTE -->
+    <header class="h-20 border-b border-slate-800 bg-[#091124] px-8 flex justify-between items-center shadow-2xl relative z-50">
+        <div class="flex items-center gap-4">
+            <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-amber-500 flex items-center justify-center font-black text-slate-950 text-sm shadow-lg shadow-cyan-500/10">F30</div>
             <div>
-                <h1 class="text-md font-bold tracking-tight bg-gradient-to-r from-cyan-400 via-emerald-400 to-indigo-400 bg-clip-text text-transparent uppercase">
-                    PROJETO FAMÍLIA 2030 &bull; Executive Suite
-                </h1>
-                <p class="text-[11px] text-slate-400 uppercase tracking-widest font-mono">Plano de Transição Patrimonial, Linguística e Carreira (2026-2050)</p>
+                <h1 class="text-sm font-black uppercase tracking-wider bg-gradient-to-r from-slate-100 via-slate-300 to-cyan-400 bg-clip-text text-transparent">Projeto Família 2030</h1>
+                <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Plano Diretor de Emigração Estratégica & Arquitetura de Património</p>
             </div>
         </div>
 
-        <div class="flex gap-1.5 bg-[#060814] p-1 rounded-xl border border-slate-800">
-            <button onclick="mudarMembro('julio')" id="btn-julio" class="px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-cyan-600 text-white">
+        <!-- SELETOR DE PERFIL INTERATIVO (ENCAPSULADO) -->
+        <div class="flex bg-[#050b18] p-1 rounded-xl border border-slate-800/80 shadow-inner">
+            <button onclick="ativarPerfil('julio')" id="tab-julio" class="px-5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
                 <span>👨‍💻</span> <span>Júlio (Pai)</span>
             </button>
-            <button onclick="mudarMembro('lais')" id="btn-lais" class="px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
+            <button onclick="ativarPerfil('lais')" id="tab-lais" class="px-5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
                 <span>👩‍⚕️</span> <span>Laís (Mãe)</span>
             </button>
-            <button onclick="mudarMembro('isabella')" id="btn-isabella" class="px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
+            <button onclick="ativarPerfil('isabella')" id="tab-isabella" class="px-5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
                 <span>👑</span> <span>Isabella (Filha)</span>
             </button>
         </div>
     </header>
 
-    <div class="flex-1 flex overflow-hidden w-full">
+    <!-- ARQUITETURA DE TRÊS COLUNAS CORPORATIVAS -->
+    <div class="flex-1 flex flex-col lg:flex-row w-full overflow-hidden">
         
-        <aside class="w-72 bg-[#0b0f19] border-r border-slate-800 flex flex-col flex-shrink-0 z-30">
-            <div class="p-4 border-b border-slate-800 bg-[#070a12]">
-                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Navegação Estrutural</span>
-                <h2 class="text-xs font-bold text-slate-300 flex items-center gap-1">
-                    <span>🗂️</span> Árvore de Diretórios Temporais
-                </h2>
-            </div>
-            
-            <div class="p-4 sidebar-scroll space-y-4">
-                <div class="space-y-1">
-                    <button onclick="toggleAno('tree-2026')" class="w-full text-left font-bold text-xs text-cyan-400 flex items-center justify-between p-1 hover:bg-slate-800/30 rounded">
-                        <span>📂 ANO 2026 (Preparação Core)</span>
-                        <span id="indicator-tree-2026">▼</span>
-                    </button>
-                    
-                    <div id="tree-2026" class="pl-2 space-y-1 border-l border-slate-800">
-                        <div class="space-y-0.5">
-                            <div class="text-[11px] font-bold text-emerald-500 px-2 py-1 bg-emerald-950/20 rounded flex items-center gap-1">
-                                <span>📅</span> Julho 2026 (Marco Zero)
-                            </div>
-                            <div class="pl-2 space-y-0.5 font-mono text-[11px]">
-                                <button onclick="alterarPosicao('2026', 'julho', 'semana1')" id="nav-2026-julho-semana1" class="w-full text-left p-1.5 rounded bg-slate-800 text-white font-medium flex items-center justify-between">
-                                    <span>↳ S1: 01 a 05/07</span> <span class="text-[9px] bg-cyan-950 text-cyan-400 px-1 rounded">Ativo</span>
-                                </button>
-                                <button onclick="alterarPosicao('2026', 'julho', 'semana2')" id="nav-2026-julho-semana2" class="w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40">
-                                    <span>↳ S2: 06 a 12/07</span>
-                                </button>
-                                <button onclick="alterarPosicao('2026', 'julho', 'semana3')" id="nav-2026-julho-semana3" class="w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40">
-                                    <span>↳ S3: 13 a 19/07</span>
-                                </button>
-                                <button onclick="alterarPosicao('2026', 'julho', 'semana4')" id="nav-2026-julho-semana4" class="w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40">
-                                    <span>↳ S4: 20 a 26/07</span>
-                                </button>
-                            </div>
+        <!-- COLUNA 1: DIRETÓRIO DE CRONOGRAMA EM ÁRVORE -->
+        <aside class="w-full lg:w-72 bg-[#091124] border-r border-slate-800/60 p-4 flex flex-col justify-between flex-shrink-0">
+            <div class="space-y-4">
+                <div class="p-2 bg-[#050b18] rounded-lg border border-slate-800/50">
+                    <span class="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-widest block">Índice Cronológico</span>
+                    <h2 class="text-xs font-bold text-slate-300 flex items-center gap-1.5 mt-0.5">📂 Módulos de Execução</h2>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                    <!-- Ano 2026 -->
+                    <div class="space-y-1">
+                        <div class="font-bold text-slate-300 px-1 flex items-center justify-between">
+                            <span>📂 Ano 2026 (Fase Base)</span>
                         </div>
-
-                        <button class="w-full text-left p-1.5 text-slate-500 hover:text-slate-400 text-[11px] flex items-center gap-1 opacity-60 cursor-not-allowed">
-                            <span>🔒</span> Agosto 2026 (Fase Técnica)
-                        </button>
-                        <button class="w-full text-left p-1.5 text-slate-500 hover:text-slate-400 text-[11px] flex items-center gap-1 opacity-60 cursor-not-allowed">
-                            <span>🔒</span> Setembro 2026 (Auditoria)
-                        </button>
-                        <button class="w-full text-left p-1.5 text-slate-500 hover:text-slate-400 text-[11px] flex items-center gap-1 opacity-60 cursor-not-allowed">
-                            <span>🔒</span> Outubro a Dezembro 2026
-                        </button>
+                        <div class="pl-2 border-l border-slate-800 space-y-1 font-mono text-[11px]">
+                            <div class="text-amber-400 font-bold px-1.5 py-0.5 bg-amber-500/5 rounded text-[10px]">📅 Julho 2026</div>
+                            <button onclick="mudarSemana('semana1')" id="nav-semana1" class="w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40 block">↳ Semana 1 (01-05/07)</button>
+                            <button onclick="mudarSemana('semana2')" id="nav-semana2" class="w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40 block">↳ Semana 2 (06-12/07)</button>
+                            <button onclick="mudarSemana('semana3')" id="nav-semana3" class="w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40 block">↳ Semana 3 (13-19/07)</button>
+                            <button onclick="mudarSemana('semana4')" id="nav-semana4" class="w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40 block">↳ Semana 4 (20-31/07)</button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="space-y-1 pt-2 border-t border-slate-800/60">
-                    <button onclick="toggleAno('tree-future')" class="w-full text-left font-bold text-xs text-slate-400 flex items-center justify-between p-1 hover:bg-slate-800/30 rounded">
-                        <span>📁 ANOS SEGUINTES (Horizonte)</span>
-                        <span id="indicator-tree-future">►</span>
-                    </button>
-                    <div id="tree-future" class="hidden pl-2 space-y-1 text-[11px] text-slate-500 font-mono">
-                        <div class="p-1">• 2027: Certificações & Alocação Técnica</div>
-                        <div class="p-1">• 2028: Intermediário Pro & Sondagem Ativa</div>
-                        <div class="p-1">• 2029: Simulação de Prontidão Internacional</div>
-                        <div class="p-1">• 2030: O Marco de Decisão Final / Janela</div>
-                        <div class="p-1">• 2031-2040: Consolidação Patrimonial Externa</div>
-                        <div class="p-1">• 2041-2050: Independência Plena & Reforma</div>
+                    <!-- Horizontes de Consultoria -->
+                    <div class="pt-2 border-t border-slate-800/60 space-y-1 text-slate-500 font-mono text-[11px]">
+                        <div class="p-1 hover:text-slate-400 transition cursor-help" title="Foco em Certificações Técnicas">📁 2027: Consolidação Técnica</div>
+                        <div class="p-1 hover:text-slate-400 transition cursor-help" title="Alocação Patrimonial Ativa">📁 2028: Janela Imobiliária & Pro</div>
+                        <div class="p-1 hover:text-slate-400 transition cursor-help" title="Testes de Mercado Internacional">📁 2029: Auditoria Consular</div>
+                        <div class="p-1 hover:text-slate-400 transition cursor-help" title="Decisão de Emigração">📁 2030: O Marco de Transição</div>
+                        <div class="p-1 text-slate-600">• 2031-2050: Renda Passiva & Reforma</div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-auto p-4 border-t border-slate-800 bg-[#070a12]">
-                <div class="flex justify-between items-center mb-1.5">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase">Score de Emigração</span>
-                    <span class="text-xs font-mono text-cyan-400 font-bold" id="txt-global-score">27%</span>
+            <!-- SCORE CARD DE PRONTIDÃO -->
+            <div class="pt-4 border-t border-slate-800/80 bg-[#050b18]/40 p-3 rounded-xl mt-4">
+                <div class="flex justify-between items-center text-[10px] font-mono mb-1">
+                    <span class="text-slate-400 uppercase">Score Geral do Membro:</span>
+                    <span class="text-cyan-400 font-bold" id="score-txt">0%</span>
                 </div>
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div class="bg-gradient-to-r from-cyan-500 to-emerald-400 h-full w-[27%] transition-all duration-500"></div>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div id="score-bar" class="bg-gradient-to-r from-cyan-500 to-indigo-500 h-full transition-all duration-500" style="width: 0%;"></div>
                 </div>
-                <span class="text-[9px] text-slate-500 block mt-1">Meta Mínima de Prontidão Consular: 85%</span>
             </div>
         </aside>
 
-        <main class="flex-1 bg-[#060814] main-scroll p-6 grid grid-cols-1 xl:grid-cols-3 gap-6 z-20">
+        <!-- COLUNA 2: CENTRAL DINÂMICA (PAINEL DE TRABALHO DO MEMBRO) -->
+        <main class="flex-1 bg-[#050b18] p-6 space-y-6 overflow-y-auto max-h-[calc(100vh-80px)]">
             
-            <div class="xl:col-span-2 space-y-6">
-                
-                <div class="bg-[#0b0f19] border border-slate-800 rounded-xl p-4 flex justify-between items-center shadow-md">
-                    <div>
-                        <span class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest font-mono block">Terminal de Trabalho</span>
-                        <h2 class="text-sm font-bold text-slate-200" id="lbl-posicao-painel">ANO 2026 &bull; JULHO &bull; SEMANA 1</h2>
-                    </div>
-                    <div class="text-xs bg-emerald-950/60 text-emerald-400 border border-emerald-900/60 px-2.5 py-1 rounded-lg font-mono">
-                        Operador: <span id="lbl-operador-nome" class="font-bold">Júlio</span>
-                    </div>
+            <!-- CONTROLLER CARD -->
+            <div class="bg-[#091124] border border-slate-800 rounded-xl p-4 flex justify-between items-center shadow-lg">
+                <div>
+                    <span class="text-[9px] font-mono text-cyan-400 uppercase tracking-widest block">Dashboard de Evolução Ativa</span>
+                    <h2 class="text-base font-bold text-slate-200" id="main-panel-title">Carregando dados estruturais...</h2>
                 </div>
-
-                <div class="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-3 shadow-md">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <span>📋</span> Objetivos Operacionais e Checklists Dedicados
-                    </h3>
-                    <div class="space-y-2" id="box-tasks-dinamicas">
-                        </div>
-                </div>
-
-                <div class="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-4 shadow-md">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                            <span>🌍</span> Imersão Avançada em Idiomas & Atividade Prática Real
-                        </h3>
-                        <span class="text-[10px] font-mono text-slate-500">Mínimo Diário: 60 Minutos</span>
-                    </div>
-                    <div id="box-languages-dinamico" class="space-y-6">
-                        </div>
-                </div>
-
-                <div class="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-4 shadow-md">
-                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-800 pb-2">
-                        <span>📈</span> Roadmaps de Carreira & Projeção Salarial Internacional (Consultoria)
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-                        <div class="p-3 bg-[#060814] border border-slate-800 rounded-lg space-y-2">
-                            <span class="text-cyan-400 font-bold block">ROADMAP JÚLIO</span>
-                            <p class="text-[11px] text-slate-400">Transição de Manutenção Escolar para <strong>Facility Management / Building Systems Specialist</strong>.</p>
-                            <div class="text-[10px] text-slate-500">Foco Técnico: Certificações AVAC + Regulamentos de Infraestruturas Europeias.</div>
-                        </div>
-                        <div class="p-3 bg-[#060814] border border-slate-800 rounded-lg space-y-2">
-                            <span class="text-emerald-400 font-bold block">ROADMAP LAÍS</span>
-                            <p class="text-[11px] text-slate-400">Retorno ao Ecossistema Core <strong>Microsoft Licensing & Cloud Operations Specialist</strong>.</p>
-                            <div class="text-[10px] text-slate-500">Foco Técnico: Atualização Azure, SC-900, SC-300, NCE & Partner Center Billing.</div>
-                        </div>
-                        <div class="p-3 bg-[#060814] border border-slate-800 rounded-lg space-y-2">
-                            <span class="text-indigo-400 font-bold block">ROADMAP ISABELLA</span>
-                            <p class="text-[11px] text-slate-400">Preparação de Alta Performance para Ensino Secundário e <strong>Universidade Europeia (Psicologia)</strong>.</p>
-                            <div class="text-[10px] text-slate-500">Foco Linguístico: Inglês Académico Avançado + Francês Instrumental.</div>
-                        </div>
-                    </div>
-
-                    <div class="overflow-x-auto pt-2">
-                        <table class="w-full text-left font-mono text-[11px] border-collapse border border-slate-800">
-                            <thead>
-                                <tr class="bg-[#060814] text-slate-400 border-b border-slate-800">
-                                    <th class="p-2 border-r border-slate-800">Operador / Perfil</th>
-                                    <th class="p-2 border-r border-slate-800">Hoje (Portugal)</th>
-                                    <th class="p-2 border-r border-slate-800">Luxemburgo Est.</th>
-                                    <th class="p-2 border-r border-slate-800">Genebra / Suíça Est.</th>
-                                    <th class="p-2">Bruxelas / Bélgica</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b border-slate-800/60 hover:bg-slate-900/20">
-                                    <td class="p-2 border-r border-slate-800 font-bold text-cyan-400">Júlio (Facility Tech)</td>
-                                    <td class="p-2 border-r border-slate-800 text-slate-400">1.000€ Líq.</td>
-                                    <td class="p-2 border-r border-slate-800 text-slate-200">3.800€ - 5.200€</td>
-                                    <td class="p-2 border-r border-slate-800 text-slate-200">5.000 - 6.800 CHF</td>
-                                    <td class="p-2 text-slate-300">3.200€ - 4.400€</td>
-                                </tr>
-                                <tr class="hover:bg-slate-900/20">
-                                    <td class="p-2 border-r border-slate-800 font-bold text-emerald-400">Laís (Microsoft Cloud Ops)</td>
-                                    <td class="p-2 border-r border-slate-800 text-slate-400">1.100€ Líq.</td>
-                                    <td class="p-2 border-r border-slate-800 text-slate-200">4.500€ - 6.500€</td>
-                                    <td class="p-2 border-r border-slate-800 text-slate-200">5.500 - 8.000 CHF</td>
-                                    <td class="p-2 text-slate-300">3.800€ - 5.500€</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="text-xs bg-slate-950 px-3 py-1 rounded-lg border border-slate-800/80 font-mono text-slate-300">
+                    Nível de Acesso: <span class="text-amber-400 font-bold uppercase">Estratégico</span>
                 </div>
             </div>
 
-            <div class="space-y-6">
-                
-                <div class="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-4 shadow-xl">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                            <span>🔒</span> Radar Financeiro Familiar Protegido
-                        </h3>
-                        <span id="badge-lock-status" class="text-[9px] font-mono bg-amber-950 text-amber-400 border border-amber-900 px-1.5 py-0.5 rounded">Criptografado</span>
-                    </div>
-                    <p class="text-[11px] text-slate-400 leading-relaxed">
-                        Em conformidade com as diretrizes de proteção familiar, todos os ativos, balanços de poupança e projeções patrimoniais encontram-se mascarados.
-                    </p>
-                    
-                    <div class="p-3 bg-[#060814] rounded-lg border border-slate-800 font-mono space-y-3 text-xs">
-                        <div class="flex justify-between items-center">
-                            <span class="text-slate-500">Poupança Mensal Líquida:</span>
-                            <span id="val-poupanca" class="text-slate-300 font-bold">••••</span>
-                        </div>
-                        <div class="flex justify-between items-center border-t border-slate-800/60 pt-2">
-                            <span class="text-slate-500">Bónus Futuro Imóvel (RJ):</span>
-                            <span id="val-bonus-rj" class="text-slate-400 font-semibold">••••</span>
-                        </div>
-                        <div class="flex justify-between items-center border-t border-slate-800/60 pt-2">
-                            <span class="text-slate-500">Projeção de Alocação (RJ):</span>
-                            <span id="val-alocacao-rj" class="text-[10px] text-slate-500 text-right">••••</span>
-                        </div>
+            <!-- CHECKLIST EXECUTIVA -->
+            <div class="bg-[#091124] border border-slate-800 rounded-xl p-5 space-y-3 shadow-md">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                    <span>📋</span> Metas Operacionais Semanais (Checklist)
+                </h3>
+                <div id="tasks-container" class="space-y-2"></div>
+            </div>
 
-                        <div id="form-senha-financas" class="pt-2 border-t border-slate-800 flex gap-2">
-                            <input type="password" id="pass-financas-input" placeholder="Código de Acesso" class="w-full bg-[#060814] border border-slate-700 rounded p-1.5 text-center text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
-                            <button onclick="revelarFinancas()" class="bg-cyan-950 text-cyan-400 border border-cyan-900 px-3 py-1.5 rounded text-xs font-bold hover:bg-cyan-900 hover:text-white transition">Decriptar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-3 shadow-md">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <span>🏁</span> Metas por Ano Consolidado (2026-2030)
+            <!-- MÓDULO INTERATIVO DE IDIOMAS COM ÁUDIO E MICROFONE -->
+            <div class="bg-[#091124] border border-slate-800 rounded-xl p-5 space-y-4 shadow-md">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <span>🌍</span> Laboratório Linguístico Inteligente (Áudio + Fala)
                     </h3>
-                    <div class="space-y-2.5 font-mono text-[11px]">
-                        <div class="p-2 bg-[#060814] border-l-2 border-cyan-500 rounded">
-                            <span class="text-cyan-400 font-bold block">2026 - Estrutura Financeira Base</span>
-                            <p class="text-[10px] text-slate-400 mt-0.5">Fundo de Emergência ativado em Estarreja. Rotina severa de idiomas.</p>
-                        </div>
-                        <div class="p-2 bg-[#060814] border-l-2 border-slate-700 rounded opacity-70">
-                            <span class="text-slate-300 font-bold block">2027 - Certificações de Peso</span>
-                            <p class="text-[10px] text-slate-500 mt-0.5">Mãe valida SC-900. Pai conclui formação em AVAC e Eletricidade.</p>
-                        </div>
-                        <div class="p-2 bg-[#060814] border-l-2 border-slate-700 rounded opacity-70">
-                            <span class="text-slate-300 font-bold block">2028 - Tração Operacional</span>
-                            <p class="text-[10px] text-slate-500 mt-0.5">Certificação SC-300. Janela potencial para venda do imóvel no Brasil.</p>
-                        </div>
-                        <div class="p-2 bg-[#060814] border-l-2 border-slate-700 rounded opacity-70">
-                            <span class="text-slate-300 font-bold block">2029 - Auditoria Internacional</span>
-                            <p class="text-[10px] text-slate-500 mt-0.5">Validação de exames de proficiência (B2). Testes de candidaturas exógenas.</p>
-                        </div>
-                        <div class="p-2 bg-[#060814] border-l-2 border-emerald-500 rounded opacity-70">
-                            <span class="text-emerald-400 font-bold block">2030 - Janela de Mudança Estratégica</span>
-                            <p class="text-[10px] text-slate-500 mt-0.5">Ativação dos planos de imigração (Luxemburgo, Suíça ou Bruxelas).</p>
-                        </div>
-                    </div>
+                    <span class="text-[10px] font-mono text-slate-500">Mapeamento de Fluência Diária</span>
                 </div>
+                <div id="languages-container" class="space-y-6"></div>
+            </div>
 
-                <div class="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-3 shadow-md">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-                        <span>🛡️</span> Matriz de Risco Estratégico & Mitigação
-                    </h3>
-                    <div class="space-y-2 text-[11px]">
-                        <div class="p-2.5 bg-[#171012] border border-red-900/40 rounded-lg">
-                            <div class="flex justify-between font-bold text-red-400 mb-1">
-                                <span>⚡ Défice de Idioma Alvo</span>
-                                <span class="bg-red-950 px-1 rounded text-[10px]">Crítico</span>
-                            </div>
-                            <p class="text-slate-400 text-[10px]"><strong>Mitigação:</strong> Fracionamento da rotina em blocos diários de 20min obrigatórios com input de texto na plataforma.</p>
-                        </div>
-                        <div class="p-2.5 bg-[#171410] border border-amber-900/40 rounded-lg">
-                            <div class="flex justify-between font-bold text-amber-400 mb-1">
-                                <span>⚡ Flutuação na Venda do RJ</span>
-                                <span class="bg-amber-950 px-1 rounded text-[10px]">Médio</span>
-                            </div>
-                            <p class="text-slate-400 text-[10px]"><strong>Mitigação:</strong> Orçamento base familiar blindado sem contar com os €20.000, tratando-os como bónus líquido de aceleração tardia.</p>
-                        </div>
+            <!-- CAPÍTULO ESTÁTICO DE CONSULTORIA INTERNACIONAL -->
+            <div class="bg-[#091124] border border-slate-800 rounded-xl p-5 space-y-4 shadow-md">
+                <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2 border-b border-slate-800 pb-2">
+                    <span>📉</span> Projeções Salariais e Matriz de Carreira (Consultoria Internacional)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                    <div class="p-3 bg-[#050b18] border border-slate-800 rounded-lg">
+                        <span class="text-cyan-400 font-bold block mb-1">🏢 ESTRATÉGIA IMOBILIÁRIA (SÃO PAULO)</span>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            Alocação estratégica do património acumulado em imóveis na planta ou para reabilitação em zonas de alta liquidez e forte procura estudantil/empresarial (Jundiaí, Indaiatuba, Campinas).
+                        </p>
                     </div>
-                </div>
-
-                <div class="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-3 shadow-md">
-                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                        <span>🏛️</span> Cenários de Reforma do Casal em 2050
-                    </h3>
-                    <div class="space-y-2 font-mono text-[11px]">
-                        <div class="flex justify-between items-center p-1.5 bg-[#060814] rounded">
-                            <span class="text-slate-400">Portugal (Conservador):</span>
-                            <span class="text-slate-200 font-bold">2.400€ - 3.300€</span>
-                        </div>
-                        <div class="flex justify-between items-center p-1.5 bg-[#060814] rounded">
-                            <span class="text-emerald-400 font-bold">Luxemburgo (Alto):</span>
-                            <span class="text-emerald-300 font-bold">4.500€ - 7.000€</span>
-                        </tr>
-                        <div class="flex justify-between items-center p-1.5 bg-[#060814] rounded">
-                            <span class="text-cyan-400 font-bold">Suíça / Genebra:</span>
-                            <span class="text-cyan-300 font-bold">5.500 - 9.000 CHF</span>
-                        </div>
+                    <div class="p-3 bg-[#050b18] border border-slate-800 rounded-lg">
+                        <span class="text-amber-400 font-bold block mb-1">🏛️ REFORMA ESTIMADA EM 2050 (CASAL)</span>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            • Portugal: 2.400€ - 3.300€/mês<br>
+                            • Luxemburgo: 4.500€ - 7.000€/mês<br>
+                            • Suíça/Genebra: 5.500 - 9.000 CHF/mês
+                        </p>
                     </div>
-                    <p class="text-[10px] text-slate-500 italic leading-tight pt-1">
-                        *Estimativas de consultoria prudentes dependentes de anos contributivos e acordos internacionais bilaterais.
-                    </p>
                 </div>
             </div>
         </main>
+
+        <!-- COLUNA 3: RADAR PATRIMONIAL CRIPTOGRAFADO -->
+        <aside class="w-full lg:w-80 bg-[#091124] border-l border-slate-800/60 p-5 space-y-6 flex-shrink-0 overflow-y-auto max-h-[calc(100vh-80px)]">
+            
+            <div class="bg-[#050b18] border border-slate-800/80 rounded-xl p-4 space-y-4 shadow-xl">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <span>🔒</span> Ativos & Segurança Familiar
+                    </h3>
+                    <span id="finances-badge" class="text-[9px] font-mono bg-red-950 text-red-400 border border-red-900/40 px-1.5 py-0.5 rounded">Trancado</span>
+                </div>
+                
+                <p class="text-[11px] text-slate-400 leading-relaxed font-sans">
+                    Proteção de dados contra visualização acidental ou acessos não autorizados de terceiros.
+                </p>
+
+                <div class="space-y-3 font-mono text-xs pt-1">
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500">Poupança Consolidada:</span>
+                        <span id="txt-poupanca" class="font-bold text-slate-300">••••</span>
+                    </div>
+                    <div class="flex justify-between items-center border-t border-slate-800/40 pt-2">
+                        <span class="text-slate-500">Valor Ativo Imóvel RJ:</span>
+                        <span id="txt-imovel" class="font-bold text-slate-300">••••</span>
+                    </div>
+                    <div class="flex justify-between items-center border-t border-slate-800/40 pt-2">
+                        <span class="text-slate-500">Alocação dos €20k:</span>
+                        <span id="txt-alocacao" class="text-[10px] text-slate-500 text-right">••••</span>
+                    </div>
+
+                    <!-- INPUT DE SENHA EMBEBEDADO -->
+                    <div id="finances-auth-block" class="pt-2 border-t border-slate-800 flex gap-2">
+                        <input type="password" id="finances-pass" placeholder="Código de Segurança" class="w-full bg-[#050b18] border border-slate-700 rounded px-2.5 py-1.5 text-center text-xs text-white focus:outline-none focus:border-cyan-500 font-mono">
+                        <button onclick="autenticarFinancas()" class="bg-cyan-950 text-cyan-400 border border-cyan-900/60 px-3 py-1.5 rounded text-xs font-bold hover:bg-cyan-900 hover:text-white transition">Exibir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MATRIZ DE RISCO CORPORATIVA -->
+            <div class="space-y-3">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">🛡️ Matriz de Mitigação</h4>
+                <div class="space-y-2 text-[11px] font-mono">
+                    <div class="p-3 bg-[#161014] border border-red-900/30 rounded-lg space-y-1">
+                        <div class="flex justify-between text-red-400 font-bold">
+                            <span>⚡ Falha de Proficiência</span>
+                            <span>Crítico</span>
+                        </div>
+                        <p class="text-slate-400 text-[10px] font-sans">Mitigação ativa baseada em treinos fonéticos e simulação de áudio nesta suite.</p>
+                    </div>
+                    <div class="p-3 bg-[#161410] border border-amber-900/30 rounded-lg space-y-1">
+                        <div class="flex justify-between text-amber-400 font-bold">
+                            <span>⚡ Desistência por Desgaste</span>
+                            <span>Médio</span>
+                        </div>
+                        <p class="text-slate-400 text-[10px] font-sans">Estratégia de micro-vitórias estruturadas e mensuráveis semana a semana.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
     </div>
 
+    <!-- SCRIPT DE INTELIGÊNCIA SÉNIOR DA PLATAFORMA (DADOS EM MASSA) -->
     <script>
-        // BANCO DE DADOS PEDAGÓGICO COMPLETO E DENSO (Julho 2026 - Dividido Semanalmente por Membro)
-        const baseDadosSemanas = {
+        const matrixDados = {
             julio: {
-                nome: "Júlio",
-                posicaoAtiva: { ano: "2026", mes: "julho", semana: "semana1" },
+                nome: "Júlio (Pai)",
+                semanaAtiva: "semana1",
+                score: "27%",
                 semanas: {
                     semana1: {
                         tasks: [
-                            { id: "ju-s1-1", text: "Garantir o aporte mínimo mensal de poupança na conta de custódia (€100-€200)", done: false },
-                            { id: "ju-s1-2", text: "Consolidar mapeamento de competências anteriores em Telecomunicações, Fibra Óptica e Redes estruturadas para o novo CV Europeu", done: false },
-                            { id: "ju-s1-3", text: "Iniciar triagem de cursos certificados em AVAC e Sistemas de Climatização de Edifícios em Portugal", done: false }
+                            { id: "ju-s1-t1", text: "Efetuar a retenção e alocação automática de poupança mensal (€100-€200).", done: false },
+                            { id: "ju-s1-t2", text: "Compilar histórico completo de 15 anos em Telecomunicações e Fibra Óptica para o formato Europass.", done: false },
+                            { id: "ju-s1-t3", text: "Mapear entidades formadoras para certificações credenciadas em AVAC em Portugal.", done: false }
                         ],
                         languages: [
                             {
-                                lang: "fr",
-                                id: "ju-s1-lang1",
-                                titulo: "Francês Técnico - Domínio de Manutenção e Edifícios (Facility)",
-                                vocabulario: "Vocabulário Semanal Crítico:\n- La maintenance préventive (A manutenção preventiva)\n- Le diagnostic de pannes (O diagnóstico de avarias)\n- Le bâtiment (O edifício / A infraestrutura)\n- Chauffage, ventilation et climatisation / CVC (AVAC)\n\nFrases de Simulação Executiva:\n1. 'Je travaille dans une école.'\n   Pronúncia: jê travai dan une ecol (Trabalho numa escola)\n2. 'Je cherche un emploi dans la maintenance des bâtiments.'\n   Pronúncia: jê chérch an ampluá dan la manutençón de batimãn (Procuro emprego na manutenção de edifícios)",
-                                atividade: "Atividade de Tradução Ativa:\nTraduza para o francês técnico a seguinte declaração para uma vaga de emprego: 'Tenho 15 anos de experiência em redes e infraestruturas e realizo a manutenção preventiva do edifício.'"
+                                lang: "fr", code: "fr-FR", id: "ju-s1-l1",
+                                nivel: "Francês Técnico - Facility Management (Módulo I)",
+                                lexical: [
+                                    { original: "Bonjour", fone: "bon-jûr", trad: "Olá / Bom dia" },
+                                    { original: "Je cherche un emploi dans la maintenance des bâtiments.", fone: "jê chérch an ampluá dan la manutençón de batimãn", trad: "Procuro emprego na manutenção de edifícios." },
+                                    { original: "La maintenance préventive du système électrique.", fone: "la man-tê-nãnss pré-vãn-tîv dû sîs-têm é-léc-trîc", trad: "A manutenção preventiva do sistema elétrico." },
+                                    { original: "Le disjoncteur principal est en panne.", fone: "lê dîz-jonc-têr pran-sî-pâl étãn pân", trad: "O disjuntor principal está avariado." },
+                                    { original: "Où se trouve la centrale thermique?", fone: "û sê trûv la sãn-trâl têr-mîc", trad: "Onde fica a central térmica?" },
+                                    { original: "Veuillez vérifier le panneau de commande s'il vous plaît.", fone: "vêu-iê vé-rî-fiê lê pa-nô dê có-mãnd sîl vû plê", trad: "Por favor, verifique o painel de comando." },
+                                    { original: "Le technicien de maintenance est en route.", fone: "lê téc-nî-ssiãn dê man-tê-nãnss étãn rût", trad: "O técnico de manutenção está a caminho." }
+                                ],
+                                prompt: "Traduza e contextualize em francês: 'Trabalho numa escola secundária e coordeno reparações elétricas.'"
                             },
                             {
-                                lang: "en",
-                                id: "ju-s1-lang2",
-                                titulo: "Inglês Operacional - Facilities & Infrastructure Basics",
-                                vocabulario: "Key Terms:\n- Troubleshooting (Resolução de problemas/avarias)\n- Facility Manager (Gestor de instalações/edifícios)\n- Health and Safety standards (Normas de higiene e segurança)",
-                                atividade: "Atividade Prática:\nEscreva uma breve justificação técnica (3 linhas) em inglês explicando a necessidade de uma reparação elétrica urgente no quadro elétrico principal do bloco escolar."
+                                lang: "en", code: "en-US", id: "ju-s1-l2",
+                                nivel: "Inglês Operacional - Technical Infrastructure (Módulo I)",
+                                lexical: [
+                                    { original: "Troubleshooting the fiber optic connection.", fone: "tru-bêl-chu-ting dâ fâi-bêr óp-tîc co-néc-chón", trad: "Resolução de problemas na ligação de fibra óptica." },
+                                    { original: "The heating, ventilation, and air conditioning system.", fone: "dâ hî-ting vên-tî-lêi-chón and êr con-dî-chó-ning sîs-têm", trad: "O sistema de aquecimento, ventilação e ar condicionado (AVAC)." },
+                                    { original: "We need to replace the optical transceiver.", fone: "uî nîd tû rê-plêis dâ óp-tî-câl trãn-sî-vêr", trad: "Precisamos de substituir o transcetor ótico." },
+                                    { original: "The safety protocols must be followed strictly.", fone: "dâ sêif-tî prô-to-cols mâst bî fó-lôud strîct-lî", trad: "Os protocolos de segurança devem ser seguidos rigorosamente." },
+                                    { original: "Is the server rack properly grounded?", fone: "îz dâ sêr-vêr ræk pró-pêr-lî grâun-dêd", trad: "O bastidor do servidor está devidamente ligado à terra?" }
+                                ],
+                                prompt: "Descreva em inglês o procedimento básico para isolar uma avaria num circuito."
                             }
                         ]
                     },
                     semana2: {
                         tasks: [
-                            { id: "ju-s2-1", text: "Rever os normativos europeus de segurança técnica em edifícios públicos", done: false },
-                            { id: "ju-s2-2", text: "Executar 30 minutos de escuta de áudio passivo em francês (noticiários técnicos)", done: false }
+                            { id: "ju-s2-t1", text: "Revisar regulamentos técnicos europeus de segurança estrutural de edifícios.", done: false },
+                            { id: "ju-s2-t2", text: "Pesquisar empresas de Facility Management de grande porte na região de Genebra.", done: false }
                         ],
                         languages: [
                             {
-                                lang: "fr",
-                                id: "ju-s2-lang1",
-                                titulo: "Francês Técnico - Equipas e Ferramentas",
-                                vocabulario: "Termos:\n- La plomberie (A canalização)\n- Les outils (As ferramentas)\n- Électricien (Eletricista)",
-                                atividade: "Atividade:\nEscreva em francês: 'Preciso das ferramentas para reparar a canalização na terça-feira.'"
+                                lang: "fr", code: "fr-FR", id: "ju-s2-l1",
+                                nivel: "Francês Técnico - Outillage et Sécurité (Módulo II)",
+                                lexical: [
+                                    { original: "Les outils de travail sont dans l'armoire.", fone: "lê zû-tî dê tra-vâi son dãn lar-muár", trad: "As ferramentas de trabalho estão no armário." },
+                                    { original: "Il faut vérifier la pression d'eau immédiatement.", fone: "îl fô vé-rî-fiê la prê-ssión dô î-mé-diat-mãn", trad: "É preciso verificar a pressão da água imediatamente." },
+                                    { original: "Coupez le courant avant de commencer a travailler.", fone: "cû-pê lê cû-rãn a-vãn dê co-mãn-sê a tra-vâi-iê", trad: "Desligue a corrente antes de começar a trabalhar." },
+                                    { original: "Le câble de fibre optique est endommagé.", fone: "lê câbl dê fîbr óp-tîc étãn-do-ma-jê", trad: "O cabo de fibra óptica está danificado." },
+                                    { original: "Où sont les plans de l'infrastructure?", fone: "û son lê plãn dê lân-fra-strûc-tûr", trad: "Onde estão as plantas da infraestrutura?" }
+                                ],
+                                prompt: "Escreva em francês: 'As ferramentas de manutenção estão guardadas no armário principal.'"
+                            },
+                            {
+                                lang: "en", code: "en-US", id: "ju-s2-l2",
+                                nivel: "Inglês Operacional - Network Architecture (Módulo II)",
+                                lexical: [
+                                    { original: "The patch panel is fully routed.", fone: "dâ pætch pæ-nêl îz fû-lî rû-têd", trad: "O painel de conexões (patch panel) está totalmente encaminhado." },
+                                    { original: "We are experiencing low signal attenuation.", fone: "uî âr êxs-pî-rî-ên-sîng lôu sîg-nâl a-té-nû-êi-chón", trad: "Estamos a registar uma baixa atenuação de sinal." },
+                                    { original: "Check the uninterruptible power supply.", fone: "tchêk dâ ûn-în-tê-râp-tî-bêl pâuer sâ-plâi", trad: "Verifique a fonte de alimentação ininterrupta (UPS)." }
+                                ],
+                                prompt: "Explique em inglês como testar a integridade de uma rota de rede de dados."
                             }
                         ]
                     },
-                    semana3: { tasks: [{ id: "ju-s3-1", text: "Estudo autónomo focado em comandos elétricos básicos", done: false }], languages: [] },
-                    semana4: { tasks: [{ id: "ju-s4-1", text: "Revisão geral do progresso técnico e fecho do balancete de julho", done: false }], languages: [] }
+                    semana3: {
+                        tasks: [
+                            { id: "ju-s3-t1", text: "Organizar pastas digitais com diplomas apostilados e equivalências profissionais.", done: false },
+                            { id: "ju-s3-t2", text: "Mapear a distância média e conexões de transporte público entre zonas residenciais acessíveis em Genebra.", done: false }
+                        ],
+                        languages: [
+                            {
+                                lang: "fr", code: "fr-FR", id: "ju-s3-l1",
+                                nivel: "Francês Técnico - Rapports d'Incident (Módulo III)",
+                                lexical: [
+                                    { original: "J'ai rédigé le rapport de panne ce matin.", fone: "jê ré-dî-jê lê ra-pór dê pân sê ma-tan", trad: "Eu escrevi o relatório de avaria esta manhã." },
+                                    { original: "Le générateur d'urgence a fonctionné correctement.", fone: "lê jé-né-ra-têr dûr-jãnss a fonc-ssio-nê có-réct-mãn", trad: "O gerador de emergência funcionou corretamente." },
+                                    { original: "Il y a une fuite d'eau dans le sous-sol.", fone: "îl î a ûn fûit dô dãn lê sû-sól", trad: "Há uma fuga de água na cave/subsolo." }
+                                ],
+                                prompt: "Crie uma mensagem curta em francês reportando uma avaria no aquecimento central ao supervisor."
+                            },
+                            {
+                                lang: "en", code: "en-US", id: "ju-s3-l2",
+                                nivel: "Inglês Técnico - Safety Standards (Módulo III)",
+                                lexical: [
+                                    { original: "Wear personal protective equipment at all times.", fone: "uêr pêr-sô-nâl prô-téc-tîv î-quîp-mênt æt ôl tâims", trad: "Use equipamento de proteção individual a toda a hora." },
+                                    { original: "The emergency exit is blocked.", fone: "dâ î-mêr-jên-sî éx-ît îz blóc-têd", trad: "A saída de emergência está bloqueada." }
+                                ],
+                                prompt: "Enumere três regras fundamentais de segurança num laboratório de infraestruturas."
+                            }
+                        ]
+                    },
+                    semana4: {
+                        tasks: [
+                            { id: "ju-s4-t1", text: "Simular custo de vida total para uma família de três pessoas na zona fronteiriça francesa (Annemasse/Thonon).", done: false },
+                            { id: "ju-s4-t2", text: "Revisão final de portefólio técnico de telecomunicações e fecho do plano base de julho.", done: false }
+                        ],
+                        languages: [
+                            {
+                                lang: "fr", code: "fr-FR", id: "ju-s4-l1",
+                                nivel: "Francês Técnico - Entretien Professionnel (Módulo IV)",
+                                lexical: [
+                                    { original: "J'ai quinze ans d'expérience dans le domaine.", fone: "jê canz ãn déxs-pé-rî-ãnss dãn lê dô-mên", trad: "Tenho quinze anos de experiência na área." },
+                                    { original: "Je suis disponible pour commencer immédiatement.", fone: "jê sûî dîs-pô-nîbl pûr co-mãn-sê î-mé-diat-mãn", trad: "Estou disponível para começar imediatamente." }
+                                ],
+                                prompt: "Como responderia em francês quando questionado sobre os seus pontos fortes na liderança de equipas de manutenção?"
+                            },
+                            {
+                                lang: "en", code: "en-US", id: "ju-s4-l2",
+                                nivel: "Inglês Técnico - Project Closeout (Módulo IV)",
+                                lexical: [
+                                    { original: "The system migration is now complete.", fone: "dâ sîs-têm mâi-grêi-chón îz nãu com-plît", trad: "A migração do sistema está agora concluída." },
+                                    { original: "All systems are operating nominal.", fone: "ôl sîs-têms âr ó-pê-rêi-ting nó-mî-nâl", trad: "Todos os sistemas estão a operar de forma nominal." }
+                                ],
+                                prompt: "Escreva uma nota formal de entrega de projeto informando que os testes de fibra foram validados."
+                            }
+                        ]
+                    }
                 }
             },
             lais: {
-                nome: "Laís",
-                posicaoAtiva: { ano: "2026", mes: "julho", semana: "semana1" },
+                nome: "Laís (Mãe)",
+                semanaAtiva: "semana1",
+                score: "35%",
                 semanas: {
                     semana1: {
                         tasks: [
-                            { id: "la-s1-1", text: "Revisão profunda dos manuais internos de Microsoft Licensing (Enterprise Agreements, EAS, EES)", done: false },
-                            { id: "la-s1-2", text: "Mapeamento das plataformas do Microsoft Learn para preparação de re-certificação Azure", done: false },
-                            { id: "la-s1-3", text: "Otimização técnica do perfil do LinkedIn com termos em inglês: 'Microsoft Cloud Operations', 'Licensing Specialist'", done: false }
+                            { id: "la-s1-t1", text: "Iniciar trilho de aprendizagem do Microsoft Learn focado na re-certificação Azure Core e Copilot.", done: false },
+                            { id: "la-s1-t2", text: "Rever arquitetura contratual de Enterprise Agreements (EA) e subscrições MPSA.", done: false },
+                            { id: "la-s1-t3", text: "Atualizar perfis profissionais internacionais com foco em Cloud Operations e Customer Success.", done: false }
                         ],
                         languages: [
                             {
-                                lang: "en",
-                                id: "la-s1-lang1",
-                                titulo: "Inglês Corporativo - Microsoft Licensing & Cloud Subscriptions",
-                                vocabulario: "Executive Key Terms:\n- Azure Consumption and Billing (Consumo e Faturação Azure)\n- Cloud Adoption Framework (Estrutura de Adoção de Nuvem)\n- Enterprise Agreement / EA Renewals (Renovações de Contratos de Grandes Empresas)\n- Customer Success Management (Gestão de Sucesso do Cliente)",
-                                atividade: "Simulação de Resposta Corporativa:\nUm cliente internacional questiona o aumento na faturação do Azure Consumption devido ao Novo Modelo de Comércio (NCE). Redija uma resposta formal em inglês justificando a auditoria contratual."
+                                lang: "en", code: "en-US", id: "la-s1-l1",
+                                nivel: "Inglês Avançado - Cloud Architecture & Enterprise Licensing (I)",
+                                lexical: [
+                                    { original: "Azure Consumption and Billing Architecture.", fone: "â-chêr con-sâmp-chón and bî-ling âr-quî-têc-chêr", trad: "Arquitetura de Consumo e Faturação Azure." },
+                                    { original: "Enterprise Agreement Renewals and True-up process.", fone: "ên-têr-prâiz a-grî-mênt rê-nû-als and trû-âp prô-cess", trad: "Renovações de Contratos Corporativos e Ajuste Anual de Licenças." },
+                                    { original: "Cloud Adoption Framework guidelines.", fone: "clâud a-dóp-chón frêim-uêrk gâid-lâins", trad: "Diretrizes da Estrutura de Adoção de Nuvem." },
+                                    { original: "We must optimize the customer success milestones.", fone: "uî mâst óp-tî-mâiz dâ câs-tô-mêr sâc-céss mâil-stôuns", trad: "Devemos otimizar os marcos de sucesso do cliente." },
+                                    { original: "The tenant is isolated under a secure subscription.", fone: "dâ té-nãnt îz âi-so-lêi-têd ân-dêr â sê-quiûr sâb-scrîp-chón", trad: "O inquilino (tenant) está isolado sob uma subscrição segura." },
+                                    { original: "Our target is to mitigate churn by forty percent.", fone: "âu-êr târ-gêt îz tû mî-tî-gêit tchârn bâi fór-tî pêr-sênt", trad: "O nosso objetivo é mitigar a rotatividade de clientes (churn) em 40%." },
+                                    { original: "The enterprise cloud expenditure exceeded the budget forecast.", fone: "dâ ên-têr-prâiz clâud êxs-pên-dî-tchêr êxc-sî-dêd dâ bâ-djêt fôr-cæst", trad: "O gasto de nuvem corporativa excedeu a previsão orçamental." }
+                                ],
+                                prompt: "Redija uma justificação formal em inglês explicando variações no consumo de instâncias Azure sob o modelo NCE."
                             },
                             {
-                                lang: "fr",
-                                id: "la-s1-lang2",
-                                titulo: "Francês de Negócios - Présentation de Partenaire Microsoft",
-                                vocabulario: "Vocabulaire:\n- Gestion des licences (Gestão de licenciamento)\n- Opérations sur le cloud (Operações em nuvem)\n- Le contrat de licence (O contrato de licenciamento)\n\nFrase Executiva:\n'Je travaille avec Microsoft Licensing et Cloud Operations.'\nPronúncia: jê travai avéc Microsoft Licensing e Cloud Operations.",
-                                atividade: "Atividade:\nTraduza para o francês corporativo: 'Sou especialista em operações na nuvem e gerencio contratos corporativos da Microsoft há mais de 15 anos.'"
+                                lang: "fr", code: "fr-FR", id: "la-s1-l2",
+                                nivel: "Francês Comercial - Partner Center Operations (I)",
+                                lexical: [
+                                    { original: "Je travaille avec Microsoft Licensing et Cloud Operations.", fone: "jê tra-vâi a-véc Microsoft Licensing e Cloud Operations", trad: "Trabalho com Licenciamento Microsoft e Operações Cloud." },
+                                    { original: "Gestion des licences de grands comptes.", fone: "jês-tión dê lî-sãnss dê grãn cóntt", trad: "Gestão de licenciamento de grandes contas/empresas." },
+                                    { original: "Le contrat de revente de services cloud est actif.", fone: "lê cónt-râ dê rê-vãnt dê sêr-vîss clâud étac-tîf", trad: "O contrato de revenda de serviços de nuvem está ativo." },
+                                    { original: "Quelle est la marge opérationnelle pour ce trimestre?", fone: "quêl ê la mârj ô-pé-ra-ssio-nêl pûr sê trî-mêstr", trad: "Qual é a margem operacional para este trimestre?" }
+                                ],
+                                prompt: "Traduza para francês empresarial: 'O nosso objetivo é otimizar os custos operacionais da infraestrutura em nuvem do cliente.'"
                             }
                         ]
                     },
                     semana2: {
                         tasks: [
-                            { id: "la-s2-1", text: "Estudar as principais alterações no modelo NCE (New Commerce Experience) da Microsoft", done: false }
+                            { id: "la-s2-t1", text: "Análise profunda das métricas do Novo Modelo de Comércio (NCE) da Microsoft.", done: false },
+                            { id: "la-s2-t2", text: "Mapear vagas corporativas de Customer Success Manager em filiais tecnológicas em Bruxelas.", done: false }
                         ],
                         languages: [
                             {
-                                lang: "en",
-                                id: "la-s2-lang1",
-                                titulo: "Inglês - Enterprise Agreement Architecture",
-                                vocabulario: "Terms:\n- True-up process (Processo de ajuste anual de licenças)\n- Enrollment (Inscrição/Adesão contrataual)",
-                                atividade: "Atividade:\nExplique resumidamente em inglês o que ocorre durante um processo de True-up anual num contrato Microsoft."
+                                lang: "en", code: "en-US", id: "la-s2-l1",
+                                nivel: "Inglês - Billing & Commerce Alignment (II)",
+                                lexical: [
+                                    { original: "Commitment term constraints apply to this pool.", fone: "co-mît-mênt têrm con-strêints a-plâi tû dîs pûl", trad: "Restrições de termos de compromisso contratual aplicam-se a este conjunto." },
+                                    { original: "Seat count modifications can be performed within the window.", fone: "sît câunt mô-dî-fî-quêi-chóns cæn bî pêr-fórmd uî-dîn dâ uîn-dôu", trad: "As modificações na contagem de assentos podem ser realizadas dentro da janela permitida." },
+                                    { original: "Legacy subscriptions must be migrated manually.", fone: "lé-ga-sî sâb-scrîp-chóns mâst bî mâi-grêi-têd mæ-nû-a-lî", trad: "As subscrições antigas (legacy) têm de ser migradas manualmente." }
+                                ],
+                                prompt: "Explique em inglês as vantagens financeiras de um compromisso anual em relação ao mensal no modelo NCE."
+                            },
+                            {
+                                lang: "fr", code: "fr-FR", id: "la-s2-l2",
+                                nivel: "Francês Comercial - Négociation de Contrats (II)",
+                                lexical: [
+                                    { original: "Nous devons valider l'accord de niveau de service.", fone: "nû dê-von va-lî-dê la-cór dê nî-vô dê sêr-vîss", trad: "Devemos validar o acordo de nível de serviço (SLA)." },
+                                    { original: "La résiliation anticipée entraîne des pénalités.", fone: "la ré-zî-lî-a-ssión ãn-tî-sî-pê ãn-trên dê pé-na-lî-tê", trad: "A rescisão antecipada acarreta penalizações." }
+                                ],
+                                prompt: "Proponha uma alternativa contratual em francês para um cliente insatisfeito com as regras rígidas de cancelamento."
                             }
                         ]
                     },
-                    semana3: { tasks: [], languages: [] },
-                    semana4: { tasks: [], languages: [] }
+                    semana3: {
+                        tasks: [
+                            { id: "la-s3-t1", text: "Desenhar proposta de valor focada em Governação de Cloud FinOps para mercados europeus.", done: false },
+                            { id: "la-s3-t2", text: "Revisar canais de comunicação com consultores de imigração para validação de poupanças externas.", done: false }
+                        ],
+                        languages: [
+                            {
+                                lang: "en", code: "en-US", id: "la-s3-l1",
+                                nivel: "Inglês - Cloud FinOps Framework (III)",
+                                lexical: [
+                                    { original: "Anomalous cost detection triggered an alert.", fone: "a-nó-ma-lâs cóst dê-téc-chón trî-gêrd an a-lêrt", trad: "A deteção de custos anómalos disparou um alerta." },
+                                    { original: "Tagging enforcement is mandatory for resource allocation.", fone: "tæ-gîng ên-fórsmênt îz mæn-da-tó-rî fôr rî-sórs a-lo-quêi-chón", trad: "A obrigatoriedade de etiquetas (tagging) é mandatória para alocação de recursos." }
+                                ],
+                                prompt: "Apresente um mini resumo em inglês sobre a importância do FinOps para evitar o desperdício de infraestrutura."
+                            },
+                            {
+                                lang: "fr", code: "fr-FR", id: "la-s3-l2",
+                                nivel: "Francês - Gestion de Crise Client (III)",
+                                lexical: [
+                                    { original: "Le client demande un remboursement immédiat.", fone: "lê clî-ãn dê-mãnd an rãn-bûr-sêmãn î-mé-dia", trad: "O cliente solicita um reembolso imediato." },
+                                    { original: "Nous analysons l'impact technique actuel.", fone: "nû a-na-lî-zon lan-pact téc-nîc ac-tû-êl", trad: "Estamos a analisar o impacto técnico atual." }
+                                ],
+                                prompt: "Redija um e-mail formal em francês acalmando um cliente que teve problemas de faturação na sua conta Azure."
+                            }
+                        ]
+                    },
+                    semana4: {
+                        tasks: [
+                            { id: "la-s4-t1", text: "Auditoria final de frameworks estudados no mês e consolidação de portefólio executivo.", done: false },
+                            { id: "la-s4-t2", text: "Finalizar análise comparativa de benefícios fiscais (Residente Não Habitual / regimes belgas).", done: false }
+                        ],
+                        languages: [
+                            {
+                                lang: "en", code: "en-US", id: "la-s4-l1",
+                                nivel: "Inglês - Quarterly Business Review (IV)",
+                                lexical: [
+                                    { original: "Our retention rate reached an all-time high.", fone: "âu-êr rî-tên-chón rêit rîtchd an ôl-tâim hâi", trad: "A nossa taxa de retenção atingiu o nível mais alto de sempre." },
+                                    { original: "Let's align the strategic roadmap for next year.", fone: "lêts a-lâin dâ stra-tî-djîc rôud-mæp fôr nêxs-t iîr", trad: "Vamos alinhar o roteiro estratégico para o próximo ano." }
+                                ],
+                                prompt: "Simule em inglês a abertura de uma reunião de revisão trimestral de resultados com parceiros seniores."
+                            },
+                            {
+                                lang: "fr", code: "fr-FR", id: "la-s4-l2",
+                                nivel: "Francês - Clôture Stratégique (IV)",
+                                lexical: [
+                                    { original: "Le projet a été validé par la direction.", fone: "lê prô-jê a é-tê va-lî-dê par la dî-réc-chón", trad: "O projeto foi validado pela direção." },
+                                    { original: "Nous avons atteint tous les objectifs fixés.", fone: "nû z-a-von a-tan tû lê z-ob-jêc-tîf fîx-ê", trad: "Atingimos todos os objetivos fixados." }
+                                ],
+                                prompt: "Descreva em francês quais as suas ambições profissionais de longo prazo no ecossistema de nuvem europeu."
+                            }
+                        ]
+                    }
                 }
             },
             isabella: {
-                nome: "Isabella",
-                posicaoAtiva: { ano: "2026", mes: "julho", semana: "semana1" },
+                nome: "Isabella (Filha)",
+                semanaAtiva: "semana1",
+                score: "40%",
                 semanas: {
                     semana1: {
                         tasks: [
-                            { id: "is-s1-1", text: "Leitura orientada sobre os modelos de Ensino Secundário na Bélgica e no Luxemburgo", done: false },
-                            { id: "is-s1-2", text: "Análise preliminar de pré-requisitos académicos para ingresso em Psicologia em Universidades Europeias", done: false },
-                            { id: "is-s1-3", text: "Organização do plano de estudos do 9º ano em Portugal, focando em obter média escolar superior a 4.5/5", done: false }
+                            { id: "is-s1-t1", text: "Executar levantamento analítico sobre os currículos de Psicologia nas universidades da Bélgica e Luxemburgo.", done: false },
+                            { id: "is-s1-t2", text: "Estabelecer rotina diária para garantir média de excelência no 9º ano escolar.", done: false }
                         ],
                         languages: [
                             {
-                                lang: "en",
-                                id: "is-s1-lang1",
-                                titulo: "Inglês Académico Avançado - Human Behavior & Academic Writing",
-                                vocabulario: "Advanced Concepts:\n- Psychological development (Desenvolvimento psicológico)\n- Cognitive frameworks (Estruturas cognitivas)\n- Extracurricular track record (Histórico de atividades extracurriculares)\n- Core curriculum requirements (Requisitos da grade escolar obrigatória)",
-                                atividade: "Academic Essay Practice:\nWrite a text (4-6 sentences) in advanced English explaining why the study of human behavior and psychology is essential to solve social problems in multicultural environments."
+                                lang: "fr", code: "fr-FR", id: "is-s1-l1",
+                                nivel: "Francês Escolar Avançado - Éducation et Dialogue (I)",
+                                lexical: [
+                                    { original: "Bonjour, je comprends très bien les leçons de l'école.", fone: "bon-jûr, jê cóm-prãn trê biãn lê lê-çón dê lê-col", trad: "Bom dia, compreendo muito bem as lições da escola." },
+                                    { original: "Je veux étudier la psychologie en Europe.", fone: "jê vêu zé-tû-diê la psî-co-lô-jî ãn nê-róp", trad: "Quero estudar psicologia na Europa." },
+                                    { original: "J'aime faire mes devoirs tous les jours.", fone: "jêm fêr mê dê-vuár tû lê jûr", trad: "Gosto de fazer os meus trabalhos de casa todos os dias." },
+                                    { original: "Le système éducatif est excellent ici.", fone: "lê sîs-têm é-dû-câ-tîf étêx-cê-lãn î-sî", trad: "O sistema educativo é excelente aqui." },
+                                    { original: "La science du comportement humain.", fone: "la sî-ãnss dû cóm-pór-tê-mãn û-mãn", trad: "A ciência do comportamento humano." },
+                                    { original: "Ma matière préférée à l'école est la biologie.", fone: "ma ma-tiêr pré-fê-rê a lê-col ê la bî-ô-lô-jî", trad: "A minha disciplina favorita na escola é a biologia." },
+                                    { original: "Je participe activement aux discussions en classe.", fone: "jê par-tî-sîp ac-tîv-mãn ô dîs-cû-ssión ãn clâss", trad: "Participo ativamente nas discussões em aula." }
+                                ],
+                                prompt: "Construa uma pequena redação em francês (4 linhas) detalhando o seu dia a dia escolar e o seu interesse em entender as pessoas."
+                            },
+                            {
+                                lang: "en", code: "en-US", id: "is-s1-l2",
+                                nivel: "Inglês Académico - Human Behavior Science (I)",
+                                lexical: [
+                                    { original: "Cognitive development frameworks.", fone: "cóg-nî-tîv dê-vê-lop-mênt frêim-uêrks", trad: "Estruturas de desenvolvimento cognitivo." },
+                                    { original: "My extracurricular track record is consistent.", fone: "mâi êxs-tra-ca-rî-cu-lêr trêk rê-córd îz con-sîs-tênt", trad: "O meu histórico de atividades extracurriculares é consistente." },
+                                    { original: "Understanding empathy is crucial for mental health.", fone: "ân-dêr-stæn-dîng êm-pa-tî îz crû-châl fôr mên-tâl hêlt", trad: "Compreender a empatia é crucial para a saúde mental." }
+                                ],
+                                prompt: "Write an introductory academic paragraph explaining your motivation to study human psychology."
                             }
                         ]
                     },
                     semana2: {
                         tasks: [
-                            { id: "is-s2-1", text: "Treino de vocabulário de conversação avançada em inglês", done: false }
+                            { id: "is-s2-t1", text: "Treino focado em conectores argumentativos avançados para ensaios escritos em francês.", done: false },
+                            { id: "is-s2-t2", text: "Pesquisar clubes ou atividades de voluntariado jovem locais para enriquecimento do perfil estudantil.", done: false }
                         ],
                         languages: [
                             {
-                                lang: "en",
-                                id: "is-s2-lang1",
-                                titulo: "Inglês Avançado - Argumentação e Debates",
-                                vocabulario: "Connectors:\n- Furthermore (Além disso) / On the other hand (Por outro lado) / Consequently (Consequentemente)",
-                                atividade: "Atividade:\nCrie um pequeno parágrafo argumentativo em inglês utilizando obrigatoriamente os três conectores listados acima."
+                                lang: "fr", code: "fr-FR", id: "is-s2-l1",
+                                nivel: "Francês - Argumentação Avançada (II)",
+                                lexical: [
+                                    { original: "Par conséquent, l'analyse est tout à fait correcte.", fone: "par cór-sé-cãn, lân-â-lîz ê tû a fê cór-réct", trad: "Portanto, a análise está totalmente correta." },
+                                    { original: "Cependant, il faut considérer d'autres facteurs cliniques.", fone: "sê-pãnd-ãn, îl fô cón-sî-dê-rê dôtr fac-têr clî-nîc", trad: "No entanto, é necessário considerar outros fatores clínicos." },
+                                    { original: "En outre, la recherche démontre des progrès significatifs.", fone: "ãn nûtr, la rê-chêrch dê-móntr dê prô-grê sîg-nî-fî-ca-tîf", trad: "Além disso, a investigação demonstra progressos significativos." }
+                                ],
+                                prompt: "Use conectores lógicos em francês para justificar a importância da psicologia na sociedade moderna."
+                            },
+                            {
+                                lang: "en", code: "en-US", id: "is-s2-l2",
+                                nivel: "Inglês - Academic Reading & Vocabulary (II)",
+                                lexical: [
+                                    { original: "The hypothesis was proven wrong during the experiment.", fone: "dâ hâi-pó-tê-sîs uâz prû-vên róng djû-rîng dâ êxs-pé-rî-mênt", trad: "A hipótese provou-se errada durante a experiência." },
+                                    { original: "Statistical variance must be neutralized.", fone: "sta-tîs-tî-câl vê-rî-ãnss mâst bî nû-tra-lâizd", trad: "A variância estatística deve ser neutralizada." }
+                                ],
+                                prompt: "Explique em inglês, por palavras tuas, a diferença entre comportamento observado e intenção psicológica."
                             }
                         ]
                     },
-                    semana3: { tasks: [], languages: [] },
-                    semana4: { tasks: [], languages: [] }
+                    semana3: {
+                        tasks: [
+                            { id: "is-s3-t1", text: "Fazer uma lista de livros introdutórios de neurociência e psicologia cognitiva para ler nas férias.", done: false },
+                            { id: "is-s3-t2", text: "Analisar os requisitos linguísticos exatos de admissão (ex: nível B2 ou C1 de francês) na Université de Liège.", done: false }
+                        ],
+                        languages: [
+                            {
+                                lang: "fr", code: "fr-FR", id: "is-s3-l1",
+                                nivel: "Francês - Vocabulaire Médical et Mental (III)",
+                                lexical: [
+                                    { original: "Le cerveau humain contrôle toutes nos émotions.", fone: "lê sêr-vô û-mãn cón-trôl tût nô z-é-mô-ssión", trad: "O cérebro humano controla todas as nossas emoções." },
+                                    { original: "La mémoire à long terme est fascinante.", fone: "la mé-muár a lon têrm ê fa-sî-nãnt", trad: "A memória a longo prazo é fascinante." }
+                                ],
+                                prompt: "Descreve em francês uma situação onde a inteligência emocional foi fundamental para resolver um conflito entre amigos."
+                            },
+                            {
+                                lang: "en", code: "en-US", id: "is-s3-l2",
+                                nivel: "Inglês - Presentation Skills (III)",
+                                lexical: [
+                                    { original: "Today I will present my research on social behavior.", fone: "tû-dêi âi uîl prî-zênt mâi rî-sêrtch on sô-châl bî-hêi-vjêr", trad: "Hoje vou apresentar a minha investigação sobre comportamento social." }
+                                ],
+                                prompt: "Prepare an introductory speech in English for a school science fair project."
+                            }
+                        ]
+                    },
+                    semana4: {
+                        tasks: [
+                            { id: "is-s4-t1", text: "Auto-avaliação do progresso linguístico mensal e planeamento de metas para o próximo período escolar.", done: false },
+                            { id: "is-s4-t2", text: "Organização final dos resumos de estudo do 9º ano para revisão rápida pré-exames.", done: false }
+                        ],
+                        languages: [
+                            {
+                                lang: "fr", code: "fr-FR", id: "is-s4-l1",
+                                nivel: "Francês - Expression Libre et Projets (IV)",
+                                lexical: [
+                                    { original: "Je suis prête à relever de nouveaux défis académiques.", fone: "jê sûî prêt a rê-lê-vê dê nû-vô dê-fî a-ca-dé-mîc", trad: "Estou pronta para enfrentar novos desafios académicos." },
+                                    { original: "Mon avenir est interconnecté avec l'Europe.", fone: "mon na-vê-nîr étãn-têr-có-néc-tê a-véc lê-róp", trad: "O meu futuro está interligado com a Europa." }
+                                ],
+                                prompt: "Redige uma carta em francês dirigida ao teu 'eu do futuro' descrevendo onde esperas estar daqui a 5 anos."
+                            },
+                            {
+                                lang: "en", code: "en-US", id: "is-s4-l2",
+                                nivel: "Inglês - Advanced Synthesis (IV)",
+                                lexical: [
+                                    { original: "The psychological impact of technology on youth.", fone: "dâ sâi-co-ló-djî-câl îm-pæct óv têc-nó-lô-djî on iûtt", trad: "O impacto psicológico da tecnologia na juventude." }
+                                ],
+                                prompt: "Write an opinion essay in English summarizing the main challenges faced by teenagers in modern society."
+                            }
+                        ]
+                    }
                 }
             }
         };
 
-        let operadorAtivo = "julio";
+        let operadorCorrente = "julio";
 
-        // GESTÃO DO DIRETÓRIO EXPANSÍVEL (ARVORE)
-        function toggleAno(idTree) {
-            const el = document.getElementById(idTree);
-            const ind = document.getElementById(`indicator-${idTree}`);
-            if (el.classList.contains("hidden")) {
-                el.classList.remove("hidden");
-                ind.innerText = "▼";
+        // ENGINE NATIVA DE TEXT-TO-SPEECH (OUVIR AUDIO)
+        function executarLeituraAudio(texto, localidade) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); 
+                const utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = localidade;
+                utterance.rate = 0.85; // Velocidade didática e clara
+                window.speechSynthesis.speak(utterance);
             } else {
-                el.add("hidden");
-                el.classList.add("hidden");
-                ind.innerText = "►";
+                alert("O seu navegador atual não possui suporte para reprodução de áudio nativa.");
             }
         }
 
-        // CONTROLADOR DE POSIÇÃO CRONOLÓGICA
-        function alterarPosicao(ano, mes, semana) {
-            baseDadosSemanas[operadorAtivo].posicaoAtiva = { ano, mes, semana };
-            
-            // Atualizar classes dos botões na árvore
-            const botoesNav = document.querySelectorAll("[id^='nav-2026-']");
-            botoesNav.forEach(b => {
-                b.className = "w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40";
-                // Remover badge de ativo anterior se houver
-                if (b.querySelector(".bg-cyan-950")) {
-                    b.innerHTML = b.innerHTML.split("<span")[0].trim();
-                }
-            });
-
-            const btnAtivo = document.getElementById(`nav-${ano}-${mes}-${semana}`);
-            if (btnAtivo) {
-                btnAtivo.className = "w-full text-left p-1.5 rounded bg-slate-800 text-white font-medium flex items-center justify-between";
-                btnAtivo.innerHTML += ` <span class="text-[9px] bg-cyan-950 text-cyan-400 px-1 rounded">Ativo</span>`;
+        // ENGINE NATIVA DE SPEECH-TO-TEXT (MICROFONE)
+        function iniciarCapturaMicrofone(idAlvo, localidade) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("O reconhecimento de voz via microfone não é suportado neste navegador. Recomenda-se o Google Chrome ou Safari.");
+                return;
             }
 
-            compilarInterfacePainel();
+            const recognition = new SpeechRecognition();
+            recognition.lang = localidade;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const elementoTextarea = document.getElementById(idAlvo);
+            const placeholderOriginal = elementoTextarea.placeholder;
+            elementoTextarea.placeholder = "🎙️ Sistema Ativo. Fale agora no idioma alvo de forma clara...";
+            elementoTextarea.focus();
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const resultadoTexto = event.results[0][0].transcript;
+                elementoTextarea.value = (elementoTextarea.value + " " + resultadoTexto).trim();
+                localStorage.setItem(idAlvo, elementoTextarea.value);
+                elementoTextarea.placeholder = placeholderOriginal;
+            };
+
+            recognition.onerror = function(event) {
+                elementoTextarea.placeholder = placeholderOriginal;
+                alert("Erro capturado ou ausência de sinal no microfone: " + event.error);
+            };
+
+            recognition.onspeechend = function() {
+                recognition.stop();
+            };
         }
 
-        // MUDANÇA DE OPERADOR (MEMBRO DA FAMÍLIA)
-        function mudarMembro(membro) {
-            operadorAtivo = membro;
+        // CONTROLADORES DE ESTADO E RENDERIZAÇÃO CONDICIONAL
+        function mudarSemana(idSemana) {
+            matrixDados[operadorCorrente].semanaAtiva = idSemana;
             
-            // Alterar estado visual das abas superiores
-            ['julio', 'lais', 'isabella'].forEach(k => {
-                const b = document.getElementById(`btn-${k}`);
-                if (k === membro) {
-                    b.className = "px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 bg-cyan-600 text-white shadow-md";
-                } else {
-                    b.className = "px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/20";
+            ['semana1', 'semana2', 'semana3', 'semana4'].forEach(s => {
+                const nav = document.getElementById(`nav-${s}`);
+                if (nav) {
+                    if (s === idSemana) {
+                        nav.className = "w-full text-left p-1.5 rounded bg-slate-800/80 text-white font-medium block border-l-2 border-cyan-500 pl-2 shadow-sm";
+                    } else {
+                        nav.className = "w-full text-left p-1.5 rounded text-slate-400 hover:bg-slate-800/40 block pl-2 transition-all";
+                    }
                 }
             });
 
-            // Recuperar a posição em que esse membro estava ativo
-            const pos = baseDadosSemanas[operadorAtivo].posicaoAtiva;
-            alterarPosicao(pos.ano, pos.mes, pos.semana);
+            reconstruirPainelTrabalho();
         }
 
-        // MUDANÇA DE STATUS DE CHECKBOX DAS TAREFAS NATIVAS
-        function alternarEstadoTarefa(idTarefa) {
-            const pos = baseDadosSemanas[operadorAtivo].posicaoAtiva;
-            const t = baseDadosSemanas[operadorAtivo].semanas[pos.semana].tasks.find(item => item.id === idTarefa);
+        function ativarPerfil(membro) {
+            operadorCorrente = membro;
+            
+            ['julio', 'lais', 'isabella'].forEach(perfilId => {
+                const b = document.getElementById(`tab-${perfilId}`);
+                if (b) {
+                    if (perfilId === membro) {
+                        b.classList.add('tab-active');
+                    } else {
+                        b.classList.remove('tab-active');
+                    }
+                }
+            });
+
+            const perfilInfo = matrixDados[operadorCorrente];
+            document.getElementById("score-txt").innerText = perfilInfo.score;
+            document.getElementById("score-bar").style.width = perfilInfo.score;
+            
+            mudarSemana(perfilInfo.semanaAtiva);
+        }
+
+        function toggleTarefa(idTarefa) {
+            const sem = matrixDados[operadorCorrente].semanaAtiva;
+            const t = matrixDados[operadorCorrente].semanas[sem].tasks.find(item => item.id === idTarefa);
             if (t) {
                 t.done = !t.done;
             }
-            compilarInterfacePainel();
+            reconstruirPainelTrabalho();
         }
 
-        // MOTOR DE PERSISTÊNCIA DAS RESPOSTAS EM TEXTO (LOCAL STORAGE)
-        function armazenarRespostaAtividade(idInput) {
-            const val = document.getElementById(idInput).value;
-            localStorage.setItem(idInput, val);
+        function persistirInputTexto(idElemento) {
+            const el = document.getElementById(idElemento);
+            if (el) {
+                localStorage.setItem(idElemento, el.value);
+            }
         }
 
-        // COMPILADOR DE INTERFACE DINÂMICA
-        function compilarInterfacePainel() {
-            const perfil = baseDadosSemanas[operadorAtivo];
-            const pos = perfil.posicaoAtiva;
-            const dadosSemana = perfil.semanas[pos.semana];
+        // RECONSTRUTOR DINÂMICO DE COMPONENTES DE INTERFACE
+        function reconstruirPainelTrabalho() {
+            const perfil = matrixDados[operadorCorrente];
+            const semId = perfil.semanaAtiva;
+            const dadosSemana = perfil.semanas[semId];
 
-            // Atualizar textos descritivos primários
-            document.getElementById("lbl-operador-nome").innerText = perfil.nome;
-            document.getElementById("lbl-posicao-painel").innerText = `ANO ${pos.ano} &bull; ${pos.mes.toUpperCase()} &bull; ${pos.semana.toUpperCase()}`;
+            document.getElementById("main-panel-title").innerText = `PLANO 2026 \u2022 JULHO \u2022 ${semId.toUpperCase()} \u2022 ${perfil.nome.toUpperCase()}`;
 
-            // Compilar Bloco de Tarefas
-            const boxTasks = document.getElementById("box-tasks-dinamicas");
-            boxTasks.innerHTML = "";
-            
+            // Renderizar Bloco de Tarefas Operacionais
+            const tContainer = document.getElementById("tasks-container");
+            tContainer.innerHTML = "";
             if (!dadosSemana || !dadosSemana.tasks || dadosSemana.tasks.length === 0) {
-                boxTasks.innerHTML = `<p class="text-xs text-slate-500 italic p-3 bg-slate-950/20 border border-slate-800 rounded-xl">Nenhuma tarefa alocada ou planeada para este intervalo específico.</p>`;
+                tContainer.innerHTML = `<p class="text-xs text-slate-500 italic p-2 bg-slate-950/20 border border-slate-800 rounded-lg">Sem tarefas adicionais alocadas para este ciclo.</p>`;
             } else {
                 dadosSemana.tasks.forEach(t => {
-                    const lbl = document.createElement("label");
-                    lbl.className = "flex items-start gap-3 p-3 bg-[#060814] rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700 transition";
-                    lbl.innerHTML = `
-                        <input type="checkbox" ${t.done ? "checked" : ""} class="mt-1 w-4 h-4 accent-emerald-500" onchange="alternarEstadoTarefa('${t.id}')">
+                    const l = document.createElement("label");
+                    l.className = "flex items-start gap-3 p-3 bg-[#050b18] rounded-xl border border-slate-800/80 cursor-pointer hover:border-slate-700 transition shadow-inner";
+                    l.innerHTML = `
+                        <input type="checkbox" ${t.done ? "checked" : ""} class="mt-0.5 w-4 h-4 accent-cyan-500 text-slate-950" onchange="toggleTarefa('${t.id}')">
                         <span class="text-xs ${t.done ? 'line-through text-slate-500' : 'text-slate-300'}">${t.text}</span>
                     `;
-                    boxTasks.appendChild(lbl);
+                    tContainer.appendChild(l);
                 });
             }
 
-            // Compilar Bloco de Idiomas e Atividades Textuais Reais
-            const boxLanguages = document.getElementById("box-languages-dinamico");
-            boxLanguages.innerHTML = "";
-
+            // Renderizar Laboratório Prático de Idiomas (Renderização em Massa)
+            const lContainer = document.getElementById("languages-container");
+            lContainer.innerHTML = "";
             if (!dadosSemana || !dadosSemana.languages || dadosSemana.languages.length === 0) {
-                boxLanguages.innerHTML = `<p class="text-xs text-slate-500 italic p-3 bg-slate-950/20 border border-slate-800 rounded-xl">Fase sem alocação de blocos idiomáticos. Concentre-se nas tarefas de infraestrutura.</p>`;
+                lContainer.innerHTML = `<p class="text-xs text-slate-500 italic p-2 bg-slate-950/20 border border-slate-800 rounded-lg">Fase de consolidação autónoma para este perfil.</p>`;
             } else {
-                dadosSemana.languages.forEach(l => {
-                    const keyArmazenamento = `input-storage-${operadorAtivo}-${pos.ano}-${pos.semana}-${l.id}`;
-                    const textoExistente = localStorage.getItem(keyArmazenamento) || "";
+                dadosSemana.languages.forEach(idiomaBlock => {
+                    const keyStorage = `real-storage-${operadorCorrente}-${semId}-${idiomaBlock.id}`;
+                    const resSalva = localStorage.getItem(keyStorage) || "";
 
                     const card = document.createElement("div");
-                    card.className = "p-4 bg-[#060814] rounded-xl border border-slate-800 space-y-3";
+                    card.className = "p-4 bg-[#050b18] rounded-xl border border-slate-800 space-y-4 shadow-md";
+                    
+                    let rowsLexical = "";
+                    idiomaBlock.lexical.forEach(lex => {
+                        const textClean = lex.original.replace(/'/g, "\\'");
+                        rowsLexical += `
+                            <div class="p-2.5 bg-[#091124] rounded-lg border border-slate-800/60 flex flex-col md:flex-row md:items-center justify-between gap-2 text-xs font-mono hover:border-slate-700 transition">
+                                <div class="space-y-0.5">
+                                    <div class="text-slate-200 font-bold tracking-wide">${lex.original}</div>
+                                    <div class="text-[11px] text-amber-500">Diz-se no dia a dia: <span class="underline font-sans font-medium bg-amber-500/5 px-1 rounded">${lex.fone}</span></div>
+                                    <div class="text-[10px] text-slate-400 font-sans">${lex.trad}</div>
+                                </div>
+                                <button onclick="executarLeituraAudio('${textClean}', '${idiomaBlock.code}')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-2.5 py-1 rounded border border-slate-700 transition flex items-center gap-1 self-start md:self-auto text-[10px] shadow-sm">
+                                    <span>🔊</span> Ouvir
+                                </button>
+                            </div>
+                        `;
+                    });
+
                     card.innerHTML = `
-                        <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
-                            <span class="text-[10px] font-bold text-cyan-400 bg-cyan-950/30 px-2 py-0.5 rounded border border-cyan-900/40 uppercase tracking-wider font-mono">${l.lang.toUpperCase()} - ${l.titulo.split(" - ")[0]}</span>
-                            <span class="text-xs font-semibold text-slate-200">${l.title}</span>
+                        <div class="flex justify-between items-center bg-[#091124] p-2 rounded-lg border border-slate-800/60">
+                            <span class="text-[10px] font-bold text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-900/40 font-mono tracking-wider uppercase">${idiomaBlock.nivel}</span>
+                            <span class="text-xs font-mono text-slate-400">Idioma Core: ${idiomaBlock.lang.toUpperCase()}</span>
                         </div>
-                        <pre class="text-xs p-3 bg-[#0b0f19] rounded-lg text-slate-300 font-mono whitespace-pre-wrap border border-slate-800 leading-relaxed">${l.vocabulario}</pre>
                         
-                        <div class="space-y-2 pt-1">
-                            <span class="text-[11px] text-amber-400 font-bold block">✍️ Atividade Operacional Obrigatória:</span>
-                            <p class="text-xs text-slate-300 font-sans leading-relaxed">${l.atividade}</p>
-                            <textarea id="${keyArmazenamento}" oninput="armazenarRespostaAtividade('${keyArmazenamento}')" placeholder="Introduza a sua resposta em texto para validação da lição..." class="w-full bg-[#0b0f19] border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 min-h-[100px] shadow-inner">${textoExistente}</textarea>
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-mono text-slate-500 uppercase tracking-widest block">Matriz Vocabular & Fonética</span>
+                            <div class="grid grid-cols-1 gap-2">${rowsLexical}</div>
+                        </div>
+
+                        <div class="space-y-2 pt-1 border-t border-slate-800/40">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[11px] text-amber-400 font-bold block">✍️ Atividade Operacional Prática:</span>
+                                <button onclick="iniciarCapturaMicrofone('${keyStorage}', '${idiomaBlock.code}')" class="bg-emerald-950 text-emerald-400 border border-emerald-900/60 hover:bg-emerald-900 hover:text-white px-2.5 py-1 rounded-md text-[10px] font-mono transition flex items-center gap-1.5 shadow-md">
+                                    <span>🎙️</span> Usar Microfone (Falar)
+                                </button>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed font-sans">${idiomaBlock.prompt}</p>
+                            <textarea id="${keyStorage}" oninput="persistirInputTexto('${keyStorage}')" placeholder="Grave por voz com o microfone ou escreva aqui a sua resposta em texto..." class="w-full bg-[#091124] border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-cyan-500 min-h-[90px] shadow-inner input-focus-effect">${resSalva}</textarea>
                         </div>
                     `;
-                    boxLanguages.appendChild(card);
+                    lContainer.appendChild(card);
                 });
             }
         }
 
-        // LOGICA DE REVELAÇÃO FINANCEIRA PROTEGIDA POR PALAVRA-PASSE
-        function revelarFinancas() {
-            const pwd = document.getElementById("pass-financas-input").value;
-            if (pwd === "2030") {
-                // Modificar o DOM para exibir os valores reais de consultoria
-                document.getElementById("val-poupanca").innerText = "€100,00 - €200,00 / mês";
-                document.getElementById("val-bonus-rj").innerText = "€20.000,00 (Aproximado)";
-                document.getElementById("val-alocacao-rj").innerHTML = "• €10k Emergência<br>• €5k Custos Mudança<br>• €5k Formação/Idiomas";
+        // SEGURANÇA PATRIMONIAL DO PAINEL LATERAL
+        function autenticarFinancas() {
+            const pass = document.getElementById("finances-pass").value;
+            if (pass === "2030") {
+                document.getElementById("txt-poupanca").innerText = "€100,00 - €200,00 / mês";
+                document.getElementById("txt-imovel").innerText = "€20.000,00 (Líquido Estimado)";
+                document.getElementById("txt-alocacao").innerHTML = "• €10k Fundo Emergência<br>• €5k Custos Transição<br>• €5k Certificações & Idiomas";
                 
-                // Alterar badges
-                const b = document.getElementById("badge-lock-status");
-                b.className = "text-[9px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-900 px-1.5 py-0.5 rounded";
-                b.innerText = "Desbloqueado";
+                const badge = document.getElementById("finances-badge");
+                badge.className = "text-[9px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-900/40 px-1.5 py-0.5 rounded";
+                badge.innerText = "Desencriptado";
                 
-                // Esconder input de password
-                document.getElementById("form-senha-financas").className = "hidden";
+                document.getElementById("finances-auth-block").className = "hidden";
             } else {
-                alert("Falha na autenticação. Acesso negado aos ativos patrimoniais.");
+                alert("Código inválido. Acesso negado.");
             }
         }
 
-        // INICIALIZAÇÃO AUTOMÁTICA DA SUITE
-        compilarInterfacePainel();
+        // INICIALIZAÇÃO AUTOMÁTICA DA PLATAFORMA
+        window.onload = function() {
+            ativarPerfil("julio");
+        };
     </script>
 </body>
 </html>

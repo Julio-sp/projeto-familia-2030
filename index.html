@@ -3,289 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto Família 2030</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Plano Estratégico Família 2030</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        premium: {
+                            950: '#0b0f19',
+                            900: '#111827',
+                            800: '#1f2937',
+                            700: '#374151'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-slate-900 text-slate-100 antialiased font-sans min-h-screen flex flex-col">
+<body class="bg-premium-950 text-slate-100 antialiased font-sans min-h-screen flex flex-col">
 
-    <header class="border-b border-slate-800 bg-slate-950 p-4 sticky top-0 z-50 shadow-md">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-                    🗺️ Projeto Família 2030
-                </h1>
-                <p class="text-xs text-slate-400">Roteiro de Emigração & Desenvolvimento Individual Autónomo</p>
-            </div>
+    <header class="border-b border-slate-800 bg-premium-900 px-6 py-4 sticky top-0 z-50 shadow-lg flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 via-emerald-400 to-indigo-500 bg-clip-text text-transparent">
+                🗺️ Projeto Família 2030
+            </h1>
+            <p class="text-xs text-slate-400">Plataforma Independente de Evolução Multilingue e Emigração</p>
+        </div>
 
-            <div class="flex gap-2 bg-slate-900 p-1 rounded-xl border border-slate-800">
-                <button onclick="mudarMembro('julio')" id="btn-julio" class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 bg-blue-600 text-white font-bold">
-                    <span>👨‍💻</span> <span>Júlio</span>
-                </button>
-                <button onclick="mudarMembro('lais')" id="btn-lais" class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
-                    <span>👩‍⚕️</span> <span>Laís</span>
-                </button>
-                <button onclick="mudarMembro('isabella')" id="btn-isabella" class="px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
-                    <span>👑</span> <span>Isabella</span>
-                </button>
-            </div>
+        <div class="flex gap-2 bg-premium-950 p-1.5 rounded-xl border border-slate-800">
+            <button onclick="mudarMembro('julio')" id="btn-julio" class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 bg-cyan-600 text-white shadow-md">
+                <span>👨‍💻</span> <span>Júlio</span>
+            </button>
+            <button onclick="mudarMembro('lais')" id="btn-lais" class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
+                <span>👩‍⚕️</span> <span>Laís</span>
+            </button>
+            <button onclick="mudarMembro('isabella')" id="btn-isabella" class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200">
+                <span>👑</span> <span>Isabella</span>
+            </button>
         </div>
     </header>
 
-    <main class="flex-1 max-w-6xl mx-auto w-full p-4 grid grid-cols-1 lg:grid-cols-3 gap-6 my-4">
+    <div class="flex-1 flex flex-col md:flex-row w-full max-w-[100vw] overflow-x-hidden">
         
-        <div class="lg:col-span-2 space-y-6">
-            
-            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
-                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Painel Mês:</span>
-                <div class="flex gap-1.5" id="container-meses">
+        <aside class="w-full md:w-80 bg-premium-900 border-r border-slate-800 p-4 space-y-4 flex-shrink-0">
+            <div>
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">📅 Cronograma de Ações</h3>
+                
+                <div class="space-y-1">
+                    <div class="text-sm font-bold text-cyan-400 flex items-center gap-1.5 p-1">
+                        <span>▶</span> <span>Ano 2026</span>
                     </div>
-            </div>
-
-            <div class="bg-slate-800/40 border border-slate-800 p-5 rounded-2xl">
-                <h2 class="text-md font-bold mb-3 text-slate-200 flex items-center gap-2">
-                    <span>📋</span> <span id="titulo-tarefas">Minhas Tarefas</span>
-                </h2>
-                <div class="space-y-2.5" id="lista-tarefas">
+                    
+                    <div class="pl-4 border-l border-slate-800 space-y-1">
+                        <div class="text-xs font-semibold text-emerald-400 p-1 bg-slate-950/40 rounded">
+                            📅 Julho 2026 (Mês Atual)
+                        </div>
+                        
+                        <div class="pl-3 space-y-1 text-xs">
+                            <button onclick="mudarSemana('semana1')" id="nav-semana1" class="w-full text-left p-2 rounded bg-slate-800 font-medium text-white transition">
+                                🗓️ Semana 1 (01 a 05/07)
+                            </button>
+                            <button onclick="mudarSemana('semana2')" id="nav-semana2" class="w-full text-left p-2 rounded text-slate-400 hover:bg-slate-800/40 transition">
+                                🗓️ Semana 2 (06 a 12/07)
+                            </button>
+                            <button onclick="mudarSemana('semana3')" id="nav-semana3" class="w-full text-left p-2 rounded text-slate-400 hover:bg-slate-800/40 transition">
+                                🗓️ Semana 3 (13 a 19/07)
+                            </button>
+                            <button onclick="mudarSemana('semana4')" id="nav-semana4" class="w-full text-left p-2 rounded text-slate-400 hover:bg-slate-800/40 transition">
+                                🗓️ Semana 4 (20 a 26/07)
+                            </button>
+                        </div>
                     </div>
-            </div>
-
-            <div class="bg-slate-800/40 border border-slate-800 p-5 rounded-2xl space-y-4">
-                <h2 class="text-md font-bold text-slate-200 flex items-center gap-2">
-                    <span>🌍</span> Meu Plano de Idiomas
-                </h2>
-                <div id="lista-idiomas" class="space-y-4">
-                    </div>
-            </div>
-        </div>
-
-        <div class="space-y-6">
-            <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl">
-                <h3 class="text-sm font-bold text-amber-400 mb-2 flex items-center gap-1.5">
-                    <span>⚠️</span> Evolução de <span id="nome-regras">Júlio</span>
-                </h3>
-                <p class="text-xs text-slate-400 leading-relaxed">
-                    O teu progresso é totalmente independente dos restantes membros. Conclui com sucesso todas as tuas tarefas e lições do mês atual para libertar o botão do mês seguinte no painel superior.
-                </p>
-            </div>
-
-            <div class="bg-slate-950 border border-slate-800 p-5 rounded-2xl space-y-3">
-                <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2">
-                    <span>🛡️</span> Radar Patrimonial
-                </h3>
-                <p class="text-xs text-slate-400">Orçamento familiar assente estritamente na capacidade de poupança mensal ativa.</p>
-                <div class="p-3 bg-slate-900/60 rounded-xl border border-dashed border-slate-800">
-                    <div class="flex justify-between items-center text-xs">
-                        <span class="text-slate-400 font-medium">✨ Bónus Imóvel (RJ):</span>
-                        <span class="text-slate-500 bg-slate-800 px-2 py-0.5 rounded text-[10px]">Pendente</span>
-                    </div>
-                    <p class="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
-                        O montante projetado de uma futura transição patrimonial não compõe o fluxo de caixa regular. Servirá estritamente como um fundo acelerador bónus caso venha a ser liquidado.
-                    </p>
                 </div>
             </div>
-        </div>
-    </main>
+
+            <div class="pt-4 border-t border-slate-800/60 text-[11px] text-slate-500 leading-relaxed">
+                * Os meses futuros (Agosto 2026 em diante) serão expandidos nesta árvore de diretórios conforme a validação das semanas anteriores.
+            </div>
+        </aside>
+
+        <main class="flex-1 p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-y-auto">
+            
+            <div class="lg:col-span-2 space-y-6">
+                
+                <div class="bg-premium-900 border border-slate-800 p-5 rounded-xl shadow-md">
+                    <h2 class="text-md font-bold text-slate-200 mb-3 flex items-center gap-2">
+                        <span>📋</span> <span id="titulo-semana">Tarefas — Semana 1</span>
+                    </h2>
+                    <div class="space-y-2" id="box-tarefas">
+                        </div>
+                </div>
+
+                <div class="bg-premium-900 border border-slate-800 p-5 rounded-xl shadow-md space-y-4">
+                    <h2 class="text-md font-bold text-slate-200 flex items-center gap-2">
+                        <span>🌍</span> Conteúdo Pedagógico Semanal & Atividades
+                    </h2>
+                    <div id="box-idiomas" class="space-y-5">
+                        </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                
+                <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
+                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">⚠️ Painel de Evolução</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Tens controle absoluto sobre as tuas metas. O preenchimento das respostas nos campos de texto abaixo garante a memorização ativa de longo prazo.
+                    </p>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-3 shadow-inner">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <span>🔒</span> Radar Financeiro Familiar
+                    </h3>
+                    <p class="text-xs text-slate-500">Dados confidenciais protegidos contra visualização de terceiros.</p>
+                    
+                    <div id="area-patrimonio-bloqueada" class="p-4 bg-premium-900 rounded-lg border border-slate-800/80 space-y-3">
+                        <div class="space-y-1">
+                            <span class="text-[11px] text-slate-400 block font-medium">Poupança Mensal Consolidada:</span>
+                            <div class="text-md font-mono font-bold text-slate-300" id="txt-poupanca">••••</div>
+                        </div>
+                        <div class="space-y-1 pt-1 border-t border-slate-800/60">
+                            <span class="text-[11px] text-slate-400 block font-medium">Bónus Futuro Venda RJ:</span>
+                            <div class="text-md font-mono font-bold text-slate-500" id="txt-imovel">••••</div>
+                        </div>
+                        
+                        <div class="pt-2 flex gap-1.5" id="form-senha">
+                            <input type="password" id="input-pass" placeholder="Senha de Acesso" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-200 focus:outline-none focus:border-cyan-500">
+                            <button onclick="desbloquearValores()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-3 py-1 rounded text-xs font-medium transition">Exibir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
 
     <script>
-        // Banco de Dados Limpo e Isolado
-        let dadosFamilia = {
+        // Estrutura de dados robusta e atualizada (Julho 2026 por Semanas)
+        const dbFamilia = {
             julio: {
                 nome: "Júlio",
-                activeMonthId: "2026-01",
-                months: [
-                    {
-                        id: "2026-01",
-                        name: "Janeiro 2026",
-                        unlocked: true,
+                semanaAtiva: "semana1",
+                valoresRevelados: false,
+                dadosFinanceiros: { poupanca: "€250.00 / mês", bonus: "€15,000.00 (Condicionado)" },
+                semanas: {
+                    semana1: {
+                        titulo: "Semana 1 (01 a 05 de Julho 2026)",
                         tasks: [
-                            { id: "ju-t1", text: "Registar poupança mensal base (Meta: €250)", done: false },
-                            { id: "ju-t2", text: "Iniciar Curso Avançado de Programação / Arquitetura de Software", done: false },
-                            { id: "ju-t3", text: "Finalizar checklist de documentação pessoal para emigração", done: false }
+                            { id: "ju-s1-1", text: "Efetuar a alocação de poupança automática no início do mês", done: false },
+                            { id: "ju-s1-2", text: "Módulo 1: Setup do repositório remoto e teste de deploy via GitHub Pages", done: false },
+                            { id: "ju-s1-3", text: "Revisar documentação civil e passaportes da família", done: false }
                         ],
                         languages: [
-                            { id: "ju-en1", lang: "en", title: "Month 1 – Intermediate English: Career", completed: false, content: "I am responsible for... = Sou responsável por...\nProject management = Gestão de projetos", questions: "Translate: Sou responsável por gerir este projeto." }
+                            { lang: "en", nivel: "Avançado Profissional", title: "Business English — Software Architecture Pitching", content: "Key Terms:\n- Scalability (Escalabilidade)\n- Technical debt (Dívida técnica)\n- Trade-offs (Compromissos / Escolhas de projeto)\n\nContextual Phrase:\n'When scaling our cloud infrastructure, we must balance technical debt against speed to market to optimize our core architectural trade-offs.'", instruction: "Escreva abaixo um parágrafo simulando uma explicação técnica para um cliente estrangeiro justificando o uso de microsserviços." }
                         ]
                     },
-                    {
-                        id: "2026-02",
-                        name: "Fevereiro 2026",
-                        unlocked: false,
+                    semana2: {
+                        titulo: "Semana 2 (06 a 12 de Julho 2026)",
                         tasks: [
-                            { id: "ju-t4", text: "Consolidar Módulo 2 do plano técnico de engenharia de software", done: false }
+                            { id: "ju-s2-1", text: "Estudo focado em padrões de projeto de software (Design Patterns)", done: false },
+                            { id: "ju-s2-2", text: "Preenchimento do formulário consular preliminar", done: false }
                         ],
-                        languages: []
-                    }
-                ]
+                        languages: [
+                            { lang: "en", nivel: "Avançado Profissional", title: "Business English — Negotiation and Budgeting", content: "Key Terms:\n- Core budget constraints (Restrições orçamentais essenciais)\n- Return on Investment / ROI (Retorno sobre o Investimento)\n\nPhrase:\n'Given our budget constraints, allocating capital to high-ROI educational frameworks is paramount.'", instruction: "Crie uma contraproposta salarial formal em inglês utilizando as expressões fornecidas." }
+                        ]
+                    },
+                    semana3: { titulo: "Semana 3 (13 a 19 de Julho 2026)", tasks: [], languages: [] },
+                    semana4: { titulo: "Semana 4 (20 a 26 de Julho 2026)", tasks: [], languages: [] }
+                }
             },
             lais: {
                 nome: "Laís",
-                activeMonthId: "2026-01",
-                months: [
-                    {
-                        id: "2026-01",
-                        name: "Janeiro 2026",
-                        unlocked: true,
+                semanaAtiva: "semana1",
+                valoresRevelados: false,
+                dadosFinanceiros: { poupanca: "Confidencial — Júlio", bonus: "€15,000.00 (Condicionado)" },
+                semanas: {
+                    semana1: {
+                        titulo: "Semana 1 (01 a 05 de Julho 2026)",
                         tasks: [
-                            { id: "la-t1", text: "Pesquisa de validação profissional e mercado de trabalho no destino", done: false },
-                            { id: "la-t2", text: "Organizar portfólio e equivalência de currículo internacional", done: false }
+                            { id: "la-s1-1", text: "Mapeamento das 15 maiores empresas de recrutamento de destino", done: false },
+                            { id: "la-s1-2", text: "Tradução juramentada das certificações profissionais", done: false }
                         ],
                         languages: [
-                            { id: "la-fr1", lang: "fr", title: "Mês 1 – Francês Básico: Apresentação", completed: false, content: "Bonjour = bom dia / olá\nComment allez-vous? = como está?\nJe m'appelle... = Chamo-me...", questions: "Escreva a sua mini apresentação pessoal em francês." }
+                            { lang: "fr", nivel: "Básico Progressivo", title: "Francês — Présentation Professionnelle", content: "Vocabulário Útil:\n- Bonjour, je m'appelle Laís (Olá, chamo-me Laís)\n- J'ai de l'expérience en... (Tenho experiência em...)\n- Je cherche un emploi (Estou à procura de emprego)", instruction: "Escreva a sua primeira frase de apresentação profissional completa em francês no campo de texto." },
+                            { lang: "en", nivel: "Intermediário Fluidez", title: "Inglês — Job Interview Basics", content: "Phrases:\n- I have a solid background in... (Tenho um histórico sólido em...)\n- I am eager to apply my skills (Estou ansiosa por aplicar as minhas competências)", instruction: "Responda em inglês: Why are you looking to move abroad?" }
                         ]
                     },
-                    {
-                        id: "2026-02",
-                        name: "Fevereiro 2026",
-                        unlocked: false,
+                    semana2: {
+                        titulo: "Semana 2 (06 a 12 de Julho 2026)",
                         tasks: [
-                            { id: "la-t3", text: "Mapeamento de vagas e conexões estratégicas no LinkedIn", done: false }
+                            { id: "la-s2-1", text: "Adaptação curricular para o formato europeu (Europass)", done: false }
                         ],
-                        languages: []
-                    }
-                ]
+                        languages: [
+                            { lang: "fr", nivel: "Básico Progressivo", title: "Francês — Vocabulaire de Bureau", content: "Termos:\n- L'équipe (A equipa) / Le projet (O projeto)\n- Travailler ensemble (Trabalhar juntos)", instruction: "Traduza: Eu trabalho com uma equipa internacional." }
+                        ]
+                    },
+                    semana3: { titulo: "Semana 3 (13 a 19 de Julho 2026)", tasks: [], languages: [] },
+                    semana4: { titulo: "Semana 4 (20 a 26 de Julho 2026)", tasks: [], languages: [] }
+                }
             },
             isabella: {
                 nome: "Isabella",
-                activeMonthId: "2026-01",
-                months: [
-                    {
-                        id: "2026-01",
-                        name: "Janeiro 2026",
-                        unlocked: true,
+                semanaAtiva: "semana1",
+                valoresRevelados: false,
+                dadosFinanceiros: { poupanca: "Protegido", bonus: "Protegido" },
+                semanas: {
+                    semana1: {
+                        titulo: "Semana 1 (01 a 05 de Julho 2026)",
                         tasks: [
-                            { id: "is-t1", text: "Atividade de adaptação cultural e bilinguismo precoce", done: false },
-                            { id: "is-t2", text: "Pesquisa sobre o modelo de ensino e escolas no país de destino", done: false }
+                            { id: "is-s1-1", text: "Pesquisa sistemática sobre a grade curricular do ensino secundário no destino", done: false },
+                            { id: "is-s1-2", text: "Leitura de introdução à história contemporânea europeia", done: false }
                         ],
                         languages: [
-                            { id: "is-en1", lang: "en", title: "Month 1 – English Basics for Teens", completed: false, content: "Hello! My name is Isabella = Olá! O meu nome é Isabella\nI am a student = Eu sou estudante", questions: "Escreva 3 frases sobre a sua rotina escolar em inglês." }
+                            { lang: "en", nivel: "Intermediário Avançado", title: "English — Academic Discussion & School Life", content: "Expressions:\n- Extracurricular activities (Atividades extracurriculares)\n- Core curriculum (Grade curricular obrigatória)\n- To achieve high marks (Alcançar notas altas)\n\nText:\n'Adapting to a foreign core curriculum requires balance, especially when participating in competitive extracurricular activities.'", instruction: "Descreva em inglês quais são as tuas matérias escolares preferidas e quais atividades planeias fazer na nova escola." }
                         ]
                     },
-                    {
-                        id: "2026-02",
-                        name: "Fevereiro 2026",
-                        unlocked: false,
+                    semana2: {
+                        titulo: "Semana 2 (06 a 12 de Julho 2026)",
                         tasks: [
-                            { id: "is-t3", text: "Leitura guiada sobre história e cultura do destino", done: false }
+                            { id: "is-s2-1", text: "Análise comparativa de metodologias de estudo e testes", done: false }
                         ],
-                        languages: []
-                    }
-                ]
+                        languages: [
+                            { lang: "en", nivel: "Intermediário Avançado", title: "English — Advanced Vocabulary for Essay Writing", content: "Linkers:\n- Furthermore (Além disso)\n- On the other hand (Por outro lado)\n- Therefore (Portanto)", instruction: "Escreva 3 frases sobre adaptação cultural usando os conectivos acima." }
+                        ]
+                    },
+                    semana3: { titulo: "Semana 3 (13 a 19 de Julho 2026)", tasks: [], languages: [] },
+                    semana4: { titulo: "Semana 4 (20 a 26 de Julho 2026)", tasks: [], languages: [] }
+                }
             }
         };
 
-        let membroAtual = "julio";
+        let membroAtivo = "julio";
 
-        // Gerenciador de Interface e Renderização Dinâmica Nativa
-        function renderizar() {
-            const dadosMembro = dadosFamilia[membroAtual];
-            const mesAtivo = dadosMembro.months.find(m => m.id === dadosMembro.activeMonthId);
+        // MOTOR DE ATUALIZAÇÃO DE INTERFACE (DOM NATIVO SEGURO)
+        function renderizarPainel() {
+            const dadosMembro = dbFamilia[membroAtivo];
+            const semanaId = dadosMembro.semanaAtiva;
+            const dadosSemana = dadosMembro.semanas[semanaId];
 
-            // Atualiza Textos Laterais
+            // Atualizar cabeçalhos de texto
+            document.getElementById("titulo-semana").innerText = `Tarefas — ${dadosSemana.titulo || semanaId}`;
             document.getElementById("nome-regras").innerText = dadosMembro.nome;
-            document.getElementById("titulo-tarefas").innerText = `Minhas Tarefas — ${mesAtivo.name}`;
 
-            // Renderizar Botões dos Meses
-            const containerMeses = document.getElementById("container-meses");
-            containerMeses.innerHTML = "";
-            dadosMembro.months.forEach(m => {
-                const btn = document.createElement("button");
-                btn.className = `px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                    dadosMembro.activeMonthId === m.id 
-                        ? 'bg-blue-600 text-white' 
-                        : m.unlocked ? 'text-slate-300 bg-slate-800 hover:bg-slate-700' : 'text-slate-600 cursor-not-allowed opacity-40'
-                }`;
-                btn.innerHTML = `${m.unlocked ? "" : "🔒 "}${m.name}`;
-                btn.onclick = () => { if(m.unlocked) { dadosMembro.activeMonthId = m.id; renderizar(); } };
-                containerMeses.appendChild(btn);
-            });
-
-            // Renderizar Lista de Tarefas
-            const listaTarefas = document.getElementById("lista-tarefas");
-            listaTarefas.innerHTML = "";
-            mesAtivo.tasks.forEach(t => {
-                const label = document.createElement("label");
-                label.className = "flex items-start gap-3 p-3 bg-slate-900/40 rounded-xl border border-slate-800 cursor-pointer hover:border-slate-700 transition";
-                label.innerHTML = `
-                    <input type="checkbox" ${t.done ? "checked" : ""} class="mt-1 accent-blue-500 rounded" onchange="alternarTarefa('${t.id}')">
-                    <span class="text-sm ${t.done ? 'line-through text-slate-500' : 'text-slate-300'}">${t.text}</span>
-                `;
-                listaTarefas.appendChild(label);
-            });
-
-            // Renderizar Lista de Idiomas
-            const listaIdiomas = document.getElementById("lista-idiomas");
-            listaIdiomas.innerHTML = "";
-            if(mesAtivo.languages.length === 0) {
-                listaIdiomas.innerHTML = `<p class="text-xs text-slate-500 italic p-2">Nenhuma lição de idioma pendente neste período.</p>`;
+            // Renderizar Lista de Checkboxes de Tarefas
+            const boxTarefas = document.getElementById("box-tarefas");
+            boxTarefas.innerHTML = "";
+            if (!dadosSemana.tasks || dadosSemana.tasks.length === 0) {
+                boxTarefas.innerHTML = `<p class="text-xs text-slate-500 italic p-3 bg-slate-950/20 border border-slate-800 rounded-xl">Planeamento de tarefas não configurado ou liberado para esta semana.</p>`;
             } else {
-                mesAtivo.languages.forEach(l => {
+                dadosSemana.tasks.forEach(t => {
+                    const label = document.createElement("label");
+                    label.className = "flex items-start gap-3 p-3 bg-slate-950/40 rounded-xl border border-slate-800/80 cursor-pointer hover:border-slate-700 transition";
+                    label.innerHTML = `
+                        <input type="checkbox" ${t.done ? "checked" : ""} class="mt-1 w-4 h-4 accent-emerald-500" onchange="alternarCheck('${t.id}')">
+                        <span class="text-sm ${t.done ? 'line-through text-slate-500' : 'text-slate-300'}">${t.text}</span>
+                    `;
+                    boxTarefas.appendChild(label);
+                });
+            }
+
+            // Renderizar Lições e Inputs de Texto para Respostas
+            const boxIdiomas = document.getElementById("box-idiomas");
+            boxIdiomas.innerHTML = "";
+            if (!dadosSemana.languages || dadosSemana.languages.length === 0) {
+                boxIdiomas.innerHTML = `<p class="text-xs text-slate-500 italic p-3 bg-slate-950/20 border border-slate-800 rounded-xl">Nenhum bloco de idioma alocado para esta semana.</p>`;
+            } else {
+                dadosSemana.languages.forEach((l, index) => {
+                    const keyArmazenamento = `resposta-${membroAtivo}-${semanaId}-${index}`;
+                    const respostaSalva = localStorage.getItem(keyArmazenamento) || "";
+
                     const div = document.createElement("div");
                     div.className = "p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-3";
                     div.innerHTML = `
-                        <div class="flex justify-between items-center gap-2">
-                            <h3 class="text-sm font-semibold text-blue-400">
-                                <span>${l.lang === "fr" ? "🇫🇷 " : "🇬🇧 "}</span>${l.title}
-                            </h3>
-                            <button onclick="alternarIdioma('${l.id}')" class="text-xs px-3 py-1 rounded-lg font-medium border ${l.completed ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-900 text-slate-300 border-slate-700'}">
-                                ${l.completed ? "✓ Concluído" : "Concluir"}
-                            </button>
+                        <div class="flex justify-between items-center border-b border-slate-800/80 pb-2">
+                            <span class="text-xs font-bold text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-900/40 uppercase tracking-wide">${l.nivel}</span>
+                            <span class="text-sm font-semibold text-slate-200">${l.title}</span>
                         </div>
-                        <pre class="text-xs p-3 bg-slate-900 rounded-lg text-slate-300 font-mono whitespace-pre-wrap leading-relaxed">${l.content}</pre>
-                        <div class="text-xs p-2 bg-blue-950/20 border border-blue-900/30 rounded-lg text-slate-400">
-                            <strong class="text-blue-400 block mb-1">Atividade Prática:</strong>
-                            <p>• ${l.questions}</p>
+                        <pre class="text-xs p-3 bg-premium-900 rounded-lg text-slate-300 font-mono whitespace-pre-wrap leading-relaxed border border-slate-800">${l.content}</pre>
+                        
+                        <div class="space-y-2 pt-1">
+                            <label class="text-xs text-slate-400 font-medium block">✍️ Atividade Prática Resolutiva:</label>
+                            <p class="text-xs text-slate-300 italic mb-2">${l.instruction}</p>
+                            <textarea id="${keyArmazenamento}" oninput="salvarResposta('${keyArmazenamento}')" placeholder="Introduza a sua resposta em texto para validação da lição..." class="w-full bg-premium-900 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-emerald-500 min-h-[80px]">${respostaSalva}</textarea>
                         </div>
                     `;
-                    listaIdiomas.appendChild(div);
+                    boxIdiomas.appendChild(div);
                 });
+            }
+
+            // Atualizar Visual da Barra Lateral de Valores Criptografados
+            if (dadosMembro.valoresRevelados) {
+                document.getElementById("txt-poupanca").innerText = dadosMembro.dadosFinanceiros.poupanca;
+                document.getElementById("txt-imovel").innerText = dadosMembro.dadosFinanceiros.bonus;
+                document.getElementById("form-senha").className = "hidden";
+            } else {
+                document.getElementById("txt-poupanca").innerText = "••••";
+                document.getElementById("txt-imovel").innerText = "••••";
+                document.getElementById("form-senha").className = "pt-2 flex gap-1.5";
             }
         }
 
-        // Ações de Interatividade
+        // LÓGICAS INTERATIVAS DE NAVEGAÇÃO E PERSISTÊNCIA
         function mudarMembro(membro) {
-            membroAtual = member = membro;
+            membroAtivo = membro;
             ['julio', 'lais', 'isabella'].forEach(k => {
                 const b = document.getElementById(`btn-${k}`);
-                if(k === membro) {
-                    b.className = "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 bg-blue-600 text-white font-bold";
+                if (k === membro) {
+                    b.className = "px-5 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 bg-cyan-600 text-white shadow-md font-bold scale-102";
                 } else {
-                    b.className = "px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200";
+                    b.className = "px-5 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/30";
                 }
             });
-            renderizar();
+            mudarSemana(dbFamilia[membroAtivo].semanaAtiva);
         }
 
-        function alternarTarefa(id) {
-            const mes = dadosFamilia[membroAtual].months.find(m => m.id === dadosFamilia[membroAtual].activeMonthId);
-            const tarefa = mes.tasks.find(t => t.id === id);
+        function mudarSemana(semanaId) {
+            dbFamilia[membroAtivo].semanaAtiva = semanaId;
+            ['semana1', 'semana2', 'semana3', 'semana4'].forEach(s => {
+                const nav = document.getElementById(`nav-${s}`);
+                if (s === semanaId) {
+                    nav.className = "w-full text-left p-2 rounded bg-slate-800 font-medium text-white transition";
+                } else {
+                    nav.className = "w-full text-left p-2 rounded text-slate-400 hover:bg-slate-800/40 transition";
+                }
+            });
+            renderizarPainel();
+        }
+
+        function alternarCheck(id) {
+            const semanaId = dbFamilia[membroAtivo].semanaAtiva;
+            const tarefa = dbFamilia[membroAtivo].semanas[semanaId].tasks.find(t => t.id === id);
             tarefa.done = !tarefa.done;
-            verificarTravas();
-            renderizar();
+            renderizarPainel();
         }
 
-        function alternarIdioma(id) {
-            const mes = dadosFamilia[membroAtual].months.find(m => m.id === dadosFamilia[membroAtual].activeMonthId);
-            const lingua = mes.languages.find(l => l.id === id);
-            lingua.completed = !lingua.completed;
-            verificarTravas();
-            renderizar();
+        function salvarResposta(idElemento) {
+            const texto = document.getElementById(idElemento).value;
+            localStorage.setItem(idElemento, texto);
         }
 
-        function verificarTravas() {
-            // Varre as condições do Mês 1 para liberar o Mês 2 de forma isolada
-            Object.keys(dadosFamilia).forEach(m => {
-                const m1 = dadosFamilia[m].months[0];
-                const tarefasFeitas = m1.tasks.every(t => t.done);
-                const idiomasFeitos = m1.languages.every(l => l.completed);
-                
-                if(dadosFamilia[m].months[1]) {
-                    dadosFamilia[m].months[1].unlocked = (tarefasFeitas && idiomasFeitos);
-                }
-            });
+        function desbloquearValores() {
+            const pwd = document.getElementById("input-pass").value;
+            if (pwd === "2030") {
+                dbFamilia[membroAtivo].valoresRevelados = true;
+                renderizarPainel();
+            } else {
+                alert("Código de Acesso Incorreto. Falha na autenticação patrimonial.");
+            }
         }
 
-        // Inicialização Primária
-        renderizar();
+        // Inicializador de Fluxo
+        renderizarPainel();
     </script>
 </body>
 </html>
